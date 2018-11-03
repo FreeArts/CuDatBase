@@ -1,0 +1,10 @@
+AbstractTextEditor.Color.Background=46,47,48
+AbstractTextEditor.Color.Background.SystemDefault=false
+AbstractTextEditor.Color.FindScope=0,0,0
+AbstractTextEditor.Color.SelectionBackground=0,0,0
+AbstractTextEditor.Color.SelectionBackground.SystemDefault=false
+AbstractTextEditor.Color.SelectionForeground=0,171,0
+AbstractTextEditor.Color.SelectionForeground.SystemDefault=false
+currentLineColor=0,0,0
+eclipse.preferences.version=1
+overviewRuler_migration=migrated_3.1
