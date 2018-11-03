@@ -1896,7 +1896,15 @@
 <includePath path="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
 <includePath path="/usr/include/x86_64-linux-gnu"/>
 <includePath path="/usr/include"/>
+<definedSymbol symbol="="/>
+<definedSymbol symbol="__CUDA_RUNTIME_H__="/>
+<definedSymbol symbol="CUDA_DOUBLE_MATH_FUNCTIONS="/>
+<definedSymbol symbol="__CUDA_ARCH__=300"/>
 <definedSymbol symbol="__CUDACC__="/>
+<definedSymbol symbol="__NVCC__="/>
+<definedSymbol symbol="__NVCC__=1"/>
+<definedSymbol symbol="__DRIVER_TYPES_H__="/>
+<definedSymbol symbol="__CUDACC_DEBUG__="/>
 <definedSymbol symbol="__STDC__=1"/>
 <definedSymbol symbol="__cplusplus=201402L"/>
 <definedSymbol symbol="__cplusplus=201103L"/>
@@ -2187,7 +2195,6 @@
 <definedSymbol symbol="__ELF__=1"/>
 <definedSymbol symbol="__DECIMAL_BID_FORMAT__=1"/>
 <definedSymbol symbol="_GNU_SOURCE=1"/>
-<definedSymbol symbol="__NVCC__=1"/>
 <definedSymbol symbol="__CUDACC_VER_BUILD__=85"/>
 <definedSymbol symbol="__CUDACC_VER_MINOR__=1"/>
 <definedSymbol symbol="__CUDACC_VER_MAJOR__=9"/>
@@ -2527,7 +2534,15 @@
 <includePath path="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
 <includePath path="/usr/include/x86_64-linux-gnu"/>
 <includePath path="/usr/include"/>
+<definedSymbol symbol="="/>
+<definedSymbol symbol="__CUDA_RUNTIME_H__="/>
+<definedSymbol symbol="CUDA_DOUBLE_MATH_FUNCTIONS="/>
+<definedSymbol symbol="__CUDA_ARCH__=300"/>
 <definedSymbol symbol="__CUDACC__="/>
+<definedSymbol symbol="__NVCC__="/>
+<definedSymbol symbol="__NVCC__=1"/>
+<definedSymbol symbol="__DRIVER_TYPES_H__="/>
+<definedSymbol symbol="__CUDACC_DEBUG__="/>
 <definedSymbol symbol="__STDC__=1"/>
 <definedSymbol symbol="__cplusplus=201402L"/>
 <definedSymbol symbol="__cplusplus=201103L"/>
@@ -2818,7 +2833,6 @@
 <definedSymbol symbol="__ELF__=1"/>
 <definedSymbol symbol="__DECIMAL_BID_FORMAT__=1"/>
 <definedSymbol symbol="_GNU_SOURCE=1"/>
-<definedSymbol symbol="__NVCC__=1"/>
 <definedSymbol symbol="__CUDACC_VER_BUILD__=85"/>
 <definedSymbol symbol="__CUDACC_VER_MINOR__=1"/>
 <definedSymbol symbol="__CUDACC_VER_MAJOR__=9"/>
