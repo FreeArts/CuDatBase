@@ -61,7 +61,6 @@ void initialize(float *data, unsigned size)
 
 int main(void)
 {
-	SELECT testSelect;
 	static const int WORK_SIZE = 65530;
 	float *data = new float[WORK_SIZE];
 

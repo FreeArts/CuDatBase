@@ -11,7 +11,6 @@
 #include <iostream>
 #include <numeric>
 #include <stdlib.h>
-#include "select.h"
 
 static void CheckCudaErrorAux (const char *, unsigned, const char *, cudaError_t);
 #define CUDA_CHECK_RETURN(value) CheckCudaErrorAux(__FILE__,__LINE__, #value, value)
@@ -61,7 +60,6 @@ void initialize(float *data, unsigned size)
 
 int main(void)
 {
-	SELECT testSelect;
 	static const int WORK_SIZE = 65530;
 	float *data = new float[WORK_SIZE];
 

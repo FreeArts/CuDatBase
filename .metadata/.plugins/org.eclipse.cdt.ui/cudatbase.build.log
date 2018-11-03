@@ -1,16 +1,6 @@
-12:31:56 **** Build of configuration Debug for project cudatbase ****
+12:45:17 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
-Building file: ../src/cudatbase.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
-Finished building: ../src/cudatbase.cu
- 
-Building target: cudatbase
-Invoking: NVCC Linker
-/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/cudatbase.o   
-Finished building target: cudatbase
- 
+make: Nothing to be done for 'all'.
 
-12:31:58 Build Finished (took 1s.422ms)
+12:45:17 Build Finished (took 312ms)
 
