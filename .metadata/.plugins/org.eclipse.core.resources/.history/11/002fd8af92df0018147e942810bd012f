@@ -19,7 +19,7 @@ SELECT::~SELECT() {
 	// TODO Auto-generated destructor stub
 }
 
-void SELECT::collectData(string databaseFile){
+void SELECT::collectData(){
     // Store the words from the two files into these two vectors
     vector<string> DataArray;
     vector<string> QueryArray;

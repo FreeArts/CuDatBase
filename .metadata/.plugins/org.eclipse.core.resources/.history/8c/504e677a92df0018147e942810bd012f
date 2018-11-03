@@ -19,10 +19,11 @@ SELECT::~SELECT() {
 	// TODO Auto-generated destructor stub
 }
 
-void SELECT::collectData(string databaseFile){
+void SELECT::collectData(string data){
     // Store the words from the two files into these two vectors
     vector<string> DataArray;
     vector<string> QueryArray;
+    data = "alma";
 
     // Create two input streams, opening the named files in the process.
     // You only need to check for failure if you want to distinguish

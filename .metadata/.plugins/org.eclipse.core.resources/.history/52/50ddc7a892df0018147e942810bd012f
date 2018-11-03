@@ -16,17 +16,16 @@
 #include <iterator>
 #include <algorithm>
 
-using namespace std;
 
 class SELECT {
 public:
 	SELECT();
 	virtual ~SELECT();
 
-	void collectData(string databaseFile);
+	void collectData();
 
 private:
-
+string a;
 };
 
 #endif /* SELECT_H_ */

@@ -23,7 +23,7 @@ public:
 	SELECT();
 	virtual ~SELECT();
 
-	void collectData(string databaseFile);
+	void collectData();
 
 private:
 

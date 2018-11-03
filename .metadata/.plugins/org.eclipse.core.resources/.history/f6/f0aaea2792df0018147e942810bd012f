@@ -16,7 +16,6 @@
 #include <iterator>
 #include <algorithm>
 
-using namespace std;
 
 class SELECT {
 public:

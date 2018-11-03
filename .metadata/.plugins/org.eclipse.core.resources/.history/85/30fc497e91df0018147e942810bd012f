@@ -9,21 +9,11 @@
 #define SELECT_H_
 
 #include "cuda_select.cuh"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-
-using namespace std;
 
 class SELECT {
 public:
 	SELECT();
 	virtual ~SELECT();
-
-	void collectData(string databaseFile);
 
 private:
 

@@ -10,20 +10,25 @@
 
 #include "cuda_select.cuh"
 #include <iostream>
+using std::cout;
+using std::cin;
 #include <fstream>
+using std::ifstream;
 #include <string>
+using std::string;
 #include <vector>
+using std::vector;
 #include <iterator>
+using std::istream_iterator;
 #include <algorithm>
-
-using namespace std;
+using std::copy;
 
 class SELECT {
 public:
 	SELECT();
 	virtual ~SELECT();
 
-	void collectData(string databaseFile);
+	void collectData();
 
 private:
 

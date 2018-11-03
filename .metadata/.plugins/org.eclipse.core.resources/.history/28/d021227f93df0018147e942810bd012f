@@ -15,7 +15,7 @@ SELECT::SELECT() {
 
 }
 
-SELECT::~SELECT() {
+SELECT::~SELECT() {string databaseFile
 	// TODO Auto-generated destructor stub
 }
 
