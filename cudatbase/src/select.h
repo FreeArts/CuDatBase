@@ -23,9 +23,13 @@ public:
 	SELECT();
 	virtual ~SELECT();
 
+	void select_every(const string &target);
 	void collectData();
 
+	void testFunction();
 private:
+	void setDatabaseName(string name);
+	string databaseName;
 
 };
 

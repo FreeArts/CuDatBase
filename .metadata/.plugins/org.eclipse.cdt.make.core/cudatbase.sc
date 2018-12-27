@@ -1912,9 +1912,9 @@
 <definedSymbol symbol="__STDC_UTF_32__=1"/>
 <definedSymbol symbol="__STDC_HOSTED__=1"/>
 <definedSymbol symbol="__GNUC__=6"/>
-<definedSymbol symbol="__GNUC_MINOR__=4"/>
+<definedSymbol symbol="__GNUC_MINOR__=5"/>
 <definedSymbol symbol="__GNUC_PATCHLEVEL__=0"/>
-<definedSymbol symbol="__VERSION__=&quot;6.4.0 20180424&quot;"/>
+<definedSymbol symbol="__VERSION__=&quot;6.5.0 20181026&quot;"/>
 <definedSymbol symbol="__ATOMIC_RELAXED=0"/>
 <definedSymbol symbol="__ATOMIC_SEQ_CST=5"/>
 <definedSymbol symbol="__ATOMIC_ACQUIRE=2"/>
@@ -2231,9 +2231,9 @@
 <definedSymbol symbol="__STDC_UTF_32__=1"/>
 <definedSymbol symbol="__STDC_HOSTED__=1"/>
 <definedSymbol symbol="__GNUC__=6"/>
-<definedSymbol symbol="__GNUC_MINOR__=4"/>
+<definedSymbol symbol="__GNUC_MINOR__=5"/>
 <definedSymbol symbol="__GNUC_PATCHLEVEL__=0"/>
-<definedSymbol symbol="__VERSION__=&quot;6.4.0 20180424&quot;"/>
+<definedSymbol symbol="__VERSION__=&quot;6.5.0 20181026&quot;"/>
 <definedSymbol symbol="__ATOMIC_RELAXED=0"/>
 <definedSymbol symbol="__ATOMIC_SEQ_CST=5"/>
 <definedSymbol symbol="__ATOMIC_ACQUIRE=2"/>
@@ -2550,9 +2550,9 @@
 <definedSymbol symbol="__STDC_UTF_32__=1"/>
 <definedSymbol symbol="__STDC_HOSTED__=1"/>
 <definedSymbol symbol="__GNUC__=6"/>
-<definedSymbol symbol="__GNUC_MINOR__=4"/>
+<definedSymbol symbol="__GNUC_MINOR__=5"/>
 <definedSymbol symbol="__GNUC_PATCHLEVEL__=0"/>
-<definedSymbol symbol="__VERSION__=&quot;6.4.0 20180424&quot;"/>
+<definedSymbol symbol="__VERSION__=&quot;6.5.0 20181026&quot;"/>
 <definedSymbol symbol="__ATOMIC_RELAXED=0"/>
 <definedSymbol symbol="__ATOMIC_SEQ_CST=5"/>
 <definedSymbol symbol="__ATOMIC_ACQUIRE=2"/>

@@ -1,1 +1,6 @@
-alma
+1   alma    10
+2   korte   20
+3   szilva  30
+4   barack  40
+5   banan   55
+
