@@ -14,3 +14,5 @@ float *cpuReciprocal(float *data, unsigned size);
 void initialize(float *data, unsigned size);
 
 int work(void);
+
+void callExample(int a[5],int b[5],int c[5]);

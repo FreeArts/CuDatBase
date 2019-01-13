@@ -21,6 +21,7 @@ using namespace std;
 class SELECT {
 public:
 	SELECT();
+	SELECT(int a[5],int b[5],int c[5]);
 	virtual ~SELECT();
 
 	void select_every(const string &target);

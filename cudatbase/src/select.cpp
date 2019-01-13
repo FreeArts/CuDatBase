@@ -13,7 +13,13 @@ SELECT::SELECT() {
 	// TODO Auto-generated constructor stub
 	setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
 	testFunction();
-	testCuda();
+}
+
+SELECT::SELECT(int a[5],int b[5],int c[5]) {
+	// TODO Auto-generated constructor stub
+	setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
+	testFunction();
+	callExample(a,b,c);
 }
 
 SELECT::~SELECT() {
