@@ -1,0 +1,38 @@
+/*
+ * CSVReader.cpp
+ *
+ *  Created on: 2019 jan. 24
+ *      Author: freeart
+ */
+
+#include "CSVReader.h"
+
+CSVReader::CSVReader(std::string filename, std::string delm) :
+    l_fileName_s(filename), l_delimeter_s(delm)
+{ }
+
+CSVReader::~CSVReader() {
+	// TODO Auto-generated destructor stub
+}
+
+std::vector<std::vector<std::string> > CSVReader::getData()
+{
+    std::ifstream file(l_fileName_s);
+
+    std::vector<std::vector<std::string> > dataList;
+
+    std::string line = "";
+    // Iterate through each line and split the content using delimeter
+    while (getline(file, line))
+    {
+        std::vector<std::string> vec;
+        boost::algorithm::split(vec, line, boost::is_any_of(l_delimeter_s));
+        dataList.push_back(vec);
+    }
+    // Close the File
+    file.close();
+
+    return dataList;
+}
+
+

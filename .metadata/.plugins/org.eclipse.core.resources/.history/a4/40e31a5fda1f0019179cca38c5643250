@@ -1,0 +1,17 @@
+/*
+ * CSVReader.h
+ *
+ *  Created on: 2019 jan. 24
+ *      Author: freeart
+ */
+
+#ifndef CSVREADER_H_
+#define CSVREADER_H_
+
+class CSVReader {
+public:
+	CSVReader();
+	virtual ~CSVReader();
+};
+
+#endif /* CSVREADER_H_ */

@@ -17,6 +17,6 @@
 
 int main(void)
 {
-	//SELECT testSelect;
+	SELECT testSelect;
 
 }
