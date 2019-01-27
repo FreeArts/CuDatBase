@@ -7,51 +7,59 @@
 
 #include "select.h"
 
-using namespace std;
 
 SELECT::SELECT() {
 	// TODO Auto-generated constructor stub
-	setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
+	//setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
 	testFunction();
+	m_dataList_v.empty();
+
+	//For test without Qt
+	m_dataBasePath_str = "/home/freeart/MscThesis/CuDatBase/cudatbase/src/honda_test.csv" ;
+	m_delimeter_str = ";";
 }
 
-SELECT::SELECT(int a[5],int b[5],int c[5]) {
+SELECT::SELECT(int a[5],int b[5],int c[5]) { //cuda_test call from qt
 	// TODO Auto-generated constructor stub
-	setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
+	m_dataList_v.empty();
+
+	//For test without Qt
+	m_dataBasePath_str = "/home/freeart/MscThesis/CuDatBase/cudatbase/src/honda_test.csv" ;
+	m_delimeter_str = ";";
+
 	testFunction();
-	callExample(a,b,c);
+	callExample(a,b,c); //cuda_test
 }
 
 SELECT::~SELECT() {
 	// TODO Auto-generated destructor stub
 }
 
-void SELECT::select_every(const string &target)
-{
-
-}
-
-void SELECT::collectData(){
-
-
-}
-
-void SELECT::setDatabaseName(string name)
-{
-	databaseName = name;
-}
-
 void SELECT::testFunction()
 {
 	testCuda();
-	std::vector<std::string> output;
-	typedef std::istream_iterator<std::string> istream_iterator;
-	std::ifstream file(databaseName);
-	std::vector<std::string> input;
+}
 
-	std::copy(istream_iterator(file), istream_iterator(),
-	std::back_inserter(input));
+void SELECT::loadDatabase(){
+	CSVReader *reader = new CSVReader(m_dataBasePath_str,m_delimeter_str);
+	m_dataList_v =  reader->getData();
 
-	for (auto i = input.begin(); i != input.end(); ++i)
-		std::cout << *i << ' ';
+	delete reader;
+
+}
+
+void SELECT::loadDatabase(const vector<vector<string> > &l_dataBase_v){
+	m_dataList_v = l_dataBase_v;
+}
+
+void SELECT::showDatabase() const{
+
+	for(vector<string> vec : m_dataList_v)
+	    {
+	        for(string m_dataList_v : vec)
+	        {
+	            cout<<m_dataList_v << " ; ";
+	        }
+	        cout<<std::endl;
+	    }
 }

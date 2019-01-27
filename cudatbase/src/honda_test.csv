@@ -1,0 +1,43 @@
+ID;Modell;Year;Color
+1;Life;2001;green
+2;Zest;2002;red
+3;Freed;2003;blue
+4;Vamos Hobio;2004;white
+5;Civic;2005;green
+6;Vamos Hobio;2006;red
+7;Jazz;2007;blue
+8;Civic;2001;white
+9;Jazz;2009;green
+10;Vamos Hobio;2010;red
+11;Element;2011;blue
+12;Honda Accord;2012;white
+13;Element;2013;green
+14;Civic;2001;red
+15;Element;2015;blue
+16;Jazz;2016;white
+17;Element;2017;green
+18;Element;2018;red
+19;Civic;2001;blue
+20;accord;2020;white
+21;Vamos Hobio;2021;green
+22;Jazz;2022;red
+23;Element;2023;blue
+24;Element;2024;white
+25;Vamos Hobio;2025;green
+26;Jazz;2026;red
+27;Accord;2001;blue
+28;Vamos Hobio;2028;white
+29;Civic;2001;green
+30;Accord;2001;red
+31;Vamos Hobio;2031;blue
+32;Civic;2032;white
+33;Element;2033;green
+34;Inspire;2034;red
+35;Acura;2035;blue
+36;Element;2036;white
+37;Civic;2037;green
+38;Acura;2038;red
+39;Inspire;2039;blue
+40;Acura;2001;white
+41;Acura;2041;green
+42;Odyssey;2042;red

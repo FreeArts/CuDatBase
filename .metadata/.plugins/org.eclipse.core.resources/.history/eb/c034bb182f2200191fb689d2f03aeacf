@@ -1,0 +1,31 @@
+/*
+ * select.cpp
+ *
+ *  Created on: 2018 nov. 3
+ *      Author: freeart
+ */
+
+#include "select.h"
+
+
+SELECT::SELECT() {
+	// TODO Auto-generated constructor stub
+	//setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
+	testFunction();
+}
+
+SELECT::SELECT(int a[5],int b[5],int c[5]) { //cuda_test call from qt
+	// TODO Auto-generated constructor stub
+	//setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
+	testFunction();
+	callExample(a,b,c); //cuda_test
+}
+
+SELECT::~SELECT() {
+	// TODO Auto-generated destructor stub
+}
+
+void SELECT::testFunction()
+{
+	testCuda();
+}
