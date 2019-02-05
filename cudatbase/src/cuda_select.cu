@@ -1,10 +1,9 @@
 
 #include "cuda_select.cuh"
+#include <vector>
 
-//__global__ void test_kernel(void) {
-//}
 
-//example so
+//example so test--------------------
 __global__ void addKernel(int* c, const int* a, const int* b, int size) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     if (i < size) {
@@ -40,6 +39,8 @@ void addWithCuda(int* c, const int* a, const int* b, int size) {
     cudaFree(dev_c);
     cudaFree(dev_a);
     cudaFree(dev_b);
+
+
 }
 
 void callExample(int a[5],int b[5],int c[5]){
@@ -68,6 +69,8 @@ __global__  void reciprocalKernel(float *data, unsigned vectorSize) {
 	unsigned idx = blockIdx.x*blockDim.x+threadIdx.x;
 	if (idx < vectorSize)
 		data[idx] = 1.0/data[idx];
+
+
 }
 
 /**
@@ -131,6 +134,7 @@ int work(void)
  * Check the return value of the CUDA runtime API call and exit
  * the application if the call has failed.
  */
+
 static void CheckCudaErrorAux (const char *file, unsigned line, const char *statement, cudaError_t err)
 {
 	if (err == cudaSuccess)

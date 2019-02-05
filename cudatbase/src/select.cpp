@@ -39,7 +39,7 @@ void SELECT::testFunction()
 {
 	testCuda();
 }
-
+//For test period
 void SELECT::loadDatabase(){
 	CSVReader *reader = new CSVReader(m_dataBasePath_str,m_delimeter_str);
 	m_dataList_v =  reader->getData();
@@ -47,7 +47,7 @@ void SELECT::loadDatabase(){
 	delete reader;
 
 }
-
+//In the future
 void SELECT::loadDatabase(const vector<vector<string> > &l_dataBase_v){
 	m_dataList_v = l_dataBase_v;
 }
@@ -56,10 +56,15 @@ void SELECT::showDatabase() const{
 
 	for(vector<string> vec : m_dataList_v)
 	    {
-	        for(string m_dataList_v : vec)
+	        for(string vector_member : vec)
 	        {
-	            cout<<m_dataList_v << " ; ";
+	            cout<<vector_member << ";";
 	        }
 	        cout<<std::endl;
 	    }
 }
+
+void SELECT::selectRule(vector<vector<string>> selectRule){
+
+}
+

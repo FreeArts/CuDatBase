@@ -33,6 +33,8 @@ public:
 
 	void showDatabase() const;
 
+	void selectRule(vector<vector<string>> selectRule);
+
 private:
 
 	string m_dataBasePath_str;
