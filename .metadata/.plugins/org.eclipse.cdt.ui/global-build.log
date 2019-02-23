@@ -1,20 +1,4 @@
-16:37:51 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/select.cpp
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
-/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
-Finished building: ../src/select.cpp
- 
-Building target: cudatbase
-Invoking: NVCC Linker
-/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
-Finished building target: cudatbase
- 
-16:37:55 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-make: Nothing to be done for 'all'.
-16:56:02 **** Incremental Build of configuration Debug for project cudatbase ****
+11:37:24 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/cudatbase.cu
 Invoking: NVCC Compiler
@@ -33,7 +17,205 @@ Invoking: NVCC Linker
 /usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
 Finished building target: cudatbase
  
-17:46:38 **** Incremental Build of configuration Debug for project cudatbase ****
+11:42:05 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+11:45:52 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+11:46:04 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+../src/select.h(52): error: identifier "traue" is undefined
+
+1 error detected in the compilation of "/tmp/tmpxft_00000f21_00000000-6_cudatbase.cpp1.ii".
+make: *** [src/cudatbase.o] Error 1
+src/subdir.mk:42: recipe for target 'src/cudatbase.o' failed
+11:46:12 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+11:48:34 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+11:50:29 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+../src/select.cpp:67:58: error: no ‘void SELECT::selectRule(std::vector<std::vector<std::__cxx11::basic_string<char> > >)’ member function declared in class ‘SELECT’
+ void SELECT::selectRule(vector<vector<string>> selectRule){
+                                                          ^
+src/subdir.mk:34: recipe for target 'src/select.o' failed
+make: *** [src/select.o] Error 1
+11:50:49 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+../src/select.cpp:67:58: error: no ‘void SELECT::selectRule(std::vector<std::vector<std::__cxx11::basic_string<char> > >)’ member function declared in class ‘SELECT’
+ void SELECT::selectRule(vector<vector<string>> selectRule){
+                                                          ^
+src/subdir.mk:34: recipe for target 'src/select.o' failed
+make: *** [src/select.o] Error 1
+11:51:14 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+11:54:17 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+../src/select.cpp:67:6: error: prototype for ‘void SELECT::readSelectRule(std::vector<std::vector<std::__cxx11::basic_string<char> > >)’ does not match any in class ‘SELECT’
+ void SELECT::readSelectRule(vector<vector<string>> l_selectRule_v){
+      ^~~~~~
+In file included from ../src/select.cpp:8:0:
+../src/select.h:37:7: error: candidate is: void SELECT::readSelectRule(std::vector<std::__cxx11::basic_string<char> >)
+  void readSelectRule(vector<string> l_selectRule_v);
+       ^~~~~~~~~~~~~~
+src/subdir.mk:34: recipe for target 'src/select.o' failed
+make: *** [src/select.o] Error 1
+11:55:18 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+11:55:27 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+11:56:51 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+../src/select.cpp:71:18: error: no ‘void SELECT::run()’ member function declared in class ‘SELECT’
+ void SELECT::run(){
+                  ^
+make: *** [src/select.o] Error 1
+src/subdir.mk:34: recipe for target 'src/select.o' failed
+11:57:42 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/select.cpp
 Invoking: NVCC Compiler

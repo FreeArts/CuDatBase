@@ -64,7 +64,10 @@ void SELECT::showDatabase() const{
 	    }
 }
 
-void SELECT::selectRule(vector<vector<string>> selectRule){
-
+void SELECT::readSelectRule(vector<string> l_selectRule_v){
+	m_selectRule_v = l_selectRule_v;
 }
 
+void SELECT::Run(){
+
+}

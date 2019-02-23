@@ -22,6 +22,7 @@ using namespace std;
 
 class SELECT {
 public:
+
 	SELECT();
 	SELECT(int a[5],int b[5],int c[5]);
 	virtual ~SELECT();
@@ -33,13 +34,35 @@ public:
 
 	void showDatabase() const;
 
-	void selectRule(vector<vector<string>> selectRule);
+	void readSelectRule(vector<string> l_selectRule_v);
+
+	void Run();
+
 
 private:
 
 	string m_dataBasePath_str;
 	string m_delimeter_str;
 	vector<vector<string> > m_dataList_v;
+	vector<string> m_selectRule_v;
+
+    vector<vector<string>> *collectDataVector_p = NULL;
+    vector<vector<string>> m_workDataVector;
+
+    vector<vector<string>> m_AND_collectDataVector;
+    vector<vector<string>> m_OR_collectDataVector;
+
+	void or_method(vector<vector<string>> *l_collectDataVector_p,vector<vector<string>> &l_OR_collectDataVector_r);
+
+	void and_method(vector<vector<string>> *l_collectDataVector_p, const vector<vector<string>> &l_OR_collectDataVector_r,
+		                vector<vector<string>> &l_AND_collectDataVector_r, vector<vector<string> > &l_workDataVector);
+
+	void or_and_merge(const vector<vector<string> > *l_collectDataVector_p, const vector<vector<string>> &l_OR_collectDataVector_r,
+		                  vector<vector<string>> &l_AND_collectDataVector_r);
+
+	void equal(int input, string l_SelectRule_str, const vector<vector<string>> &dataBase_r,
+				vector<vector<string>> *l_collectDataVector_p, vector<vector<string> > &l_workDataVector);
+
 };
 
 #endif /* SELECT_H_ */
