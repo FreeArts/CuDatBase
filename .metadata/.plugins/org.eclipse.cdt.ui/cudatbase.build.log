@@ -1,4 +1,4 @@
-11:57:42 **** Incremental Build of configuration Debug for project cudatbase ****
+16:14:54 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/select.cpp
 Invoking: NVCC Compiler
@@ -12,5 +12,5 @@ Invoking: NVCC Linker
 Finished building target: cudatbase
  
 
-11:57:44 Build Finished (took 2s.264ms)
+16:14:56 Build Finished (took 2s.265ms)
 

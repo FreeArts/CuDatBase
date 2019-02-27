@@ -24,7 +24,6 @@ class SELECT {
 public:
 
 	SELECT();
-	SELECT(int a[5],int b[5],int c[5]);
 	virtual ~SELECT();
 
 	void testFunction();
@@ -36,7 +35,7 @@ public:
 
 	void readSelectRule(vector<string> l_selectRule_v);
 
-	void Run();
+	void run();
 
 
 private:
