@@ -18,6 +18,5 @@
 int main(void)
 {
 	SELECT testSelect;
-	testSelect.loadDatabase();
 	testSelect.showDatabase();
 }

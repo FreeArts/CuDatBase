@@ -28,15 +28,7 @@ void SELECT::testFunction()
 {
 	testCuda();
 }
-//For test period
-void SELECT::loadDatabase(){
-	CSVReader *reader = new CSVReader(m_dataBasePath_str,m_delimeter_str);
-	m_dataList_v =  reader->getData();
 
-	delete reader;
-
-}
-//In the future
 void SELECT::loadDatabase(const vector<vector<string> > &l_dataBase_v){
 	m_dataList_v = l_dataBase_v;
 }

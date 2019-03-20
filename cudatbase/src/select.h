@@ -8,7 +8,6 @@
 #ifndef SELECT_H_
 #define SELECT_H_
 
-#include "CSVReader.h"
 #include "cuda_select.cuh"
 
 #include <iostream>
@@ -28,7 +27,6 @@ public:
 
 	void testFunction();
 
-	void loadDatabase();
 	void loadDatabase(const vector<vector<string> > &l_dataBase_v);
 
 	void showDatabase() const;
