@@ -27,10 +27,12 @@ public:
 
 	void testFunction();
 
+	void loadDatabase(/*const vector<vector<string> > &l_dataBase_v*/);
 	void loadDatabase(const vector<vector<string> > &l_dataBase_v);
 
 	void showDatabase() const;
 
+	void readSelectRule(/*vector<string> l_selectRule_v*/);
 	void readSelectRule(vector<string> l_selectRule_v);
 
 	void run();
@@ -58,7 +60,7 @@ private:
 		                  vector<vector<string>> &l_AND_collectDataVector_r);
 
 	void equal(int input, string l_SelectRule_str, const vector<vector<string>> &dataBase_r,
-				vector<vector<string>> *l_collectDataVector_p, vector<vector<string> > &l_workDataVector);
+				vector<vector<string>> *l_collectDataVector_p, vector<vector<string> > &l_workDataVector,bool &firstRun);
 
 };
 
