@@ -1,6 +1,6 @@
-21:11:52 **** Incremental Build of configuration Debug for project cudatbase ****
+16:33:07 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 make: Nothing to be done for 'all'.
 
-21:11:52 Build Finished (took 459ms)
+16:33:08 Build Finished (took 412ms)
 

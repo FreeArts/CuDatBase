@@ -1,5 +1,7 @@
 #!/bin/sh
 
+clang-format -i *.cpp *.h *.hpp
+
 rm -r *.so
 rm -r *.o
 

@@ -1,3 +1,12 @@
-21:11:52 **** Incremental Build of configuration Debug for project cudatbase ****
+16:31:37 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+16:31:46 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+16:32:04 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+16:33:07 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 make: Nothing to be done for 'all'.
