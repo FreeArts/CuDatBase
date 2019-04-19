@@ -1,6 +1,6 @@
 #!/bin/sh
 
-clang-format -i *.cpp *.h *.hpp
+clang-format -i *.cpp *.h *.hpp *.cu *.cuh
 
 rm -r *.so
 rm -r *.o

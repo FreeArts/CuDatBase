@@ -8,16 +8,13 @@
  ============================================================================
  */
 
+#include "select.h"
 #include <iostream>
 #include <numeric>
 #include <stdlib.h>
-#include "select.h"
 
-
-
-int main(void)
-{
-	SELECT testSelect;
-	testSelect.run();
-	//testSelect.showDatabase();
+int main(void) {
+  SELECT testSelect;
+  testSelect.run();
+  // testSelect.showDatabase();
 }

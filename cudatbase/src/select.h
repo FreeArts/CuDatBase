@@ -31,8 +31,7 @@ public:
 
   void showDatabase() const;
 
-  void readSelectRule(/*vector<string> l_selectRule_v*/);
-  void readSelectRule(vector<string> l_selectRule_v);
+  void readSelectRule(vector<string> f_selectRule_v);
 
   void run();
 
