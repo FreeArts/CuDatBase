@@ -26,8 +26,8 @@ SELECT::~SELECT() {
 
 void SELECT::testFunction() { testCuda(); }
 
-void SELECT::loadDatabase(const vector<vector<string>> &l_dataBase_v) {
-  m_dataList_v = l_dataBase_v;
+void SELECT::loadDatabase(const vector<vector<string>> &f_dataBase_v) {
+  m_dataList_v = f_dataBase_v;
 }
 
 void SELECT::showDatabase() const {
@@ -45,6 +45,7 @@ void SELECT::readSelectRule(vector<string> f_selectRule_v) {
   CopySelectRuleToDevice(f_selectRule_v);
 }
 
+// ToDo refactore
 void SELECT::run() {
 
   // date="2010" & sex="men" | brand="ktm"
@@ -80,6 +81,7 @@ void SELECT::run() {
     or_and_merge(collectDataVector_p, m_OR_collectDataVector,
                  m_AND_collectDataVector);
   }
+  testVector();
 }
 
 void SELECT::or_method(vector<vector<string>> *f_collectDataVector_p,
@@ -105,7 +107,7 @@ void SELECT::and_method(vector<vector<string>> *f_collectDataVector_p,
   f_workDataVector = f_AND_collectDataVector_r;
   f_collectDataVector_p->clear();
 }
-
+// ToDo return!
 void SELECT::or_and_merge(
     const vector<vector<string>> *f_collectDataVector_p,
     const vector<vector<string>> &f_OR_collectDataVector_r,
@@ -130,12 +132,12 @@ void SELECT::equal(int input, string f_SelectRule_str,
   /// cut "date=" part
   string row = f_SelectRule_str.substr(input + 1, f_SelectRule_str.size());
 
-  /// find "date" number of column
+  /// find "date" number of column //PC side
   for (unsigned int l_it_y = 0; l_it_y < dataBase_r.at(0).size();
        l_it_y++) // Todo optimalize!!
   {
-    string alma = dataBase_r.at(0).at(l_it_y);
-    if (alma == column) {
+    string l_column = dataBase_r.at(0).at(l_it_y);
+    if (l_column == column) {
       l_columnNumber_ui = l_it_y;
     }
   }

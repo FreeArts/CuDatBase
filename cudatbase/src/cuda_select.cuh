@@ -37,3 +37,5 @@ void CopySelectRuleToDevice(vector<string> f_selectRule_v);
 int work(void);
 
 void callExample(int a[5], int b[5], int c[5]);
+
+void testVector();

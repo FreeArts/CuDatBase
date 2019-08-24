@@ -2,6 +2,43 @@
 #include "cuda_select.cuh"
 #include <vector>
 
+void testVector() {
+
+  //https://www.geeksforgeeks.org/convert-string-char-array-cpp/
+  printf("TestFunction");
+  thrust::host_vector<char *> host_vector;
+  vector<string> simple_vector;
+  vector<char *> simple_result_vector;
+  thrust::device_vector<char *> device_vector;
+
+  simple_vector.push_back("Hello");
+  simple_vector.push_back("vilag");
+  simple_vector.push_back("Szia");
+
+  for (int i = 0; i < simple_vector.size(); i++) {
+    // char* s = (char*)"Hello";
+    // device_vector.push_back(s);
+
+    std::string str = simple_vector.at(i);
+    char *s = const_cast<char *>(str.c_str());
+    // strcpy
+    host_vector.push_back(s);
+
+    // simple_result_vector.at(i) = device_vector[i];
+    // host_vector = device_vector;
+  }
+
+  device_vector = host_vector;
+
+  cout << "host_v " << (simple_vector[0]) << endl;
+  cout << "host_v " << (host_vector[0]) << endl;
+  cout << "host_v " << (device_vector[0]) << endl;
+
+  cout << "host_v " << &(simple_vector[0]) << endl;
+  cout << "host_v " << &(host_vector[0]) << endl;
+  cout << "host_v " << &(device_vector[0]) << endl;
+}
+
 // example so test--------------------
 __global__ void addKernel(int *c, const int *a, const int *b, int size) {
   int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -46,7 +83,28 @@ void parallelANDmethod(vector<vector<string>> *f_collectDataVector_p,
                        vector<vector<string>> &f_AND_collectDataVector_r,
                        vector<vector<string>> &f_workDataVector) {
 
-  thrust::device_vector<thrust::device_vector<string>> a;
+  // thrust::device_vector<thrust::device_vector<string>> a;
+
+  thrust::host_vector<char *> host_vector;
+  std::vector<char *> data;
+  vector<string> simple_vector;
+  vector<char *> simple_result_vector;
+  thrust::device_vector<char *> device_vector;
+
+  thrust::device_vector<string> asd;
+  thrust::host_vector<string> bsd;
+
+  for (int i = 0; i <= simple_vector.size(); i++) {
+    // char* s = (char*)"Hello";
+    // device_vector.push_back(s);
+
+    std::string str = simple_vector.at(i);
+    char *s = const_cast<char *>(str.c_str());
+    device_vector.push_back(s);
+
+    simple_result_vector.at(i) = device_vector[i];
+    host_vector = device_vector;
+  }
 }
 
 void parallelORandMerge(const vector<vector<string>> *f_collectDataVector_p,

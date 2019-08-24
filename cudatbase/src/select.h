@@ -27,7 +27,7 @@ public:
   void testFunction();
 
   void loadDatabase(/*const vector<vector<string> > &l_dataBase_v*/);
-  void loadDatabase(const vector<vector<string>> &l_dataBase_v);
+  void loadDatabase(const vector<vector<string>> &f_dataBase_v);
 
   void showDatabase() const;
 
