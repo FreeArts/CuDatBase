@@ -4,7 +4,7 @@
 
 void testVector() {
 
-  //https://www.geeksforgeeks.org/convert-string-char-array-cpp/
+  // https://www.geeksforgeeks.org/convert-string-char-array-cpp/
   printf("TestFunction");
   thrust::host_vector<char *> host_vector;
   vector<string> simple_vector;

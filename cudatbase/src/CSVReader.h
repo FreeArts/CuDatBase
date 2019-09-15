@@ -26,8 +26,14 @@ public:
   string m_fileName_str;
   string m_delimeter_str;
 
+  void readData();
   // Function to fetch data from a CSV File
-  vector<vector<string>> getData();
+  std::vector<std::string> getHeaderOfDatabse() const;
+  std::vector<std::vector<long int>> getDataBase() const;
+
+private:
+  std::vector<std::vector<long int>> m_dataList_v;
+  std::vector<std::string> m_dataBaseHeader_v;
 };
 
 #endif /* CSVREADER_H_ */

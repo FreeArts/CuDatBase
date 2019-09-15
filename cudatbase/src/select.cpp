@@ -6,18 +6,13 @@
  */
 
 #include "select.h"
-#include <thrust/device_vector.h>
-#include <thrust/host_vector.h>
 
 SELECT::SELECT() {
-  // TODO Auto-generated constructor stub
-  // setDatabaseName("/home/freeart/MscThesis/CuDatBase/cudatbase/src/example.txt");
+
   testFunction();
   m_dataList_v.empty();
 
-  // For test without Qt
-  m_dataBasePath_str = "";
-  m_delimeter_str = ";";
+   //testRun();
 }
 
 SELECT::~SELECT() {
@@ -26,14 +21,16 @@ SELECT::~SELECT() {
 
 void SELECT::testFunction() { testCuda(); }
 
-void SELECT::loadDatabase(const vector<vector<string>> &f_dataBase_v) {
+void SELECT::loadDatabase(const vector<vector<long int>> &f_dataBase_v,
+                          const vector<string> f_headerOfDataBase) {
   m_dataList_v = f_dataBase_v;
+  m_databaseHeader = f_headerOfDataBase;
 }
 
 void SELECT::showDatabase() const {
 
-  for (vector<string> vec : m_AND_collectDataVector) {
-    for (string vector_member : vec) {
+  for (vector<long int> vec : m_AND_collectDataVector) {
+    for (long int vector_member : vec) {
       cout << vector_member << ";";
     }
     cout << std::endl;
@@ -42,7 +39,7 @@ void SELECT::showDatabase() const {
 
 void SELECT::readSelectRule(vector<string> f_selectRule_v) {
   m_selectRule_v = f_selectRule_v;
-  CopySelectRuleToDevice(f_selectRule_v);
+  // CopySelectRuleToDevice(f_selectRule_v);
 }
 
 // ToDo refactore
@@ -52,7 +49,7 @@ void SELECT::run() {
   bool firstRun = true;
   int input; // Todo destroy it...
   collectDataVector_p = &m_AND_collectDataVector;
-  const vector<vector<string>> &l_dataBase_r = m_dataList_v;
+  const vector<vector<long int>> &l_dataBase_r = m_dataList_v;
 
   for (string l_rule_str : m_selectRule_v) {
     input = l_rule_str.find("&");
@@ -81,20 +78,20 @@ void SELECT::run() {
     or_and_merge(collectDataVector_p, m_OR_collectDataVector,
                  m_AND_collectDataVector);
   }
-  testVector();
 }
 
-void SELECT::or_method(vector<vector<string>> *f_collectDataVector_p,
-                       vector<vector<string>> &f_OR_collectDataVector_r) {
+void SELECT::or_method(vector<vector<long int>> *f_collectDataVector_p,
+                       vector<vector<long int>> &f_OR_collectDataVector_r) {
   /// put collectDataVector_p contain to l_OR_collectDataVector_r by indirect
   f_collectDataVector_p = &f_OR_collectDataVector_r;
   f_collectDataVector_p->clear();
 }
 
-void SELECT::and_method(vector<vector<string>> *f_collectDataVector_p,
-                        const vector<vector<string>> &f_OR_collectDataVector_r,
-                        vector<vector<string>> &f_AND_collectDataVector_r,
-                        vector<vector<string>> &f_workDataVector) {
+void SELECT::and_method(
+    vector<vector<long int>> *f_collectDataVector_p,
+    const vector<vector<long int>> &f_OR_collectDataVector_r,
+    vector<vector<long int>> &f_AND_collectDataVector_r,
+    vector<vector<long int>> &f_workDataVector) {
 
   or_and_merge(f_collectDataVector_p, f_OR_collectDataVector_r,
                f_AND_collectDataVector_r);
@@ -109,9 +106,9 @@ void SELECT::and_method(vector<vector<string>> *f_collectDataVector_p,
 }
 // ToDo return!
 void SELECT::or_and_merge(
-    const vector<vector<string>> *f_collectDataVector_p,
-    const vector<vector<string>> &f_OR_collectDataVector_r,
-    vector<vector<string>> &f_AND_collectDataVector_r) {
+    const vector<vector<long int>> *f_collectDataVector_p,
+    const vector<vector<long int>> &f_OR_collectDataVector_r,
+    vector<vector<long int>> &f_AND_collectDataVector_r) {
   /// if the collectDataVector_p point to the OR_collectDataVector_r copy the
   /// OR_collectDataVector_r contain to AND_collectDataVector_r
   if ((void *)f_collectDataVector_p == &f_OR_collectDataVector_r) {
@@ -122,21 +119,22 @@ void SELECT::or_and_merge(
 }
 
 void SELECT::equal(int input, string f_SelectRule_str,
-                   const vector<vector<string>> &dataBase_r,
-                   vector<vector<string>> *f_collectDataVector_p,
-                   vector<vector<string>> &f_workDataVector, bool &firstRun) {
+                   const vector<vector<long int>> &dataBase_r,
+                   vector<vector<long int>> *f_collectDataVector_p,
+                   vector<vector<long int>> &f_workDataVector, bool &firstRun) {
   /// date="2010"
   unsigned int l_columnNumber_ui = 0;
   /// cut "=2010" part
   string column = f_SelectRule_str.substr(0, input);
   /// cut "date=" part
-  string row = f_SelectRule_str.substr(input + 1, f_SelectRule_str.size());
+  string tmp_row = f_SelectRule_str.substr(input + 1, f_SelectRule_str.size());
+  long int row = std::stol(tmp_row);
 
   /// find "date" number of column //PC side
-  for (unsigned int l_it_y = 0; l_it_y < dataBase_r.at(0).size();
+  for (unsigned int l_it_y = 0; l_it_y < m_databaseHeader.size();
        l_it_y++) // Todo optimalize!!
   {
-    string l_column = dataBase_r.at(0).at(l_it_y);
+    string l_column = m_databaseHeader.at(l_it_y);
     if (l_column == column) {
       l_columnNumber_ui = l_it_y;
     }
@@ -146,7 +144,7 @@ void SELECT::equal(int input, string f_SelectRule_str,
     /// if first time run the query, search the lines from original database
     /// else we search from workDataVector
     for (unsigned int l_it_x = 0; l_it_x < dataBase_r.size(); l_it_x++) {
-      string word = dataBase_r.at(l_it_x).at(l_columnNumber_ui);
+      long int word = dataBase_r.at(l_it_x).at(l_columnNumber_ui);
       if (word == row) {
         // if find the line which include "2010" value put to
         // collectDataVector_p
@@ -158,10 +156,42 @@ void SELECT::equal(int input, string f_SelectRule_str,
 
   else {
     for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
-      string word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
+      long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
       if (word == row) {
         f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
       }
     }
   }
+}
+
+//-------------------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
+void SELECT::loadCSV() {
+
+	CSVReader *reader = new CSVReader("/home/freeart/MscThesis/CuDatBase/cudatbase/src/simple_test.csv", ";");
+
+	 reader->readData();
+
+	 std::vector<std::vector<long int>> m_dataList_v = reader->getDataBase();
+	 std::vector<std::string> m_headerOfDataBase_v = reader->getHeaderOfDatabse();
+
+	 loadDatabase(m_dataList_v, m_headerOfDataBase_v);
+
+	 delete reader;
+}
+
+void SELECT::testRun() {
+
+  loadCSV();
+  std::vector<std::string> l_selectRule_stdv;
+
+  // SELECT name,brand where date="2010" & sex="1" | brand="3"
+  l_selectRule_stdv.push_back("date=2010");
+  l_selectRule_stdv.push_back("&");
+  l_selectRule_stdv.push_back("sex=1");
+  l_selectRule_stdv.push_back("|");
+  l_selectRule_stdv.push_back("brand=3");
+
+  readSelectRule(l_selectRule_stdv);
+  run();
+  showDatabase();
 }

@@ -1,0 +1,25 @@
+/*
+ * CSVReader.cpp
+ *
+ *  Created on: 2019 jan. 24
+ *      Author: freeart
+ */
+
+#include "CSVReader.h"
+
+CSVReader::CSVReader(string filename, string delm)
+    : m_fileName_str(filename), m_delimeter_str(delm) {}
+
+CSVReader::~CSVReader() {
+  // TODO Auto-generated destructor stub
+}
+
+void CSVReader::readData() {}
+
+std::vector<string> CSVReader::getHeaderOfDatabse() const {
+  return m_dataBaseHeader_v;
+}
+
+std::vector<std::vector<long>> CSVReader::getDataBase() const {
+  return m_dataList_v;
+}

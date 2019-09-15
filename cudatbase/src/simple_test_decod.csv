@@ -1,0 +1,15 @@
+date;sex;brand;name
+2010;women;suzuki;Nati
+2009;men;honda;Peti
+2010;men;kawasaki;Aron
+
+men ->1
+women ->2
+
+suzuki ->2
+honda -> 1
+kawa ->3
+
+Nati -> 11
+Peti -> 12
+Aron -> 13

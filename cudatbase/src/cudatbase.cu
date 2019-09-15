@@ -15,6 +15,6 @@
 
 int main(void) {
   SELECT testSelect;
-  testSelect.run();
+  // testSelect.run();
   // testSelect.showDatabase();
 }
