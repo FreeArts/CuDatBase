@@ -5,14 +5,55 @@
  *      Author: freeart
  */
 
+//---------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
+#include "CSVReader.h"
+//--------------------------------------------------------
+
 #include "select.h"
 
+
+//--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
+void SELECT::loadCSV() {
+
+  CSVReader *reader = new CSVReader(
+      "/home/freeart/MscThesis/CuDatBase/cudatbase/src/simple_test.csv", ";");
+
+  reader->readData();
+
+  std::vector<std::vector<long int>> m_dataList_v = reader->getDataBase();
+  std::vector<std::string> m_headerOfDataBase_v = reader->getHeaderOfDatabse();
+
+  loadDatabase(m_dataList_v, m_headerOfDataBase_v);
+
+  delete reader;
+}
+
+void SELECT::testRun() {
+
+  loadCSV();
+  std::vector<std::string> l_selectRule_stdv;
+
+  // SELECT name,brand where date="2010" & sex="1" | brand="3"
+  l_selectRule_stdv.push_back("date=2010");
+  l_selectRule_stdv.push_back("&");
+  l_selectRule_stdv.push_back("sex=1");
+  l_selectRule_stdv.push_back("|");
+  l_selectRule_stdv.push_back("brand=3");
+
+  readSelectRule(l_selectRule_stdv);
+  run();
+  showDatabase();
+
+}
+//-------------------------------------------------
 SELECT::SELECT() {
 
-  testFunction();
+  //testFunction();
   m_dataList_v.empty();
 
-   //testRun();
+  //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
+  testRun();
+  //-------------------------------------------------------------------
 }
 
 SELECT::~SELECT() {
@@ -44,6 +85,11 @@ void SELECT::readSelectRule(vector<string> f_selectRule_v) {
 
 // ToDo refactore
 void SELECT::run() {
+
+   //init:
+	m_AND_collectDataVector.clear();
+	m_OR_collectDataVector.clear();
+	m_workDataVector.clear();
 
   // date="2010" & sex="men" | brand="ktm"
   bool firstRun = true;
@@ -162,36 +208,4 @@ void SELECT::equal(int input, string f_SelectRule_str,
       }
     }
   }
-}
-
-//-------------------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
-void SELECT::loadCSV() {
-
-	CSVReader *reader = new CSVReader("/home/freeart/MscThesis/CuDatBase/cudatbase/src/simple_test.csv", ";");
-
-	 reader->readData();
-
-	 std::vector<std::vector<long int>> m_dataList_v = reader->getDataBase();
-	 std::vector<std::string> m_headerOfDataBase_v = reader->getHeaderOfDatabse();
-
-	 loadDatabase(m_dataList_v, m_headerOfDataBase_v);
-
-	 delete reader;
-}
-
-void SELECT::testRun() {
-
-  loadCSV();
-  std::vector<std::string> l_selectRule_stdv;
-
-  // SELECT name,brand where date="2010" & sex="1" | brand="3"
-  l_selectRule_stdv.push_back("date=2010");
-  l_selectRule_stdv.push_back("&");
-  l_selectRule_stdv.push_back("sex=1");
-  l_selectRule_stdv.push_back("|");
-  l_selectRule_stdv.push_back("brand=3");
-
-  readSelectRule(l_selectRule_stdv);
-  run();
-  showDatabase();
 }

@@ -78,12 +78,12 @@ void addWithCuda(int *c, const int *a, const int *b, int size) {
   cudaFree(dev_b);
 }
 
-void parallelANDmethod(vector<vector<string>> *f_collectDataVector_p,
-                       const vector<vector<string>> &f_OR_collectDataVector_r,
-                       vector<vector<string>> &f_AND_collectDataVector_r,
-                       vector<vector<string>> &f_workDataVector) {
+void parallelANDmethod(vector<vector<long int>> *f_collectDataVector_p,
+                       const vector<vector<long int>> &f_OR_collectDataVector_r,
+                       vector<vector<long int>> &f_AND_collectDataVector_r,
+                       vector<vector<long int>> &f_workDataVector) {
 
-  // thrust::device_vector<thrust::device_vector<string>> a;
+  /*// thrust::device_vector<thrust::device_vector<string>> a;
 
   thrust::host_vector<char *> host_vector;
   std::vector<char *> data;
@@ -104,7 +104,7 @@ void parallelANDmethod(vector<vector<string>> *f_collectDataVector_p,
 
     simple_result_vector.at(i) = device_vector[i];
     host_vector = device_vector;
-  }
+  }*/
 }
 
 void parallelORandMerge(const vector<vector<string>> *f_collectDataVector_p,

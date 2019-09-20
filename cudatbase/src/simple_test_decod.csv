@@ -6,10 +6,12 @@ date;sex;brand;name
 men ->1
 women ->2
 
-suzuki ->2
-honda -> 1
+suzuki ->1
+honda -> 2
 kawa ->3
 
 Nati -> 11
 Peti -> 12
 Aron -> 13
+
+SELECT name,brand where date="2010" & sex="1" | brand="3"
