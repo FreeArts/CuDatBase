@@ -2,6 +2,73 @@
 #include "cuda_select.cuh"
 #include <vector>
 
+//------Real Functions----
+CudaSelect::CudaSelect(){
+	copyDataToDevice();
+}
+
+CudaSelect::~CudaSelect(){
+
+}
+
+__global__ void kernel(long int *data, int row, int col) {
+
+	  int W = 4;
+	  printf("Element (%d, %d) = %d\n", row, col, data[(row*W)+col]);
+}
+
+void CudaSelect::copyDataToDevice()
+{
+	int H = 2;
+	int W = 4;
+    int h[H][W];
+
+    h[0][0] = 111;
+    h[0][1] = 112;
+    h[0][2] = 113;
+
+    h[1][0] = 222;
+    h[1][1] = 223;
+    h[1][2] = 224;
+
+    thrust::device_vector<long int> d(H*W);
+
+    thrust::copy(&(h[0][0]), &(h[H-1][W-1]), d.begin());
+    //thrust::sequence(d.begin(), d.end());
+    kernel<<<1,1>>>(thrust::raw_pointer_cast(d.data()), 1, 0);
+    cudaDeviceSynchronize();
+
+}
+
+void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r)
+{
+	//int H = 2;
+	int H = f_dataBase_r.size();
+	int W = 4;
+    int h[H][W];
+
+    unsigned int l_it_x = 0;
+    unsigned int l_it_y = 0;
+
+    for (vector<long int> vec : f_dataBase_r) {
+      for (long int vector_member : vec) {
+    	 h[l_it_x][l_it_y] = vector_member;
+    	 l_it_y++;
+      }
+      l_it_y = 0;
+      l_it_x++;
+    }
+
+    thrust::device_vector<long int> d(H*W);
+    thrust::copy(&(h[0][0]), &(h[H-1][W-1]), d.begin());
+    //thrust::sequence(d.begin(), d.end());
+    kernel<<<1,1>>>(thrust::raw_pointer_cast(d.data()), 1, 0);
+    cudaDeviceSynchronize();
+
+
+}
+//------------------------
+
 void testVector() {
 
   // https://www.geeksforgeeks.org/convert-string-char-array-cpp/

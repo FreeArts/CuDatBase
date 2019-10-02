@@ -13,6 +13,25 @@
 
 using namespace std;
 
+//--------Real Functions ---------
+class CudaSelect{
+
+public:
+	CudaSelect();
+	virtual ~CudaSelect();
+	void copyDataToDevice();
+	void copyDataToDevice(const vector<vector<long int>> &f_dataBase_r);
+
+
+private:
+	thrust::device_vector<vector<long int>> m_databseOnCuda_v;
+
+
+};
+
+
+//----------------------------------------------
+
 #define CUDA_CHECK_RETURN(value)                                               \
   CheckCudaErrorAux(__FILE__, __LINE__, #value, value)
 

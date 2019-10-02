@@ -48,11 +48,13 @@ void SELECT::testRun() {
 //-------------------------------------------------
 SELECT::SELECT() {
 
+   CudaSelect asd;
   //testFunction();
   m_dataList_v.empty();
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   testRun();
+  asd.copyDataToDevice(m_dataList_v);
   //-------------------------------------------------------------------
 }
 
