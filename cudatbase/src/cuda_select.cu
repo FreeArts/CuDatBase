@@ -3,24 +3,66 @@
 #include <vector>
 
 //------Real Functions----
+namespace CudaVariables{
+	thrust::device_vector<long int> databaseOnCuda(4*CudaSelect::m_columnNumber_ui);
+
+	thrust::device_vector<long int> *collectDataVector_p(NULL);
+	thrust::device_vector<long int> m_workDataVector(4*CudaSelect::m_columnNumber_ui);
+
+	thrust::device_vector<long int> m_AND_collectDataVector(4*CudaSelect::m_columnNumber_ui);
+	thrust::device_vector<long int> m_OR_collectDataVector(4*CudaSelect::m_columnNumber_ui);
+
+	thrust::device_vector<long int> foundedResults(4*CudaSelect::m_columnNumber_ui);
+}
+
+using namespace CudaVariables;
+
 CudaSelect::CudaSelect(){
-	copyDataToDevice();
+	//copyDataToDevice();
 }
 
 CudaSelect::~CudaSelect(){
 
 }
 
-__global__ void kernel(long int *data, int row, int col) {
+__global__ void searchDataFromDatabase(long int *data, int row, int col) {
 
-	  int W = 4;
-	  printf("Element (%d, %d) = %d\n", row, col, data[(row*W)+col]);
+	  printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
+
 }
+
+__global__ void searcData(long int *data) {
+
+	//printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	long int tmp[4][4] = {0};
+	unsigned int tmp_stepper = 0;
+
+	for(;row<=2;row++){
+		printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
+		long int temp = data[(row*CudaSelect::m_columnNumber_ui)+col];
+		if(temp == 2009)
+		{
+			printf("found\n");
+			for(int i=0;i<=3;i++)
+			{
+				long int asd = data[(row*CudaSelect::m_columnNumber_ui)+i];
+				tmp[tmp_stepper][i]= asd;
+				printf("Array %d ", tmp[tmp_stepper][i]);
+			}
+			tmp_stepper = atomicAdd(&tmp_stepper,1);
+		}
+	}
+}
+
+
+
 
 void CudaSelect::copyDataToDevice()
 {
 	int H = 2;
-	int W = 4;
+	int W = CudaSelect::m_columnNumber_ui;
     int h[H][W];
 
     h[0][0] = 111;
@@ -35,7 +77,7 @@ void CudaSelect::copyDataToDevice()
 
     thrust::copy(&(h[0][0]), &(h[H-1][W-1]), d.begin());
     //thrust::sequence(d.begin(), d.end());
-    kernel<<<1,1>>>(thrust::raw_pointer_cast(d.data()), 1, 0);
+    searchDataFromDatabase<<<3,1>>>(thrust::raw_pointer_cast(d.data()), 1, 0);
     cudaDeviceSynchronize();
 
 }
@@ -44,7 +86,7 @@ void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r)
 {
 	//int H = 2;
 	int H = f_dataBase_r.size();
-	int W = 4;
+	int W = CudaSelect::m_columnNumber_ui;
     int h[H][W];
 
     unsigned int l_it_x = 0;
@@ -60,12 +102,119 @@ void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r)
     }
 
     thrust::device_vector<long int> d(H*W);
-    thrust::copy(&(h[0][0]), &(h[H-1][W-1]), d.begin());
-    //thrust::sequence(d.begin(), d.end());
-    kernel<<<1,1>>>(thrust::raw_pointer_cast(d.data()), 1, 0);
+    thrust::copy(&(h[0][0]), &(h[H-1][W-1]), CudaVariables::databaseOnCuda.begin());
+    searcData<<<4,1>>>(thrust::raw_pointer_cast(CudaVariables::databaseOnCuda.data()));
     cudaDeviceSynchronize();
+}
+
+void CudaSelect::CudaRun(const vector<string> f_selectRule){
+	CudaVariables::m_AND_collectDataVector.clear();
+	CudaVariables::m_OR_collectDataVector.clear();
+	CudaVariables::m_workDataVector.clear();
+
+	collectDataVector_p = &m_AND_collectDataVector;
+	const thrust::device_vector<long int> &l_dataBase_r = databaseOnCuda;
+
+	 int input; // Todo destroy it...
+
+	  for (string l_rule_str : f_selectRule) {
+	    input = l_rule_str.find("&");
+	    if (input != (-1)) {
+
+	      //and_method(collectDataVector_p, m_OR_collectDataVector,
+	                 //m_AND_collectDataVector, m_workDataVector);
+	      continue;
+	    }
+
+	    input = l_rule_str.find("|");
+	    if (input != (-1)) {
+	      //or_method(collectDataVector_p, m_OR_collectDataVector);
+	      continue;
+	    }
+
+	    /// first will be find date="2010"
+	    input = l_rule_str.find("=");
+	    if (input != (-1)) {
+	      //equal(input, l_rule_str, l_dataBase_r, collectDataVector_p,
+	            //m_workDataVector, firstRun);
+
+	      continue;
+	    }
+
+	    //or_and_merge(collectDataVector_p, m_OR_collectDataVector,
+	                 //m_AND_collectDataVector);
+	  }
+}
+
+void CudaSelect::or_method(thrust::device_vector<long int> *f_collectDataVector_p, thrust::device_vector<long int> &f_OR_collectDataVector_r) {
+  /// put collectDataVector_p contain to l_OR_collectDataVector_r by indirect
+  f_collectDataVector_p = &f_OR_collectDataVector_r;
+  f_collectDataVector_p->clear();
+}
+
+void CudaSelect::and_method(thrust::device_vector<long int> *f_collectDataVector_p,const thrust::device_vector<long int> &f_OR_collectDataVector_r,thrust::device_vector<long int> &f_AND_collectDataVector_r,thrust::device_vector<long int> &f_workDataVector) {
+
+  or_and_merge(f_collectDataVector_p, f_OR_collectDataVector_r,
+               f_AND_collectDataVector_r);
+
+  /// put collectDataVector_p contain to AND_collectDataVector_r by indirect
+  f_collectDataVector_p = &f_AND_collectDataVector_r;
+
+  f_workDataVector.clear();
+  /// put the AND_collectDataVector_r contains to l_workDataVector by directly
+  f_workDataVector = f_AND_collectDataVector_r;
+  f_collectDataVector_p->clear();
+}
+
+void CudaSelect::or_and_merge(
+    const thrust::device_vector<long int> *f_collectDataVector_p,
+    const thrust::device_vector<long int> &f_OR_collectDataVector_r,
+    thrust::device_vector<long int> &f_AND_collectDataVector_r) {
+  /// if the collectDataVector_p point to the OR_collectDataVector_r copy the
+  /// OR_collectDataVector_r contain to AND_collectDataVector_r
+  if ((void *)f_collectDataVector_p == &f_OR_collectDataVector_r) {
+    f_AND_collectDataVector_r.insert(f_AND_collectDataVector_r.end(),
+                                     f_OR_collectDataVector_r.begin(),
+                                     f_OR_collectDataVector_r.end());
+  }
+}
+
+void CudaSelect::equal(int input, string f_SelectRule_str,
+                   const thrust::device_vector<long int> &dataBase_r,
+                   thrust::device_vector<long int> *f_collectDataVector_p,
+                   thrust::device_vector<long int> &f_workDataVector, bool &firstRun, unsigned int f_columnNumber_ui) {
+/*
+	/// date="2010"
+  unsigned int l_columnNumber_ui = f_columnNumber_ui;
+  /// cut "=2010" part
+  string column = f_SelectRule_str.substr(0, input);
+  /// cut "date=" part
+  string tmp_row = f_SelectRule_str.substr(input + 1, f_SelectRule_str.size());
+  long int row = std::stol(tmp_row);
 
 
+  if (firstRun == true) {
+    /// if first time run the query, search the lines from original database
+    /// else we search from workDataVector
+    for (unsigned int l_it_x = 0; l_it_x < dataBase_r.size(); l_it_x++) {
+      long int word = dataBase_r.at(l_it_x).at(l_columnNumber_ui);
+      if (word == row) {
+        // if find the line which include "2010" value put to
+        // collectDataVector_p
+        f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
+      }
+    }
+    firstRun = false;
+  }
+
+  else {
+    for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
+      long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
+      if (word == row) {
+        f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
+      }
+    }
+  }*/
 }
 //------------------------
 

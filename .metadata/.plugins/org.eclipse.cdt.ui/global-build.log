@@ -1,4 +1,4 @@
-14:21:56 **** Build of configuration Debug for project cudatbase ****
+22:38:34 **** Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/CSVReader.cpp
 Invoking: NVCC Compiler
@@ -10,6 +10,8 @@ Building file: ../src/cuda_select.cu
 Invoking: NVCC Compiler
 /usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
 /usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(88): warning: variable "l_dataBase_r" was declared but never referenced
+
 Finished building: ../src/cuda_select.cu
  
 Building file: ../src/cudatbase.cu
@@ -29,178 +31,29 @@ Invoking: NVCC Linker
 /usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
 Finished building target: cudatbase
  
-14:22:26 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-make: Nothing to be done for 'all'.
-15:38:59 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-make: Nothing to be done for 'all'.
-15:45:20 **** Incremental Build of configuration Debug for project cudatbase ****
+22:39:39 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/cuda_select.cu
 Invoking: NVCC Compiler
 /usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
 /usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-../src/cuda_select.cuh(23): warning: qualified name is not allowed in member declaration
+../src/cuda_select.cu(88): warning: variable "l_dataBase_r" was declared but never referenced
 
-/usr/include/thrust/system/cuda/detail/transform.h(118): error: no operator "=" matches these operands
-            operand types are: thrust::device_reference<long> = const thrust::host_vector<int, std::allocator<int>>
-          detected during:
-            instantiation of "void thrust::cuda_cub::__transform::unary_transform_f<InputIt, OutputIt, thrust::cuda_cub::__transform::no_stencil_tag, TransformOp, Predicate>::operator()(Size) [with InputIt=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, OutputIt=thrust::detail::normal_iterator<thrust::device_ptr<long>>, TransformOp=thrust::identity<thrust::host_vector<int, std::allocator<int>>>, Predicate=thrust::cuda_cub::__transform::always_true_predicate, Size=long]" 
-/usr/include/thrust/system/cuda/detail/parallel_for.h(98): here
-            instantiation of "void thrust::cuda_cub::__parallel_for::ParallelForAgent<F, Size>::consume_tile<IS_FULL_TILE>(F, Size, int) [with F=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, Size=signed long, IS_FULL_TILE=true]" 
-/usr/include/thrust/system/cuda/detail/parallel_for.h(114): here
-            instantiation of "void thrust::cuda_cub::__parallel_for::ParallelForAgent<F, Size>::entry(F, Size, char *) [with F=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, Size=signed long]" 
-/usr/include/thrust/system/cuda/detail/core/agent_launcher.h(73): here
-            instantiation of "void thrust::cuda_cub::core::_kernel_agent<Agent,_0,_1>(_0, _1) [with Agent=thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, signed long>, _0=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, _1=signed long]" 
-/usr/include/thrust/system/cuda/detail/core/agent_launcher.h(926): here
-            instantiation of "void thrust::cuda_cub::core::AgentLauncher<Agent>::launch_impl(thrust::detail::true_type, _0, _1) const [with Agent=thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, signed long>, _0=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, _1=signed long]" 
-/usr/include/thrust/system/cuda/detail/core/agent_launcher.h(1077): here
-            [ 11 instantiation contexts not shown ]
-            instantiation of "OutputIterator thrust::cuda_cub::__copy::cross_system_copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/cuda/detail/copy.h(174): here
-            instantiation of "OutputIterator thrust::cuda_cub::copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(37): here
-            instantiation of "OutputIterator thrust::copy(const thrust::detail::execution_policy_base<System> &, InputIterator, InputIterator, OutputIterator) [with System=thrust::cuda_cub::cross_system<thrust::system::cpp::detail::tag, thrust::cuda_cub::tag>, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(72): here
-            instantiation of "OutputIterator thrust::detail::two_system_copy(const thrust::execution_policy<FromSystem> &, const thrust::execution_policy<ToSystem> &, InputIterator, InputIterator, OutputIterator) [with FromSystem=thrust::system::cpp::detail::tag, ToSystem=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(110): here
-            instantiation of "OutputIterator thrust::copy(InputIterator, InputIterator, OutputIterator) [with InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-../src/cuda_select.cu(52): here
-
-/usr/include/thrust/system/detail/sequential/general_copy.h(91): error: no operator "=" matches these operands
-            operand types are: thrust::device_reference<long> = value_type
-          detected during:
-            instantiation of "thrust::detail::disable_if<thrust::system::detail::sequential::general_copy_detail::reference_is_assignable<InputIterator, OutputIterator>::value, void>::type thrust::system::detail::sequential::general_copy_detail::iter_assign(OutputIterator, InputIterator) [with OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>, InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>]" 
-(135): here
-            instantiation of "OutputIterator thrust::system::detail::sequential::general_copy_n(InputIterator, Size, OutputIterator) [with InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/detail/sequential/copy.inl(103): here
-            instantiation of "OutputIterator thrust::system::detail::sequential::copy_detail::copy_n(InputIterator, Size, OutputIterator, thrust::detail::false_type) [with InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/detail/sequential/copy.inl(137): here
-            instantiation of "OutputIterator thrust::system::detail::sequential::copy_n(thrust::system::detail::sequential::execution_policy<DerivedPolicy> &, InputIterator, Size, OutputIterator) [with DerivedPolicy=thrust::detail::seq_t, InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(50): here
-            instantiation of "OutputIterator thrust::copy_n(const thrust::detail::execution_policy_base<System> &, InputIterator, Size, OutputIterator) [with System=thrust::detail::seq_t, InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/cuda/detail/copy.h(156): here
-            [ 3 instantiation contexts not shown ]
-            instantiation of "OutputIterator thrust::cuda_cub::__copy::cross_system_copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/cuda/detail/copy.h(174): here
-            instantiation of "OutputIterator thrust::cuda_cub::copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(37): here
-            instantiation of "OutputIterator thrust::copy(const thrust::detail::execution_policy_base<System> &, InputIterator, InputIterator, OutputIterator) [with System=thrust::cuda_cub::cross_system<thrust::system::cpp::detail::tag, thrust::cuda_cub::tag>, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(72): here
-            instantiation of "OutputIterator thrust::detail::two_system_copy(const thrust::execution_policy<FromSystem> &, const thrust::execution_policy<ToSystem> &, InputIterator, InputIterator, OutputIterator) [with FromSystem=thrust::system::cpp::detail::tag, ToSystem=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(110): here
-            instantiation of "OutputIterator thrust::copy(InputIterator, InputIterator, OutputIterator) [with InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-../src/cuda_select.cu(52): here
-
-2 errors detected in the compilation of "/tmp/tmpxft_00006f97_00000000-6_cuda_select.cpp1.ii".
-make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
-15:46:05 **** Incremental Build of configuration Debug for project cudatbase ****
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+22:44:58 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/cuda_select.cu
 Invoking: NVCC Compiler
 /usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
 /usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-../src/cuda_select.cuh(23): warning: qualified name is not allowed in member declaration
+../src/cuda_select.cu(93): warning: variable "l_dataBase_r" was declared but never referenced
 
-/usr/include/thrust/system/cuda/detail/transform.h(118): error: no operator "=" matches these operands
-            operand types are: thrust::device_reference<long> = const thrust::host_vector<int, std::allocator<int>>
-          detected during:
-            instantiation of "void thrust::cuda_cub::__transform::unary_transform_f<InputIt, OutputIt, thrust::cuda_cub::__transform::no_stencil_tag, TransformOp, Predicate>::operator()(Size) [with InputIt=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, OutputIt=thrust::detail::normal_iterator<thrust::device_ptr<long>>, TransformOp=thrust::identity<thrust::host_vector<int, std::allocator<int>>>, Predicate=thrust::cuda_cub::__transform::always_true_predicate, Size=long]" 
-/usr/include/thrust/system/cuda/detail/parallel_for.h(98): here
-            instantiation of "void thrust::cuda_cub::__parallel_for::ParallelForAgent<F, Size>::consume_tile<IS_FULL_TILE>(F, Size, int) [with F=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, Size=signed long, IS_FULL_TILE=true]" 
-/usr/include/thrust/system/cuda/detail/parallel_for.h(114): here
-            instantiation of "void thrust::cuda_cub::__parallel_for::ParallelForAgent<F, Size>::entry(F, Size, char *) [with F=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, Size=signed long]" 
-/usr/include/thrust/system/cuda/detail/core/agent_launcher.h(73): here
-            instantiation of "void thrust::cuda_cub::core::_kernel_agent<Agent,_0,_1>(_0, _1) [with Agent=thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, signed long>, _0=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, _1=signed long]" 
-/usr/include/thrust/system/cuda/detail/core/agent_launcher.h(926): here
-            instantiation of "void thrust::cuda_cub::core::AgentLauncher<Agent>::launch_impl(thrust::detail::true_type, _0, _1) const [with Agent=thrust::cuda_cub::__parallel_for::ParallelForAgent<thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, signed long>, _0=thrust::cuda_cub::__transform::unary_transform_f<thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, thrust::detail::normal_iterator<thrust::device_ptr<long>>, thrust::cuda_cub::__transform::no_stencil_tag, thrust::identity<thrust::host_vector<int, std::allocator<int>>>, thrust::cuda_cub::__transform::always_true_predicate>, _1=signed long]" 
-/usr/include/thrust/system/cuda/detail/core/agent_launcher.h(1077): here
-            [ 11 instantiation contexts not shown ]
-            instantiation of "OutputIterator thrust::cuda_cub::__copy::cross_system_copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/cuda/detail/copy.h(174): here
-            instantiation of "OutputIterator thrust::cuda_cub::copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(37): here
-            instantiation of "OutputIterator thrust::copy(const thrust::detail::execution_policy_base<System> &, InputIterator, InputIterator, OutputIterator) [with System=thrust::cuda_cub::cross_system<thrust::system::cpp::detail::tag, thrust::cuda_cub::tag>, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(72): here
-            instantiation of "OutputIterator thrust::detail::two_system_copy(const thrust::execution_policy<FromSystem> &, const thrust::execution_policy<ToSystem> &, InputIterator, InputIterator, OutputIterator) [with FromSystem=thrust::system::cpp::detail::tag, ToSystem=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(110): here
-            instantiation of "OutputIterator thrust::copy(InputIterator, InputIterator, OutputIterator) [with InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-../src/cuda_select.cu(52): here
-
-/usr/include/thrust/system/detail/sequential/general_copy.h(91): error: no operator "=" matches these operands
-            operand types are: thrust::device_reference<long> = value_type
-          detected during:
-            instantiation of "thrust::detail::disable_if<thrust::system::detail::sequential::general_copy_detail::reference_is_assignable<InputIterator, OutputIterator>::value, void>::type thrust::system::detail::sequential::general_copy_detail::iter_assign(OutputIterator, InputIterator) [with OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>, InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>]" 
-(135): here
-            instantiation of "OutputIterator thrust::system::detail::sequential::general_copy_n(InputIterator, Size, OutputIterator) [with InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/detail/sequential/copy.inl(103): here
-            instantiation of "OutputIterator thrust::system::detail::sequential::copy_detail::copy_n(InputIterator, Size, OutputIterator, thrust::detail::false_type) [with InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/detail/sequential/copy.inl(137): here
-            instantiation of "OutputIterator thrust::system::detail::sequential::copy_n(thrust::system::detail::sequential::execution_policy<DerivedPolicy> &, InputIterator, Size, OutputIterator) [with DerivedPolicy=thrust::detail::seq_t, InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(50): here
-            instantiation of "OutputIterator thrust::copy_n(const thrust::detail::execution_policy_base<System> &, InputIterator, Size, OutputIterator) [with System=thrust::detail::seq_t, InputIterator=thrust::pointer<thrust::host_vector<int, std::allocator<int>>, thrust::cuda_cub::tag, thrust::use_default, thrust::use_default>, Size=std::ptrdiff_t, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/cuda/detail/copy.h(156): here
-            [ 3 instantiation contexts not shown ]
-            instantiation of "OutputIterator thrust::cuda_cub::__copy::cross_system_copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/system/cuda/detail/copy.h(174): here
-            instantiation of "OutputIterator thrust::cuda_cub::copy(thrust::cuda_cub::cross_system<System1, System2>, InputIterator, InputIterator, OutputIterator) [with System1=thrust::system::cpp::detail::tag, System2=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(37): here
-            instantiation of "OutputIterator thrust::copy(const thrust::detail::execution_policy_base<System> &, InputIterator, InputIterator, OutputIterator) [with System=thrust::cuda_cub::cross_system<thrust::system::cpp::detail::tag, thrust::cuda_cub::tag>, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(72): here
-            instantiation of "OutputIterator thrust::detail::two_system_copy(const thrust::execution_policy<FromSystem> &, const thrust::execution_policy<ToSystem> &, InputIterator, InputIterator, OutputIterator) [with FromSystem=thrust::system::cpp::detail::tag, ToSystem=thrust::cuda_cub::tag, InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-/usr/include/thrust/detail/copy.inl(110): here
-            instantiation of "OutputIterator thrust::copy(InputIterator, InputIterator, OutputIterator) [with InputIterator=thrust::host_vector<int, std::allocator<int>> *, OutputIterator=thrust::detail::normal_iterator<thrust::device_ptr<long>>]" 
-../src/cuda_select.cu(52): here
-
-2 errors detected in the compilation of "/tmp/tmpxft_00007032_00000000-6_cuda_select.cpp1.ii".
-make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
-15:46:26 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-../src/cuda_select.cuh(23): warning: qualified name is not allowed in member declaration
-
-../src/cuda_select.cuh(23): warning: qualified name is not allowed in member declaration
-
-../src/cuda_select.cuh:23:6: error: extra qualification ‘CudaSelect::’ on member ‘copyDataToDevice’ [-fpermissive]
-  void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r);
-      ^~~~~~~~~~
-make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
-15:46:45 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-../src/cuda_select.cuh(23): warning: qualified name is not allowed in member declaration
-
-../src/cuda_select.cuh(23): warning: qualified name is not allowed in member declaration
-
-../src/cuda_select.cuh:23:6: error: extra qualification ‘CudaSelect::’ on member ‘copyDataToDevice’ [-fpermissive]
-  void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r);
-      ^~~~~~~~~~
-make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
-15:47:20 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-../src/cuda_select.cu(50): error: expected a ";"
-
-../src/cuda_select.cu(51): error: identifier "d" is undefined
-
-2 errors detected in the compilation of "/tmp/tmpxft_0000718f_00000000-6_cuda_select.cpp1.ii".
-make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
-15:47:50 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
 Finished building: ../src/cuda_select.cu
  
 Building file: ../src/cudatbase.cu
@@ -220,88 +73,29 @@ Invoking: NVCC Linker
 /usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
 Finished building target: cudatbase
  
-15:48:31 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-Finished building: ../src/cuda_select.cu
- 
-Building target: cudatbase
-Invoking: NVCC Linker
-/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
-Finished building target: cudatbase
- 
-15:49:40 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-../src/cuda_select.cu(49): error: "H" has already been declared in the current scope
-
-../src/cuda_select.cu(49): error: no operator "*" matches these operands
-            operand types are: thrust::host_vector<long, std::allocator<long>> * int
-
-../src/cuda_select.cu(50): error: no operator "*" matches these operands
-            operand types are: thrust::host_vector<long, std::allocator<long>> * int
-
-../src/cuda_select.cu(52): error: identifier "h" is undefined
-
-../src/cuda_select.cu(52): error: no operator "-" matches these operands
-            operand types are: thrust::host_vector<long, std::allocator<long>> - int
-
-5 errors detected in the compilation of "/tmp/tmpxft_00007390_00000000-6_cuda_select.cpp1.ii".
-make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
-15:50:10 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-Finished building: ../src/cuda_select.cu
- 
-Building target: cudatbase
-Invoking: NVCC Linker
-/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
-Finished building target: cudatbase
- 
-15:54:05 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/cuda_select.cu
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
-/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-Finished building: ../src/cuda_select.cu
- 
-Building target: cudatbase
-Invoking: NVCC Linker
-/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
-Finished building target: cudatbase
- 
-15:55:56 **** Incremental Build of configuration Debug for project cudatbase ****
-make all 
-Building file: ../src/select.cpp
-Invoking: NVCC Compiler
-/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
-/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
-Finished building: ../src/select.cpp
- 
-Building target: cudatbase
-Invoking: NVCC Linker
-/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
-Finished building target: cudatbase
- 
-15:56:10 **** Incremental Build of configuration Debug for project cudatbase ****
+22:45:16 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 make: Nothing to be done for 'all'.
-15:57:41 **** Incremental Build of configuration Debug for project cudatbase ****
+22:53:23 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/cuda_select.cu
 Invoking: NVCC Compiler
 /usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
 /usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(37): error: identifier "n" is undefined
+
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00000559_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+22:54:07 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(97): warning: variable "l_dataBase_r" was declared but never referenced
+
 Finished building: ../src/cuda_select.cu
  
 Building target: cudatbase
@@ -309,6 +103,1496 @@ Invoking: NVCC Linker
 /usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
 Finished building target: cudatbase
  
-15:57:53 **** Incremental Build of configuration Debug for project cudatbase ****
+22:59:39 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(36): warning: variable "idx" was declared but never referenced
+
+../src/cuda_select.cu(37): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(95): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:01:07 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(35): error: expected a ")"
+
+../src/cuda_select.cu(42): warning: variable "idx" was declared but never referenced
+
+../src/cuda_select.cu(43): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00000934_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+23:01:31 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(35): error: expected a ")"
+
+../src/cuda_select.cu(100): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_000009ab_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+23:01:40 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(100): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:01:52 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:02:22 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(100): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:02:34 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:02:57 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(100): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:03:09 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:06:26 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:06:40 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:07:01 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:07:20 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:07:53 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:08:05 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:09:28 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:09:42 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:15:33 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:15:47 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:16:27 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:16:40 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:19:48 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(41): error: identifier "col" is undefined
+
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(100): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_000014c9_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+23:20:11 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:20:54 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:23:48 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(104): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:24:01 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:26:03 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:26:15 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:27:18 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:28:11 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:28:46 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:28:58 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:30:54 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:32:05 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(44): error: "row" has already been declared in the current scope
+
+../src/cuda_select.cu(45): error: "col" has already been declared in the current scope
+
+../src/cuda_select.cu(105): warning: variable "l_dataBase_r" was declared but never referenced
+
+2 errors detected in the compilation of "/tmp/tmpxft_00001c56_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+23:32:23 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(105): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:32:36 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:34:10 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(105): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:35:22 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(105): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:35:45 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(105): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:36:37 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(104): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:37:46 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:38:29 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:40:18 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(118): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:42:40 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:43:15 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:43:50 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:44:57 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:46:30 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(38): warning: variable "idy" was declared but never referenced
+
+../src/cuda_select.cu(121): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(44): error: calling a __host__ function("cudaDeviceSynchronize") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(44): error: identifier "cudaDeviceSynchronize" is undefined in device code
+
+../src/cuda_select.cu(50): error: calling a __host__ function("cudaDeviceSynchronize") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(50): error: identifier "cudaDeviceSynchronize" is undefined in device code
+
+../src/cuda_select.cu(56): error: calling a __host__ function("cudaDeviceSynchronize") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(56): error: identifier "cudaDeviceSynchronize" is undefined in device code
+
+../src/cuda_select.cu(62): error: calling a __host__ function("cudaDeviceSynchronize") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(62): error: identifier "cudaDeviceSynchronize" is undefined in device code
+
+8 errors detected in the compilation of "/tmp/tmpxft_00002717_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+23:48:18 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(39): error: identifier "h" is undefined
+
+../src/cuda_select.cu(39): error: identifier "w" is undefined
+
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+2 errors detected in the compilation of "/tmp/tmpxft_00002808_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+23:49:58 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(99): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:50:11 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+23:51:30 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(100): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:52:11 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(100): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:53:20 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(107): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:55:44 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(107): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:56:25 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(107): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+23:56:47 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(107): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:01:17 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(115): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:02:09 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(106): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:09:07 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(103): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:10:37 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(103): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:11:35 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:12:13 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:12:30 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:12:55 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:13:39 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(43): error: expected a ";"
+
+../src/cuda_select.cu(102): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_000035c9_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:13:48 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(102): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:14:34 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(101): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:16:17 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(42): warning: variable "temp" was declared but never referenced
+
+../src/cuda_select.cu(102): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:20:08 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(107): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:25:27 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:26:16 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:26:29 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+00:27:21 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(39): error: a value of type "unsigned int" cannot be used to initialize an entity of type "long *"
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(110): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00003c07_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:27:34 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(110): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:27:47 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+00:28:48 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(110): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:29:02 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+00:29:55 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): error: return value type does not match the function type
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00003e6c_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:32:04 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): warning: returning pointer to local variable
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+ptxas /tmp/tmpxft_00003f8b_00000000-5_cuda_select.ptx, line 3111; error   : Illegal operand type to instruction 'st'
+ptxas /tmp/tmpxft_00003f8b_00000000-5_cuda_select.ptx, line 3111; error   : Unknown symbol 'func_retval0'
+ptxas fatal   : Ptx assembly aborted due to errors
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 255
+00:32:19 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): error: return value type does not match the function type
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00003fea_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:32:38 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): error: return value type does not match the function type
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00004051_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:32:58 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): warning: returning pointer to local variable
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+ptxas /tmp/tmpxft_000040b4_00000000-5_cuda_select.ptx, line 3111; error   : Illegal operand type to instruction 'st'
+ptxas /tmp/tmpxft_000040b4_00000000-5_cuda_select.ptx, line 3111; error   : Unknown symbol 'func_retval0'
+ptxas fatal   : Ptx assembly aborted due to errors
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 255
+00:33:38 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): error: return value type does not match the function type
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_0000412a_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:34:20 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): error: a value of type "long (*)[4][4]" cannot be used to initialize an entity of type "long *"
+
+../src/cuda_select.cu(54): error: return value type does not match the function type
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+2 errors detected in the compilation of "/tmp/tmpxft_000041a4_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:34:31 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(53): error: a value of type "long (*)[4][4]" cannot be used to initialize an entity of type "long *"
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00004200_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:34:48 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(110): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:35:43 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(49): warning: expression has no effect
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(40): error: calling a __host__ function("thrust::host_vector<long, ::std::allocator<long> > ::host_vector") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(40): error: identifier "thrust::host_vector<long, ::std::allocator<long> > ::host_vector" is undefined in device code
+
+../src/cuda_select.cu(42): error: calling a __host__ function("thrust::host_vector<long, ::std::allocator<long> > ::~host_vector") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(42): error: identifier "thrust::host_vector<long, ::std::allocator<long> > ::~host_vector" is undefined in device code
+
+4 errors detected in the compilation of "/tmp/tmpxft_00004321_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:35:56 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(49): warning: expression has no effect
+
+../src/cuda_select.cu(111): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(40): error: calling a __host__ function("thrust::host_vector<long, ::std::allocator<long> > ::host_vector") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(40): error: identifier "thrust::host_vector<long, ::std::allocator<long> > ::host_vector" is undefined in device code
+
+../src/cuda_select.cu(42): error: calling a __host__ function("thrust::host_vector<long, ::std::allocator<long> > ::~host_vector") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(42): error: identifier "thrust::host_vector<long, ::std::allocator<long> > ::~host_vector" is undefined in device code
+
+4 errors detected in the compilation of "/tmp/tmpxft_0000437d_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:36:19 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(110): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:37:26 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(48): warning: expression has no effect
+
+../src/cuda_select.cu(112): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(48): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:37:38 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+00:38:24 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(46): error: identifier "print" is undefined
+
+../src/cuda_select.cu(49): warning: expression has no effect
+
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_0000458f_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:38:36 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(49): warning: expression has no effect
+
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(49): warning: expression has no effect
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:44:26 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:44:40 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+00:46:35 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:47:21 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:48:18 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(39): warning: variable "result" was declared but never referenced
+
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:48:49 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(39): warning: variable "result" was declared but never referenced
+
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:49:18 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(39): warning: variable "result" was declared but never referenced
+
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:49:31 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+00:50:10 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(114): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:52:53 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(51): error: identifier "result" is undefined
+
+../src/cuda_select.cu(114): warning: variable "l_dataBase_r" was declared but never referenced
+
+1 error detected in the compilation of "/tmp/tmpxft_00004d88_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:53:12 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:53:38 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(114): warning: variable "l_dataBase_r" was declared but never referenced
+
+../src/cuda_select.cu(40): error: calling a __host__ function("std::vector<int, ::std::allocator<int> > ::vector") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(40): error: identifier "std::vector<int, ::std::allocator<int> > ::vector" is undefined in device code
+
+../src/cuda_select.cu(42): error: calling a __host__ function("std::vector<int, ::std::allocator<int> > ::~vector") from a __global__ function("searcData") is not allowed
+
+../src/cuda_select.cu(42): error: identifier "std::vector<int, ::std::allocator<int> > ::~vector" is undefined in device code
+
+4 errors detected in the compilation of "/tmp/tmpxft_00004e89_00000000-6_cuda_select.cpp1.ii".
+make: *** [src/subdir.mk:45: src/cuda_select.o] Error 1
+00:54:03 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(113): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:56:08 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(116): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+00:56:21 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+make: Nothing to be done for 'all'.
+00:58:40 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(117): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+01:07:25 **** Incremental Build of configuration Debug for project cudatbase ****
+make all 
+Building file: ../src/cuda_select.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
+../src/cuda_select.cu(117): warning: variable "l_dataBase_r" was declared but never referenced
+
+Finished building: ../src/cuda_select.cu
+ 
+Building target: cudatbase
+Invoking: NVCC Linker
+/usr/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30 -link -o  "cudatbase"  ./src/CSVReader.o ./src/cuda_select.o ./src/cudatbase.o ./src/select.o   
+Finished building target: cudatbase
+ 
+01:07:38 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 make: Nothing to be done for 'all'.

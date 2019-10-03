@@ -21,11 +21,24 @@ public:
 	virtual ~CudaSelect();
 	void copyDataToDevice();
 	void copyDataToDevice(const vector<vector<long int>> &f_dataBase_r);
+	static const unsigned int m_columnNumber_ui = 10; // Be careful!!!!!! change this value!!!!
+	void CudaRun(const vector<string> f_selectRule);
 
 
 private:
-	thrust::device_vector<vector<long int>> m_databseOnCuda_v;
 
+	  void or_method(thrust::device_vector<long int> *f_collectDataVector_p, thrust::device_vector<long int> &f_OR_collectDataVector_r);
+
+	  void and_method(thrust::device_vector<long int> *f_collectDataVector_p,const thrust::device_vector<long int> &f_OR_collectDataVector_r,thrust::device_vector<long int> &f_AND_collectDataVector_r,thrust::device_vector<long int> &f_workDataVector);
+
+	  void or_and_merge(const thrust::device_vector<long int>*f_collectDataVector_p,
+	                    const thrust::device_vector<long int> &f_OR_collectDataVector_r,
+	                    thrust::device_vector<long int> &f_AND_collectDataVector_r);
+
+	  void equal(int input, string f_SelectRule_str,
+	             const thrust::device_vector<long int> &dataBase_r,
+	             thrust::device_vector<long int> *f_collectDataVector_p,
+	             thrust::device_vector<long int> &f_workDataVector, bool &firstRun,unsigned int f_columnNumber_ui);
 
 };
 
