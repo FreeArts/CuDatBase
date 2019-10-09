@@ -4,7 +4,6 @@
 
 //------Real Functions----
 namespace CudaVariables{
-	thrust::device_vector<long int> databaseOnCuda(4*CudaSelect::m_columnNumber_ui);
 
 	thrust::device_vector<long int> *collectDataVector_p(NULL);
 	thrust::device_vector<long int> m_workDataVector(4*CudaSelect::m_columnNumber_ui);
@@ -31,32 +30,32 @@ __global__ void searchDataFromDatabase(long int *data, int row, int col) {
 
 }
 
-__global__ void searcData(long int *data) {
+__global__ void searcData(long int *data,long int *result,unsigned int H, unsigned int W) {
 
 	//printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
 	int row = blockIdx.y * blockDim.y + threadIdx.y;
 	int col = blockIdx.x * blockDim.x + threadIdx.x;
-	long int tmp[4][4] = {0};
+	long int tmp[4][4];
 	unsigned int tmp_stepper = 0;
 
-	for(;row<=2;row++){
+	for(;row<H;row++){
 		printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
-		long int temp = data[(row*CudaSelect::m_columnNumber_ui)+col];
+		long int temp = data[(row*W)+col];
 		if(temp == 2009)
 		{
 			printf("found\n");
 			for(int i=0;i<=3;i++)
 			{
-				long int asd = data[(row*CudaSelect::m_columnNumber_ui)+i];
-				tmp[tmp_stepper][i]= asd;
-				printf("Array %d ", tmp[tmp_stepper][i]);
+				long int asd = data[(row*W)+i];
+				result[(tmp_stepper*CudaSelect::m_columnNumber_ui)+i] = asd;
+				//tmp[tmp_stepper][i]= asd;
+				//printf("Array %d ", tmp[tmp_stepper][i]);
+				printf("Array %d \n", result[(tmp_stepper*CudaSelect::m_columnNumber_ui)+i]);
 			}
 			tmp_stepper = atomicAdd(&tmp_stepper,1);
 		}
 	}
 }
-
-
 
 
 void CudaSelect::copyDataToDevice()
@@ -82,11 +81,11 @@ void CudaSelect::copyDataToDevice()
 
 }
 
-void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r)
+void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,unsigned int f_databaseHeaderColumnSize_ui)
 {
 	//int H = 2;
 	int H = f_dataBase_r.size();
-	int W = CudaSelect::m_columnNumber_ui;
+	int W = f_databaseHeaderColumnSize_ui;
     int h[H][W];
 
     unsigned int l_it_x = 0;
@@ -101,10 +100,24 @@ void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r)
       l_it_x++;
     }
 
-    thrust::device_vector<long int> d(H*W);
-    thrust::copy(&(h[0][0]), &(h[H-1][W-1]), CudaVariables::databaseOnCuda.begin());
-    searcData<<<4,1>>>(thrust::raw_pointer_cast(CudaVariables::databaseOnCuda.data()));
+    thrust::device_vector<long int> databaseOnCuda(H*W);
+    thrust::copy(&(h[0][0]), &(h[H-1][W-1]), databaseOnCuda.begin());
+
+    thrust::device_vector<long int> resultDatabaseOnCuda(H*W);
+    searcData<<<4,1>>>(thrust::raw_pointer_cast(databaseOnCuda.data()),thrust::raw_pointer_cast(resultDatabaseOnCuda.data()),H,W);
     cudaDeviceSynchronize();
+
+    thrust::host_vector<long int> hope(H*W);
+    hope = resultDatabaseOnCuda;
+
+    for(int x =0; x< H;x++)
+    {
+    	for(int y = 0; y<W;y++)
+    	{
+    		printf("Array %lu ", hope[(x*CudaSelect::m_columnNumber_ui)+y]);
+    	}
+    }
+
 }
 
 void CudaSelect::CudaRun(const vector<string> f_selectRule){
@@ -113,7 +126,7 @@ void CudaSelect::CudaRun(const vector<string> f_selectRule){
 	CudaVariables::m_workDataVector.clear();
 
 	collectDataVector_p = &m_AND_collectDataVector;
-	const thrust::device_vector<long int> &l_dataBase_r = databaseOnCuda;
+	//const thrust::device_vector<long int> &l_dataBase_r = databaseOnCuda;
 
 	 int input; // Todo destroy it...
 

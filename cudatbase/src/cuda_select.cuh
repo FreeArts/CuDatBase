@@ -20,8 +20,8 @@ public:
 	CudaSelect();
 	virtual ~CudaSelect();
 	void copyDataToDevice();
-	void copyDataToDevice(const vector<vector<long int>> &f_dataBase_r);
-	static const unsigned int m_columnNumber_ui = 10; // Be careful!!!!!! change this value!!!!
+	void copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,unsigned int f_databaseHeaderColumnSize_ui);
+	static const unsigned int m_columnNumber_ui = 4; // Be careful!!!!!! change this value!!!!
 	void CudaRun(const vector<string> f_selectRule);
 
 

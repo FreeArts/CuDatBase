@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;cudatbase/src/CuDatBase.h&apos; to &apos;CuDatBase.cuh&apos;" description="Rename resource &apos;CuDatBase.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/CuDatBase.h" name="CuDatBase.cuh" stamp="1570481572957" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;cudatbase/src/CuDatBase.cpp&apos; to &apos;CuDatBase.cu&apos;" description="Rename resource &apos;CuDatBase.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/CuDatBase.cpp" name="CuDatBase.cu" stamp="1570481593570" updateReferences="true"/>
+</session>

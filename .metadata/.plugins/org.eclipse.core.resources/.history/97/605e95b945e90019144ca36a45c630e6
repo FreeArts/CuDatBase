@@ -1,0 +1,31 @@
+/*
+ * CuDatBase.cpp
+ *
+ *  Created on: 2019 okt. 7
+ *      Author: freeart
+ */
+
+#include "CuDatBase.cuh"
+
+namespace CudaVariables{
+	thrust::device_vector<long int> databaseOnCuda(4*CuDatBase::m_dataBaseColumnSize_ui);
+
+	thrust::device_vector<long int> *collectDataVector_p(NULL);
+	thrust::device_vector<long int> m_workDataVector(4*CuDatBase::m_dataBaseColumnSize_ui);
+
+	thrust::device_vector<long int> m_AND_collectDataVector(4*CuDatBase::m_dataBaseColumnSize_ui);
+	thrust::device_vector<long int> m_OR_collectDataVector(4*CuDatBase::m_dataBaseColumnSize_ui);
+
+	thrust::device_vector<long int> foundedResults(4*CuDatBase::m_dataBaseColumnSize_ui);
+}
+
+CuDatBase::CuDatBase(const unsigned int f_columnSize_ui,const unsigned int f_rowSize_ui) {
+	m_dataBaseColumnSize_ui = f_columnSize_ui;
+	m_dataBaseRownSize_ui = f_rowSize_ui;
+
+}
+
+CuDatBase::~CuDatBase() {
+	// TODO Auto-generated destructor stub
+}
+

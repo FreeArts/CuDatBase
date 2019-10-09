@@ -1,0 +1,18 @@
+/*
+ * CuDatBase.cpp
+ *
+ *  Created on: 2019 okt. 7
+ *      Author: freeart
+ */
+
+#include "CuDatBase.h"
+
+CuDatBase::CuDatBase() {
+	// TODO Auto-generated constructor stub
+
+}
+
+CuDatBase::~CuDatBase() {
+	// TODO Auto-generated destructor stub
+}
+

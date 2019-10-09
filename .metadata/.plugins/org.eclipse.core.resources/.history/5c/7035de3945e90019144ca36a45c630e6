@@ -1,0 +1,46 @@
+/*
+ * CuDatBase.h
+ *
+ *  Created on: 2019 okt. 7
+ *      Author: freeart
+ */
+
+#ifndef CUDATBASE_H_
+#define CUDATBASE_H_
+
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
+#include <iostream>
+#include <numeric>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <iostream>
+#include <string>
+#include <thrust/device_vector.h>
+#include <thrust/host_vector.h>
+#include <vector>
+
+class CuDatBase {
+public:
+	CuDatBase(const unsigned int f_columnSize_ui,const unsigned int f_rowSize_ui);
+	virtual ~CuDatBase();
+
+private:
+
+	unsigned int m_dataBaseColumnSize_ui=0;
+	unsigned int m_dataBaseRownSize_ui=0;
+
+	thrust::device_vector<long int> databaseOnCuda(m_dataBaseRownSize_ui*m_dataBaseColumnSize_ui);
+
+	thrust::device_vector<long int> *collectDataVector_p(NULL);
+	thrust::device_vector<long int> m_workDataVector(m_dataBaseRownSize_ui*m_dataBaseColumnSize_ui);
+
+	thrust::device_vector<long int> m_AND_collectDataVector(m_dataBaseRownSize_ui*m_dataBaseColumnSize_ui);
+	thrust::device_vector<long int> m_OR_collectDataVector(m_dataBaseRownSize_ui*m_dataBaseColumnSize_ui);
+
+	thrust::device_vector<long int> foundedResults(m_dataBaseRownSize_ui*m_dataBaseColumnSize_ui);
+
+};
+
+#endif /* CUDATBASE_H_ */

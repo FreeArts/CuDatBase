@@ -1,0 +1,22 @@
+/*
+ * CuDatBase.h
+ *
+ *  Created on: 2019 okt. 7
+ *      Author: freeart
+ */
+
+#ifndef CUDATBASE_H_
+#define CUDATBASE_H_
+
+class CuDatBase {
+public:
+	CuDatBase(const unsigned int f_columnSize_ui,const unsigned int f_rowSize_ui);
+	virtual ~CuDatBase();
+
+private:
+
+	unsigned int m_dataBaseColumnSize_ui;
+	unsigned int m_dataBaseRownSize_ui;
+};
+
+#endif /* CUDATBASE_H_ */

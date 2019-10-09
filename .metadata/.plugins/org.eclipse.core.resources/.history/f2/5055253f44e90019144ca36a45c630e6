@@ -1,0 +1,19 @@
+/*
+ * CuDatBase.cpp
+ *
+ *  Created on: 2019 okt. 7
+ *      Author: freeart
+ */
+
+#include "CuDatBase.h"
+
+CuDatBase::CuDatBase(const unsigned int f_columnSize_ui,const unsigned int rowSize_ui) {
+	m_dataBaseColumnSize_ui;
+	m_dataBaseRownSize_ui;
+
+}
+
+CuDatBase::~CuDatBase() {
+	// TODO Auto-generated destructor stub
+}
+
