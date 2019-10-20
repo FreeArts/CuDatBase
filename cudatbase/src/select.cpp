@@ -11,7 +11,6 @@
 
 #include "select.h"
 
-
 //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
 void SELECT::loadCSV() {
 
@@ -47,13 +46,12 @@ void SELECT::testRun() {
 
   CudaSelect asd;
 
-  asd.CudaRun(l_selectRule_stdv,m_dataList_v,m_databaseHeader);
-
+  asd.CudaRun(l_selectRule_stdv, m_dataList_v, m_databaseHeader);
 }
 //-------------------------------------------------
 SELECT::SELECT() {
 
-  //testFunction();
+  // testFunction();
   m_dataList_v.empty();
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
@@ -91,10 +89,10 @@ void SELECT::readSelectRule(vector<string> f_selectRule_v) {
 // ToDo refactore
 void SELECT::run() {
 
-   //init:
-	m_AND_collectDataVector.clear();
-	m_OR_collectDataVector.clear();
-	m_workDataVector.clear();
+  // init:
+  m_AND_collectDataVector.clear();
+  m_OR_collectDataVector.clear();
+  m_workDataVector.clear();
 
   // date="2010" & sex="men" | brand="ktm"
   bool firstRun = true;
