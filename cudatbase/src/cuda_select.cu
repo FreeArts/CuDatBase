@@ -1,6 +1,8 @@
 
 #include "cuda_select.cuh"
 #include <vector>
+//https://devblogs.nvidia.com/cooperative-groups/
+#include <cooperative_groups.h>
 
 //------Real Functions----
 namespace CudaVariables{
@@ -23,41 +25,39 @@ CudaSelect::CudaSelect(){
 CudaSelect::~CudaSelect(){
 
 }
-
+//Only for beta
 __global__ void searchDataFromDatabase(long int *data, int row, int col) {
 
 	  printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
 
 }
 
-__global__ void searcData(long int *data,long int *result,unsigned int H, unsigned int W) {
+/*__global__ void searcData(long int *data,long int *result, const unsigned int f_databaseRowSize_ui,const unsigned int f_databaseColumnSize_ui,const unsigned int f_targetWord_ui) {
 
-	//printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
-	int row = blockIdx.y * blockDim.y + threadIdx.y;
-	int col = blockIdx.x * blockDim.x + threadIdx.x;
-	long int tmp[4][4];
-	unsigned int tmp_stepper = 0;
+	int rowThread = blockIdx.y * blockDim.y + threadIdx.y;
+	int columnThread = blockIdx.x * blockDim.x + threadIdx.x;
+	unsigned int l_tmpStepper_ui = 0;
 
-	for(;row<H;row++){
-		printf("Element (%d, %d) = %d\n", row, col, data[(row*CudaSelect::m_columnNumber_ui)+col]);
-		long int temp = data[(row*W)+col];
-		if(temp == 2009)
+	for(;rowThread<f_databaseRowSize_ui;rowThread++){
+		printf("Element (%d, %d) = %d\n", rowThread, columnThread, data[(rowThread*CudaSelect::m_columnNumber_ui)+columnThread]);
+		long int temp = data[(rowThread*f_databaseColumnSize_ui)+columnThread];
+		if(temp == f_targetWord_ui)
 		{
 			printf("found\n");
-			for(int i=0;i<=3;i++)
+			for(int l_it_x=0;l_it_x<=3;l_it_x++)
 			{
-				long int asd = data[(row*W)+i];
-				result[(tmp_stepper*CudaSelect::m_columnNumber_ui)+i] = asd;
+				long int asd = data[(rowThread*f_databaseColumnSize_ui)+l_it_x];
+				result[(l_tmpStepper_ui*CudaSelect::m_columnNumber_ui)+l_it_x] = asd;
 				//tmp[tmp_stepper][i]= asd;
 				//printf("Array %d ", tmp[tmp_stepper][i]);
-				printf("Array %d \n", result[(tmp_stepper*CudaSelect::m_columnNumber_ui)+i]);
+				printf("Array %d \n", result[(l_tmpStepper_ui*CudaSelect::m_columnNumber_ui)+l_it_x]);
 			}
-			tmp_stepper = atomicAdd(&tmp_stepper,1);
+			l_tmpStepper_ui = atomicAdd(&l_tmpStepper_ui,1);
 		}
 	}
-}
+}*/
 
-
+//Only for beta
 void CudaSelect::copyDataToDevice()
 {
 	int H = 2;
@@ -78,57 +78,195 @@ void CudaSelect::copyDataToDevice()
     //thrust::sequence(d.begin(), d.end());
     searchDataFromDatabase<<<3,1>>>(thrust::raw_pointer_cast(d.data()), 1, 0);
     cudaDeviceSynchronize();
-
 }
-
+/*
 void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,unsigned int f_databaseHeaderColumnSize_ui)
 {
-	//int H = 2;
-	int H = f_dataBase_r.size();
-	int W = f_databaseHeaderColumnSize_ui;
-    int h[H][W];
+	unsigned int targetInfo = 2009;
+	unsigned int l_databaseRowSize_ui = f_dataBase_r.size();
+	unsigned int l_databaseColumnSize_ui = f_databaseHeaderColumnSize_ui;
+    int l_tmpDatabaseContainer_i[l_databaseRowSize_ui][l_databaseColumnSize_ui];
 
     unsigned int l_it_x = 0;
     unsigned int l_it_y = 0;
 
     for (vector<long int> vec : f_dataBase_r) {
       for (long int vector_member : vec) {
-    	 h[l_it_x][l_it_y] = vector_member;
+    	 l_tmpDatabaseContainer_i[l_it_x][l_it_y] = vector_member;
     	 l_it_y++;
       }
       l_it_y = 0;
       l_it_x++;
     }
 
-    thrust::device_vector<long int> databaseOnCuda(H*W);
-    thrust::copy(&(h[0][0]), &(h[H-1][W-1]), databaseOnCuda.begin());
+    thrust::device_vector<long int> databaseOnCuda(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+    thrust::copy(&(l_tmpDatabaseContainer_i[0][0]), &(l_tmpDatabaseContainer_i[l_databaseRowSize_ui-1][l_databaseColumnSize_ui-1]), databaseOnCuda.begin());
 
-    thrust::device_vector<long int> resultDatabaseOnCuda(H*W);
-    searcData<<<4,1>>>(thrust::raw_pointer_cast(databaseOnCuda.data()),thrust::raw_pointer_cast(resultDatabaseOnCuda.data()),H,W);
+    thrust::device_vector<long int> resultDatabaseOnCuda(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+    searcData<<<4,1>>>(thrust::raw_pointer_cast(databaseOnCuda.data()),thrust::raw_pointer_cast(resultDatabaseOnCuda.data()),l_databaseRowSize_ui,l_databaseColumnSize_ui,targetInfo);
     cudaDeviceSynchronize();
 
-    thrust::host_vector<long int> hope(H*W);
-    hope = resultDatabaseOnCuda;
+    thrust::host_vector<long int> l_foundedResult(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+    l_foundedResult = resultDatabaseOnCuda;
 
-    for(int x =0; x< H;x++)
+    for(int x =0; x< l_databaseRowSize_ui;x++)
     {
-    	for(int y = 0; y<W;y++)
+    	for(int y = 0; y<l_databaseColumnSize_ui;y++)
     	{
-    		printf("Array %lu ", hope[(x*CudaSelect::m_columnNumber_ui)+y]);
+    		printf("Array %lu ", l_foundedResult[(x*CudaSelect::m_columnNumber_ui)+y]);
     	}
     }
 
+}*/
+
+/*void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,unsigned int f_databaseHeaderColumnSize_ui)
+{
+	unsigned int targetInfo = 2009;
+	unsigned int l_databaseRowSize_ui = f_dataBase_r.size();
+	unsigned int l_databaseColumnSize_ui = f_databaseHeaderColumnSize_ui;
+    int l_tmpDatabaseContainer_i[l_databaseRowSize_ui][l_databaseColumnSize_ui];
+
+    unsigned int l_it_x = 0;
+    unsigned int l_it_y = 0;
+
+    for (vector<long int> vec : f_dataBase_r) {
+      for (long int vector_member : vec) {
+    	 l_tmpDatabaseContainer_i[l_it_x][l_it_y] = vector_member;
+    	 l_it_y++;
+      }
+      l_it_y = 0;
+      l_it_x++;
+    }
+
+    thrust::device_vector<long int> databaseOnCuda(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+    thrust::copy(&(l_tmpDatabaseContainer_i[0][0]), &(l_tmpDatabaseContainer_i[l_databaseRowSize_ui-1][l_databaseColumnSize_ui-1]), databaseOnCuda.begin());
+
+    thrust::device_vector<long int> resultDatabaseOnCuda(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+    searcData<<<4,1>>>(thrust::raw_pointer_cast(databaseOnCuda.data()),thrust::raw_pointer_cast(resultDatabaseOnCuda.data()),l_databaseRowSize_ui,l_databaseColumnSize_ui,targetInfo);
+    cudaDeviceSynchronize();
+
+    thrust::host_vector<long int> l_foundedResult(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+    l_foundedResult = resultDatabaseOnCuda;
+
+    for(int x =0; x< l_databaseRowSize_ui;x++)
+    {
+    	for(int y = 0; y<l_databaseColumnSize_ui;y++)
+    	{
+    		printf("Array %lu ", l_foundedResult[(x*CudaSelect::m_columnNumber_ui)+y]);
+    	}
+    }
+
+}*/
+//http://selkie.macalester.edu/csinparallel/modules/ConceptDataDecomposition/build/html/Decomposition/CUDA_VecAdd.html
+/*__global__ void searcData(long int *f_dataBase_p,long int *f_resultLines_p, const unsigned int f_databaseRowSize_ui,const unsigned int f_databaseColumnSize_ui,const unsigned int f_targetWord_ui) {
+
+	int rowThread = blockIdx.y * blockDim.y + threadIdx.y;
+	int columnThread = blockIdx.x * blockDim.x + threadIdx.x;
+	unsigned int l_tmpStepper_ui = 0;
+
+	printf("I am the %i %i threadPair\n",rowThread,columnThread);
+
+	for(;rowThread<f_databaseRowSize_ui;rowThread++){
+	//if(rowThread<f_databaseRowSize_ui){
+		//printf("Element (%d, %d) = %d\n", rowThread, columnThread, f_dataBase_p[(rowThread*f_databaseColumnSize_ui)+columnThread]);
+		long int temp = f_dataBase_p[(rowThread*f_databaseColumnSize_ui)+columnThread];
+		if(temp == f_targetWord_ui)
+		{
+			printf("Founded threadPair: %i %i\n",rowThread,columnThread);
+			for(int l_it_x=0;l_it_x<f_databaseColumnSize_ui;l_it_x++)
+			{
+				long int l_dataBaseFoundedLineContent_li = f_dataBase_p[(rowThread*f_databaseColumnSize_ui)+l_it_x];
+				f_resultLines_p[(l_tmpStepper_ui*f_databaseColumnSize_ui)+l_it_x] = l_dataBaseFoundedLineContent_li;
+				printf("Array %d \n", f_resultLines_p[(l_tmpStepper_ui*f_databaseColumnSize_ui)+l_it_x]);
+			}
+			//l_tmpStepper_ui = atomicAdd(&l_tmpStepper_ui,1);
+		}
+	}
+}*/
+__device__  int stepper = 0;
+__global__ void searcData(long int *f_dataBase_p,long int *f_resultLines_p, const unsigned int f_databaseRowSize_ui,const unsigned int f_databaseColumnSize_ui,const unsigned int f_targetWord_ui) {
+
+
+	int rowThread = blockIdx.x * blockDim.x + threadIdx.x;
+	int columnThread = blockIdx.y * blockDim.y + threadIdx.y;
+
+	long int temp = f_dataBase_p[(rowThread*f_databaseColumnSize_ui)+columnThread];
+	if(temp == f_targetWord_ui)
+	{
+		//printf("Founded threadPair: %i %i\n",rowThread,columnThread);
+		for(int l_it_x=0;l_it_x<f_databaseColumnSize_ui;l_it_x++)
+		{
+			long int l_dataBaseFoundedLineContent_li = f_dataBase_p[(rowThread*f_databaseColumnSize_ui)+l_it_x];
+			f_resultLines_p[l_it_x+stepper] = l_dataBaseFoundedLineContent_li;
+			//printf("Array %d \n", f_resultLines_p[(f_databaseColumnSize_ui)+l_it_x]);
+		}
+		atomicAdd(&stepper,f_databaseColumnSize_ui);
+
+	}
+
+	auto syncGroup = cooperative_groups::this_thread_block();
+	syncGroup.sync();
+	//__syncthreads();
 }
 
-void CudaSelect::CudaRun(const vector<string> f_selectRule){
-	CudaVariables::m_AND_collectDataVector.clear();
-	CudaVariables::m_OR_collectDataVector.clear();
-	CudaVariables::m_workDataVector.clear();
+void CudaSelect::copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,const unsigned int f_databaseRowSize_ui,unsigned int f_databaseColumnSize_ui,thrust::device_vector<long int> &f_DeviceDataBase_r)
+{
+    int l_tmpDatabaseContainer_i[f_databaseRowSize_ui][f_databaseColumnSize_ui];
 
-	collectDataVector_p = &m_AND_collectDataVector;
-	//const thrust::device_vector<long int> &l_dataBase_r = databaseOnCuda;
+    unsigned int l_it_x = 0;
+    unsigned int l_it_y = 0;
 
-	 int input; // Todo destroy it...
+    for (vector<long int> vec : f_dataBase_r) {
+      for (long int vector_member : vec) {
+    	 l_tmpDatabaseContainer_i[l_it_x][l_it_y] = vector_member;
+    	 l_it_y++;
+      }
+      l_it_y = 0;
+      l_it_x++;
+    }
+
+	printf("\n");
+
+	//What??
+    thrust::copy(&(l_tmpDatabaseContainer_i[0][0]), &(l_tmpDatabaseContainer_i[f_databaseRowSize_ui][f_databaseColumnSize_ui]), f_DeviceDataBase_r.begin());
+
+}
+
+void CudaSelect::CudaRun(const vector<string> &f_selectRule,const vector<vector<long int>> &f_dataBase_r,const vector<string> &f_dataBaseHeader_v){
+
+	unsigned int l_databaseRowSize_ui = f_dataBase_r.size();
+	//printf("%i\n",l_databaseRowSize_ui);
+	unsigned int l_databaseColumnSize_ui = f_dataBaseHeader_v.size();
+	//printf("%i\n",l_databaseColumnSize_ui);
+
+
+	//thrust::device_vector<long int> *l_collectDataVector_p(NULL);
+	//thrust::device_vector<long int> l_workDataVector(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+
+	//thrust::device_vector<long int> l_AND_collectDataVector(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+	//thrust::device_vector<long int> l_OR_collectDataVector(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+
+	thrust::device_vector<long int> l_DeviceDatabase(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+	thrust::device_vector<long int> l_DeviceResult(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+	thrust::host_vector<long int> l_foundedResult(l_databaseRowSize_ui*l_databaseColumnSize_ui);
+
+	copyDataToDevice(f_dataBase_r,l_databaseRowSize_ui,l_databaseColumnSize_ui,l_DeviceDatabase);
+
+	dim3 grid(l_databaseRowSize_ui,l_databaseColumnSize_ui);
+	searcData<<<grid,1>>>(thrust::raw_pointer_cast(l_DeviceDatabase.data()),thrust::raw_pointer_cast(l_DeviceResult.data()),l_databaseRowSize_ui,l_databaseColumnSize_ui,2010);
+    cudaDeviceSynchronize();
+
+    l_foundedResult = l_DeviceResult;
+
+    for(int x =0;x<l_databaseRowSize_ui;x++)
+    {
+    	for(int y = 0;y< l_databaseColumnSize_ui;y++)
+    	{
+    		printf("Result %lu ", l_foundedResult[(x*l_databaseColumnSize_ui)+y]);
+    	}
+    	printf("\n");
+    }
+	 /*int input; // Todo destroy it...
 
 	  for (string l_rule_str : f_selectRule) {
 	    input = l_rule_str.find("&");
@@ -156,7 +294,7 @@ void CudaSelect::CudaRun(const vector<string> f_selectRule){
 
 	    //or_and_merge(collectDataVector_p, m_OR_collectDataVector,
 	                 //m_AND_collectDataVector);
-	  }
+	  }*/
 }
 
 void CudaSelect::or_method(thrust::device_vector<long int> *f_collectDataVector_p, thrust::device_vector<long int> &f_OR_collectDataVector_r) {

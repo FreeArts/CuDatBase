@@ -20,9 +20,10 @@ public:
 	CudaSelect();
 	virtual ~CudaSelect();
 	void copyDataToDevice();
-	void copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,unsigned int f_databaseHeaderColumnSize_ui);
+	//void copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,unsigned int f_databaseHeaderColumnSize_ui);
+	void copyDataToDevice(const vector<vector<long int>> &f_dataBase_r,const unsigned int f_databaseRowSize_ui,unsigned int f_databaseColumnSize_ui,thrust::device_vector<long int> &f_DeviceDataBase_r);
 	static const unsigned int m_columnNumber_ui = 4; // Be careful!!!!!! change this value!!!!
-	void CudaRun(const vector<string> f_selectRule);
+	void CudaRun(const vector<string> &f_selectRule,const vector<vector<long int>> &f_dataBase_r,const vector<string> &f_dataBaseHeader_v);
 
 
 private:

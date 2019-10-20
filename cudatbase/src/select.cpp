@@ -41,21 +41,23 @@ void SELECT::testRun() {
   l_selectRule_stdv.push_back("brand=3");
 
   readSelectRule(l_selectRule_stdv);
+
   run();
   showDatabase();
+
+  CudaSelect asd;
+
+  asd.CudaRun(l_selectRule_stdv,m_dataList_v,m_databaseHeader);
 
 }
 //-------------------------------------------------
 SELECT::SELECT() {
 
-   CudaSelect asd;
   //testFunction();
   m_dataList_v.empty();
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   testRun();
-  unsigned int databaseHeaderColumnSize = 4;
-  asd.copyDataToDevice(m_dataList_v,databaseHeaderColumnSize);
   //-------------------------------------------------------------------
 }
 

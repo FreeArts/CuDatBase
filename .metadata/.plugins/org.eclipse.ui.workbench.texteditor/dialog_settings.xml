@@ -2,12 +2,15 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="stol" key="selection"/>
+		<item value="-1" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="-1"/>
+			<item value="printf"/>
+			<item value="copyDataToDevice"/>
 			<item value="stol"/>
 			<item value="hello"/>
 			<item value="or_and_merge"/>
@@ -18,10 +21,10 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="303" key="DIALOG_WIDTH"/>
+		<item value="311" key="DIALOG_WIDTH"/>
 		<item value="1|Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="426" key="DIALOG_HEIGHT"/>
-		<item value="819" key="DIALOG_X_ORIGIN"/>
-		<item value="229" key="DIALOG_Y_ORIGIN"/>
+		<item value="459" key="DIALOG_HEIGHT"/>
+		<item value="1174" key="DIALOG_X_ORIGIN"/>
+		<item value="185" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
