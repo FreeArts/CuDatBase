@@ -29,41 +29,16 @@ public:
                const vector<string> &f_dataBaseHeader_v);
 
 private:
-  void or_method(thrust::device_vector<long int> *f_collectDataVector_p,
-                 thrust::device_vector<long int> &f_OR_collectDataVector_r);
-
   void
   and_method(thrust::device_vector<long int> *f_collectDataVector_p,
              const thrust::device_vector<long int> &f_OR_collectDataVector_r,
              thrust::device_vector<long int> &f_AND_collectDataVector_r,
              thrust::device_vector<long int> &f_workDataVector);
 
-  void
-  or_and_merge(const thrust::device_vector<long int> *f_collectDataVector_p,
-               const thrust::device_vector<long int> &f_OR_collectDataVector_r,
-               thrust::device_vector<long int> &f_AND_collectDataVector_r);
-
   void equal(int input, string f_SelectRule_str,
-             const thrust::device_vector<long int> &dataBase_r,
+             thrust::device_vector<long int> &dataBase_r,
+             const vector<string> &f_dataBaseHeader_v,
              thrust::device_vector<long int> *f_collectDataVector_p,
              thrust::device_vector<long int> &f_workDataVector, bool &firstRun,
-             unsigned int f_columnNumber_ui);
+             unsigned int f_rowNumber_ui, unsigned int f_columnNumber_ui);
 };
-
-//----------------------------------------------
-
-#define CUDA_CHECK_RETURN(value)                                               \
-  CheckCudaErrorAux(__FILE__, __LINE__, #value, value)
-
-void testCuda(void);
-static void CheckCudaErrorAux(const char *, unsigned, const char *,
-                              cudaError_t);
-float *gpuReciprocal(float *data, unsigned size);
-float *cpuReciprocal(float *data, unsigned size);
-void initialize(float *data, unsigned size);
-
-int work(void);
-
-void callExample(int a[5], int b[5], int c[5]);
-
-void testVector();

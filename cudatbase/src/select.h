@@ -24,8 +24,6 @@ public:
   SELECT();
   virtual ~SELECT();
 
-  void testFunction();
-
   void loadDatabase(const vector<vector<long int>> &f_dataBase_v,
                     const vector<string> f_headerOfDataBase);
 

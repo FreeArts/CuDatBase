@@ -37,7 +37,7 @@ void SELECT::testRun() {
   l_selectRule_stdv.push_back("&");
   l_selectRule_stdv.push_back("sex=1");
   l_selectRule_stdv.push_back("|");
-  l_selectRule_stdv.push_back("brand=3");
+  l_selectRule_stdv.push_back("sex=2");
 
   readSelectRule(l_selectRule_stdv);
 
@@ -62,8 +62,6 @@ SELECT::SELECT() {
 SELECT::~SELECT() {
   // TODO Auto-generated destructor stub
 }
-
-void SELECT::testFunction() { testCuda(); }
 
 void SELECT::loadDatabase(const vector<vector<long int>> &f_dataBase_v,
                           const vector<string> f_headerOfDataBase) {
@@ -98,6 +96,7 @@ void SELECT::run() {
   bool firstRun = true;
   int input; // Todo destroy it...
   collectDataVector_p = &m_AND_collectDataVector;
+
   const vector<vector<long int>> &l_dataBase_r = m_dataList_v;
 
   for (string l_rule_str : m_selectRule_v) {
@@ -111,28 +110,30 @@ void SELECT::run() {
 
     input = l_rule_str.find("|");
     if (input != (-1)) {
-      or_method(collectDataVector_p, m_OR_collectDataVector);
+      // or_method(collectDataVector_p, m_OR_collectDataVector);
       continue;
     }
 
     /// first will be find date="2010"
     input = l_rule_str.find("=");
     if (input != (-1)) {
+
       equal(input, l_rule_str, l_dataBase_r, collectDataVector_p,
             m_workDataVector, firstRun);
-
       continue;
     }
 
-    or_and_merge(collectDataVector_p, m_OR_collectDataVector,
-                 m_AND_collectDataVector);
+    // or_and_merge(collectDataVector_p, m_OR_collectDataVector,
+    // m_AND_collectDataVector);
   }
 }
 
 void SELECT::or_method(vector<vector<long int>> *f_collectDataVector_p,
                        vector<vector<long int>> &f_OR_collectDataVector_r) {
   /// put collectDataVector_p contain to l_OR_collectDataVector_r by indirect
-  f_collectDataVector_p = &f_OR_collectDataVector_r;
+  f_collectDataVector_p =
+      &f_OR_collectDataVector_r; // Put to Or container :*f_collectDataVector_p
+                                 // = f_OR_collectDataVector_r;
   f_collectDataVector_p->clear();
 }
 
@@ -142,15 +143,18 @@ void SELECT::and_method(
     vector<vector<long int>> &f_AND_collectDataVector_r,
     vector<vector<long int>> &f_workDataVector) {
 
-  or_and_merge(f_collectDataVector_p, f_OR_collectDataVector_r,
-               f_AND_collectDataVector_r);
-
-  /// put collectDataVector_p contain to AND_collectDataVector_r by indirect
-  f_collectDataVector_p = &f_AND_collectDataVector_r;
+  // or_and_merge(f_collectDataVector_p, f_OR_collectDataVector_r,
+  // f_AND_collectDataVector_r);
 
   f_workDataVector.clear();
+
+  /// put collectDataVector_p contain to AND_collectDataVector_r by indirect
+  /// (Redundant step!)
+  f_collectDataVector_p = &f_AND_collectDataVector_r;
+
   /// put the AND_collectDataVector_r contains to l_workDataVector by directly
   f_workDataVector = f_AND_collectDataVector_r;
+
   f_collectDataVector_p->clear();
 }
 // ToDo return!
