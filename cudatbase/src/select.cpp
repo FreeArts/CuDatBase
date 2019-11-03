@@ -37,16 +37,16 @@ void SELECT::testRun() {
   l_selectRule_stdv.push_back("&");
   l_selectRule_stdv.push_back("sex=1");
   l_selectRule_stdv.push_back("|");
-  l_selectRule_stdv.push_back("sex=2");
+  l_selectRule_stdv.push_back("brand=3");
 
   readSelectRule(l_selectRule_stdv);
 
   run();
   showDatabase();
 
-  CudaSelect asd;
+  CudaSelect cudaTest;
 
-  asd.CudaRun(l_selectRule_stdv, m_dataList_v, m_databaseHeader);
+  cudaTest.CudaRun(l_selectRule_stdv, m_dataList_v, m_databaseHeader);
 }
 //-------------------------------------------------
 SELECT::SELECT() {
@@ -93,7 +93,9 @@ void SELECT::run() {
   m_workDataVector.clear();
 
   // date="2010" & sex="men" | brand="ktm"
-  bool firstRun = true;
+  m_firstRun_b = true;
+  m_firstMethodWasOr_b = true;
+
   int input; // Todo destroy it...
   collectDataVector_p = &m_AND_collectDataVector;
 
@@ -105,6 +107,10 @@ void SELECT::run() {
 
       and_method(collectDataVector_p, m_OR_collectDataVector,
                  m_AND_collectDataVector, m_workDataVector);
+
+      if (m_firstMethodWasOr_b)
+        m_firstMethodWasOr_b = false;
+
       continue;
     }
 
@@ -119,7 +125,7 @@ void SELECT::run() {
     if (input != (-1)) {
 
       equal(input, l_rule_str, l_dataBase_r, collectDataVector_p,
-            m_workDataVector, firstRun);
+            m_workDataVector);
       continue;
     }
 
@@ -171,16 +177,17 @@ void SELECT::or_and_merge(
   }
 }
 
-void SELECT::equal(int input, string f_SelectRule_str,
+void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
                    const vector<vector<long int>> &dataBase_r,
                    vector<vector<long int>> *f_collectDataVector_p,
-                   vector<vector<long int>> &f_workDataVector, bool &firstRun) {
+                   vector<vector<long int>> &f_workDataVector) {
   /// date="2010"
   unsigned int l_columnNumber_ui = 0;
   /// cut "=2010" part
-  string column = f_SelectRule_str.substr(0, input);
+  string column = f_SelectRule_str.substr(0, whereIsTheTargetCharacter);
   /// cut "date=" part
-  string tmp_row = f_SelectRule_str.substr(input + 1, f_SelectRule_str.size());
+  string tmp_row = f_SelectRule_str.substr(whereIsTheTargetCharacter + 1,
+                                           f_SelectRule_str.size());
   long int row = std::stol(tmp_row);
 
   /// find "date" number of column //PC side
@@ -193,7 +200,7 @@ void SELECT::equal(int input, string f_SelectRule_str,
     }
   }
 
-  if (firstRun == true) {
+  if ((m_firstRun_b == true) || (m_firstMethodWasOr_b == true)) {
     /// if first time run the query, search the lines from original database
     /// else we search from workDataVector
     for (unsigned int l_it_x = 0; l_it_x < dataBase_r.size(); l_it_x++) {
@@ -204,7 +211,7 @@ void SELECT::equal(int input, string f_SelectRule_str,
         f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
       }
     }
-    firstRun = false;
+    m_firstRun_b = false;
   }
 
   else {

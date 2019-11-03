@@ -1,20 +1,10 @@
-
 #include "cuda_select.cuh"
 #include <cooperative_groups.h>
 #include <vector>
 
-//------Real Functions----
-int counter = 0;
-CudaSelect::CudaSelect() {
-  // copyDataToDevice();
-}
+CudaSelect::CudaSelect() {}
 
 CudaSelect::~CudaSelect() {}
-
-__device__ unsigned int gd_ArrayStepper_ui = 0;
-__global__ void resetOffset(){
-	gd_ArrayStepper_ui = 0;
-}
 
 __global__ void searcData(long int *f_dataBase_p, long int *f_resultLines_p,
                           const unsigned int f_databaseRowSize_ui,
@@ -33,16 +23,15 @@ __global__ void searcData(long int *f_dataBase_p, long int *f_resultLines_p,
 
       long int l_dataBaseFoundedLineContent_li =
           f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
-      f_resultLines_p[l_it_x + gd_ArrayStepper_ui] =
+      f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
           l_dataBaseFoundedLineContent_li;
     }
-    atomicAdd(&gd_ArrayStepper_ui, f_databaseColumnSize_ui);
   }
   // auto syncOnlyThreads= cooperative_groups::this_thread();
-  auto syncGroup = cooperative_groups::this_thread_block();
-  syncGroup.sync();
+  // auto syncGroup = cooperative_groups::this_thread_block();
+  // syncGroup.sync();
   // syncOnlyThreads.sync();
-  //__syncthreads();
+  __syncthreads();
 }
 
 __global__ void searcDataInColumn(long int *f_dataBase_p,
@@ -54,6 +43,7 @@ __global__ void searcDataInColumn(long int *f_dataBase_p,
 
   int rowThread = blockIdx.x * blockDim.x + threadIdx.x;
 
+  // printf("%i \n",rowThread);
   long int l_tmpWordContainer_li =
       f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + f_targetColumn];
 
@@ -63,16 +53,15 @@ __global__ void searcDataInColumn(long int *f_dataBase_p,
 
       long int l_dataBaseFoundedLineContent_li =
           f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
-      f_resultLines_p[l_it_x + gd_ArrayStepper_ui] =
+      f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
           l_dataBaseFoundedLineContent_li;
     }
-    atomicAdd(&gd_ArrayStepper_ui, f_databaseColumnSize_ui);
   }
   // auto syncOnlyThreads= cooperative_groups::this_thread();
-  auto syncGroup = cooperative_groups::this_thread_block();
-  syncGroup.sync();
+  // auto syncGroup = cooperative_groups::this_thread_block();
+  // syncGroup.sync();
   // syncOnlyThreads.sync();
-  //__syncthreads();
+  __syncthreads();
 }
 
 void CudaSelect::copyDataToDevice(
@@ -115,13 +104,8 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
   thrust::device_vector<long int> l_AND_collectDataVector(
       l_databaseRowSize_ui * l_databaseColumnSize_ui);
 
-  thrust::device_vector<long int> l_OR_collectDataVector(
-      l_databaseRowSize_ui * l_databaseColumnSize_ui);
-
   thrust::device_vector<long int> l_DeviceDatabase(l_databaseRowSize_ui *
                                                    l_databaseColumnSize_ui);
-  thrust::device_vector<long int> l_DeviceResult(l_databaseRowSize_ui *
-                                                 l_databaseColumnSize_ui);
 
   // ToDo: Rename it for host_Copy.......
   thrust::host_vector<long int> l_foundedResult(l_databaseRowSize_ui *
@@ -130,41 +114,10 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
   copyDataToDevice(f_dataBase_r, l_databaseRowSize_ui, l_databaseColumnSize_ui,
                    l_DeviceDatabase);
 
-  //----------------------Debug Part------------------------------
-  /*dim3 necessaryGridSize(l_databaseRowSize_ui, l_databaseColumnSize_ui);
-  searcData<<<necessaryGridSize, 1>>>(
-      thrust::raw_pointer_cast(l_DeviceDatabase.data()),
-      thrust::raw_pointer_cast(l_DeviceResult.data()), l_databaseRowSize_ui,
-      l_databaseColumnSize_ui, 2010);
-  cudaDeviceSynchronize();
+  //---------------------R-U-N----------------------
+  m_firstRun_b = true;
+  m_firstMethodWasOr_b = true;
 
-  l_foundedResult = l_DeviceResult;
-
-  for (int x = 0; x < l_databaseRowSize_ui; x++) {
-    for (int y = 0; y < l_databaseColumnSize_ui; y++) {
-      printf("Result %lu ", l_foundedResult[(x * l_databaseColumnSize_ui) + y]);
-    }
-    printf("\n");
-  }*/
-  //----------------------Part 2---------------------------------
-  /*dim3 necessaryGridSize(l_databaseRowSize_ui);
-  searcDataInColumn<<<necessaryGridSize, 1>>>(
-      thrust::raw_pointer_cast(l_DeviceDatabase.data()),
-      thrust::raw_pointer_cast(l_DeviceResult.data()), l_databaseRowSize_ui,
-      l_databaseColumnSize_ui, 2010,0);
-  cudaDeviceSynchronize();
-
-  l_foundedResult = l_DeviceResult;
-
-  for (int x = 0; x < l_databaseRowSize_ui; x++) {
-    for (int y = 0; y < l_databaseColumnSize_ui; y++) {
-      printf("Result %lu ", l_foundedResult[(x * l_databaseColumnSize_ui) + y]);
-    }
-    printf("\n");
-  }*/
-  //--------------------MAin Part---------------------------------
-
-  bool firstRun = true;
   int whereIsTheTargetCharacter;
   l_collectDataVector_p = &l_AND_collectDataVector;
 
@@ -172,8 +125,12 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
     whereIsTheTargetCharacter = l_rule_str.find("&");
     if (whereIsTheTargetCharacter != (-1)) {
 
-      and_method(l_collectDataVector_p, l_OR_collectDataVector,
-                 l_AND_collectDataVector, l_workDataVector);
+      and_method(l_collectDataVector_p, l_AND_collectDataVector,
+                 l_workDataVector, l_databaseRowSize_ui,
+                 l_databaseColumnSize_ui);
+
+      if (m_firstMethodWasOr_b)
+        m_firstMethodWasOr_b = false;
 
       continue;
     }
@@ -189,42 +146,41 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
     if (whereIsTheTargetCharacter != (-1)) {
       equal(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
             f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
-            firstRun, l_databaseRowSize_ui, l_databaseColumnSize_ui);
+            l_databaseRowSize_ui, l_databaseColumnSize_ui);
 
       continue;
     }
   }
 
-  /*l_foundedResult = l_AND_collectDataVector;
+  l_foundedResult = l_AND_collectDataVector;
 
   for (int x = 0; x < 3; x++) {
     for (int y = 0; y < 4; y++) {
-      printf("result %lu ", l_foundedResult[(x * 4) + y]);
+      printf("cuda %lu ", l_foundedResult[(x * 4) + y]);
     }
     printf("\n");
-  }*/
+  }
 }
 
 void CudaSelect::and_method(
     thrust::device_vector<long int> *f_collectDataVector_p,
-    const thrust::device_vector<long int> &f_OR_collectDataVector_r,
     thrust::device_vector<long int> &f_AND_collectDataVector_r,
-    thrust::device_vector<long int> &f_workDataVector) {
+    thrust::device_vector<long int> &f_workDataVector,
+    unsigned int f_rowNumber_ui, unsigned int f_columnNumber_ui) {
 
-  thrust::host_vector<long int> a(3 * 4);
-  f_workDataVector = a;
-  //f_workDataVector.clear();
+  thrust::host_vector<long int> nullInitVector(
+      f_rowNumber_ui * f_columnNumber_ui); // by default Null vector
+  f_workDataVector = nullInitVector;
 
   /// put collectDataVector_p contain to AND_collectDataVector_r by indirect
-  f_collectDataVector_p = &f_AND_collectDataVector_r;
+  // f_collectDataVector_p = &f_AND_collectDataVector_r;
 
+  /// f_collectDataVector_p point to f_AND_collectDataVector_r !!!!!!!!!!!
   /// put the AND_collectDataVector_r contains to l_workDataVector by directly
   f_workDataVector = f_AND_collectDataVector_r;
 
-  thrust::host_vector<long int> l_foundedResult(3 * 4);
-
-  // f_collectDataVector_p->clear();
-  f_AND_collectDataVector_r = a;
+  // similar to f_collectDataVector_p->clear();
+  f_AND_collectDataVector_r = nullInitVector;
 }
 
 void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
@@ -232,7 +188,7 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
                        const vector<string> &f_dataBaseHeader_v,
                        thrust::device_vector<long int> *f_collectDataVector_p,
                        thrust::device_vector<long int> &f_workDataVector,
-                       bool &firstRun, unsigned int f_rowNumber_ui,
+                       unsigned int f_rowNumber_ui,
                        unsigned int f_columnNumber_ui) {
 
   /// date="2010"
@@ -246,7 +202,7 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
 
   /// find "date" number of column //PC side
   for (unsigned int l_it_y = 0; l_it_y < f_dataBaseHeader_v.size();
-       l_it_y++) // Todo optimalize!!
+       l_it_y++) // Todo optimalize to parallel search!!
   {
     string l_column = f_dataBaseHeader_v.at(l_it_y);
     if (l_column == column) {
@@ -254,31 +210,16 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
     }
   }
 
-  if (firstRun == true) {
+  if ((m_firstRun_b == true) || (m_firstMethodWasOr_b == true)) {
     /// if first time run the query, search the lines from original database
     /// else we search from workDataVector
-
     dim3 necessaryGridSize(f_rowNumber_ui);
-    searcDataInColumn<<<necessaryGridSize,1>>>(
+    searcDataInColumn<<<1, necessaryGridSize>>>(
         thrust::raw_pointer_cast(dataBase_r.data()),
         thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
         f_columnNumber_ui, row, l_targetColumnNumber_ui);
 
-    cudaDeviceSynchronize();
-    firstRun = false;
-
-  }
-
-  else {
-
-	resetOffset<<<1,1>>>();
-    dim3 necessaryGridSize(f_rowNumber_ui);
-    searcDataInColumn<<<necessaryGridSize,1 >>>(
-        thrust::raw_pointer_cast(f_workDataVector.data()),
-        thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
-        f_columnNumber_ui, row, l_targetColumnNumber_ui);
-
-    thrust::host_vector<long int> l_foundedResult(3 * 4);
+    /*thrust::host_vector<long int> l_foundedResult(3 * 4);
     l_foundedResult= *f_collectDataVector_p;
 
     for (int x = 0; x < 3; x++) {
@@ -286,7 +227,20 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
         printf("result %lu ", l_foundedResult[(x * 4) + y]);
       }
       printf("\n");
-    }
+    }*/
+
+    cudaDeviceSynchronize();
+    m_firstRun_b = false;
+
+  }
+
+  else {
+
+    dim3 necessaryGridSize(f_rowNumber_ui);
+    searcDataInColumn<<<1, necessaryGridSize>>>(
+        thrust::raw_pointer_cast(f_workDataVector.data()),
+        thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
+        f_columnNumber_ui, row, l_targetColumnNumber_ui);
 
     cudaDeviceSynchronize();
   }

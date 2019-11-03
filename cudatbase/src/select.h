@@ -46,6 +46,9 @@ private:
   vector<vector<long int>> m_AND_collectDataVector;
   vector<vector<long int>> m_OR_collectDataVector;
 
+  bool m_firstRun_b;
+  bool m_firstMethodWasOr_b;
+
   void or_method(vector<vector<long int>> *f_collectDataVector_p,
                  vector<vector<long int>> &f_OR_collectDataVector_r);
 
@@ -58,10 +61,10 @@ private:
                     const vector<vector<long int>> &f_OR_collectDataVector_r,
                     vector<vector<long int>> &f_AND_collectDataVector_r);
 
-  void equal(int input, string f_SelectRule_str,
+  void equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
              const vector<vector<long int>> &dataBase_r,
              vector<vector<long int>> *f_collectDataVector_p,
-             vector<vector<long int>> &f_workDataVector, bool &firstRun);
+             vector<vector<long int>> &f_workDataVector);
 
   //-------------------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   void loadCSV();

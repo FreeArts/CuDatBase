@@ -1,11 +1,9 @@
-20:02:09 **** Incremental Build of configuration Debug for project cudatbase ****
+20:08:40 **** Incremental Build of configuration Debug for project cudatbase ****
 make all 
 Building file: ../src/cuda_select.cu
 Invoking: NVCC Compiler
 /usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
 /usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
-../src/cuda_select.cu(209): warning: parameter "f_collectDataVector_p" was set but never used
-
 Finished building: ../src/cuda_select.cu
  
 Building target: cudatbase
@@ -14,5 +12,5 @@ Invoking: NVCC Linker
 Finished building target: cudatbase
  
 
-20:02:16 Build Finished (took 6s.627ms)
+20:08:47 Build Finished (took 6s.726ms)
 
