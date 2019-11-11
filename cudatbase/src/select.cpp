@@ -6,12 +6,13 @@
  */
 
 //---------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
-#include "CSVReader.h"
+//#include "CSVReader.h"
 //--------------------------------------------------------
 
 #include "select.h"
 
 //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
+/*
 void SELECT::loadCSV() {
 
   CSVReader *reader = new CSVReader(
@@ -25,6 +26,7 @@ void SELECT::loadCSV() {
   loadDatabase(m_dataList_v, m_headerOfDataBase_v);
 
   delete reader;
+
 }
 
 void SELECT::testRun() {
@@ -47,15 +49,19 @@ void SELECT::testRun() {
   CudaSelect cudaTest;
 
   cudaTest.CudaRun(l_selectRule_stdv, m_dataList_v, m_databaseHeader);
+
 }
+*/
 //-------------------------------------------------
 SELECT::SELECT() {
 
-  // testFunction();
   m_dataList_v.empty();
+  m_firstRun_b = true;
+  m_firstMethodWasOr_b = true;
+  m_AND_collectDataVector.clear();
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
-  testRun();
+  // testRun();
   //-------------------------------------------------------------------
 }
 
@@ -82,6 +88,14 @@ void SELECT::showDatabase() const {
 void SELECT::readSelectRule(vector<string> f_selectRule_v) {
   m_selectRule_v = f_selectRule_v;
   // CopySelectRuleToDevice(f_selectRule_v);
+}
+
+vector<vector<long int>> SELECT::parallelRun() {
+  CudaSelect cudaSelect;
+  cudaSelect.CudaRun(m_selectRule_v, m_dataList_v, m_databaseHeader);
+
+  vector<vector<long int>> l_cudaResult_v = cudaSelect.getQueryResult();
+  return l_cudaResult_v;
 }
 
 // ToDo refactore
@@ -116,7 +130,7 @@ void SELECT::run() {
 
     input = l_rule_str.find("|");
     if (input != (-1)) {
-      // or_method(collectDataVector_p, m_OR_collectDataVector);
+
       continue;
     }
 
@@ -128,19 +142,7 @@ void SELECT::run() {
             m_workDataVector);
       continue;
     }
-
-    // or_and_merge(collectDataVector_p, m_OR_collectDataVector,
-    // m_AND_collectDataVector);
   }
-}
-
-void SELECT::or_method(vector<vector<long int>> *f_collectDataVector_p,
-                       vector<vector<long int>> &f_OR_collectDataVector_r) {
-  /// put collectDataVector_p contain to l_OR_collectDataVector_r by indirect
-  f_collectDataVector_p =
-      &f_OR_collectDataVector_r; // Put to Or container :*f_collectDataVector_p
-                                 // = f_OR_collectDataVector_r;
-  f_collectDataVector_p->clear();
 }
 
 void SELECT::and_method(
@@ -162,19 +164,6 @@ void SELECT::and_method(
   f_workDataVector = f_AND_collectDataVector_r;
 
   f_collectDataVector_p->clear();
-}
-// ToDo return!
-void SELECT::or_and_merge(
-    const vector<vector<long int>> *f_collectDataVector_p,
-    const vector<vector<long int>> &f_OR_collectDataVector_r,
-    vector<vector<long int>> &f_AND_collectDataVector_r) {
-  /// if the collectDataVector_p point to the OR_collectDataVector_r copy the
-  /// OR_collectDataVector_r contain to AND_collectDataVector_r
-  if ((void *)f_collectDataVector_p == &f_OR_collectDataVector_r) {
-    f_AND_collectDataVector_r.insert(f_AND_collectDataVector_r.end(),
-                                     f_OR_collectDataVector_r.begin(),
-                                     f_OR_collectDataVector_r.end());
-  }
 }
 
 void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
@@ -222,4 +211,8 @@ void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
       }
     }
   }
+}
+
+vector<vector<long int>> SELECT::getQueryResult() const {
+  return m_AND_collectDataVector;
 }

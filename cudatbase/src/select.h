@@ -32,6 +32,9 @@ public:
   void readSelectRule(vector<string> f_selectRule_v);
 
   void run();
+  vector<vector<long int>> parallelRun();
+
+  vector<vector<long int>> getQueryResult() const;
 
 private:
   string m_dataBasePath_str;
@@ -49,17 +52,10 @@ private:
   bool m_firstRun_b;
   bool m_firstMethodWasOr_b;
 
-  void or_method(vector<vector<long int>> *f_collectDataVector_p,
-                 vector<vector<long int>> &f_OR_collectDataVector_r);
-
   void and_method(vector<vector<long int>> *f_collectDataVector_p,
                   const vector<vector<long int>> &f_OR_collectDataVector_r,
                   vector<vector<long int>> &f_AND_collectDataVector_r,
                   vector<vector<long int>> &f_workDataVector);
-
-  void or_and_merge(const vector<vector<long int>> *f_collectDataVector_p,
-                    const vector<vector<long int>> &f_OR_collectDataVector_r,
-                    vector<vector<long int>> &f_AND_collectDataVector_r);
 
   void equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
              const vector<vector<long int>> &dataBase_r,
@@ -67,8 +63,8 @@ private:
              vector<vector<long int>> &f_workDataVector);
 
   //-------------------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
-  void loadCSV();
-  void testRun();
+  // void loadCSV();
+  // void testRun();
 };
 
 #endif /* SELECT_H_ */

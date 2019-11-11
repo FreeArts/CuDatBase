@@ -24,9 +24,16 @@ public:
                         const unsigned int f_databaseRowSize_ui,
                         unsigned int f_databaseColumnSize_ui,
                         thrust::device_vector<long int> &f_DeviceDataBase_r);
+
   void CudaRun(const vector<string> &f_selectRule,
                const vector<vector<long int>> &f_dataBase_r,
                const vector<string> &f_dataBaseHeader_v);
+
+  void copyDataFromDevice(const unsigned int f_databaseRowSize_ui,
+                          const unsigned int f_databaseColumnSize_ui,
+                          const thrust::host_vector<long int> &f_resultVector);
+
+  vector<vector<long int>> getQueryResult() const;
 
 private:
   void and_method(thrust::device_vector<long int> *f_collectDataVector_p,
@@ -44,4 +51,5 @@ private:
 
   bool m_firstRun_b;
   bool m_firstMethodWasOr_b;
+  vector<vector<long int>> m_resultDatabase_v;
 };

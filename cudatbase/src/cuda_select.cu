@@ -2,7 +2,13 @@
 #include <cooperative_groups.h>
 #include <vector>
 
-CudaSelect::CudaSelect() {}
+CudaSelect::CudaSelect() {
+
+  m_firstMethodWasOr_b = true;
+  m_firstRun_b = true;
+
+  m_resultDatabase_v.clear();
+}
 
 CudaSelect::~CudaSelect() {}
 
@@ -69,6 +75,7 @@ void CudaSelect::copyDataToDevice(
     const unsigned int f_databaseRowSize_ui,
     unsigned int f_databaseColumnSize_ui,
     thrust::device_vector<long int> &f_DeviceDataBase_r) {
+
   int l_tmpDatabaseContainer_i[f_databaseRowSize_ui][f_databaseColumnSize_ui];
 
   unsigned int l_it_x = 0;
@@ -88,6 +95,25 @@ void CudaSelect::copyDataToDevice(
                &(l_tmpDatabaseContainer_i[f_databaseRowSize_ui]
                                          [f_databaseColumnSize_ui]),
                f_DeviceDataBase_r.begin());
+}
+
+void CudaSelect::copyDataFromDevice(
+    const unsigned int f_databaseRowSize_ui,
+    const unsigned int f_databaseColumnSize_ui,
+    const thrust::host_vector<long int> &f_resultVector) {
+
+  vector<long int> l_tmpDatabaseContainer_v;
+  for (int x = 0; x < f_databaseRowSize_ui; x++) {
+
+    l_tmpDatabaseContainer_v.clear();
+    for (int y = 0; y < f_databaseColumnSize_ui; y++) {
+      long int l_tmpVectorValu =
+          f_resultVector[(x * f_databaseColumnSize_ui) + y];
+
+      l_tmpDatabaseContainer_v.push_back(l_tmpVectorValu);
+    }
+    m_resultDatabase_v.push_back(l_tmpDatabaseContainer_v);
+  }
 }
 
 void CudaSelect::CudaRun(const vector<string> &f_selectRule,
@@ -110,6 +136,8 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
   // ToDo: Rename it for host_Copy.......
   thrust::host_vector<long int> l_foundedResult(l_databaseRowSize_ui *
                                                 l_databaseColumnSize_ui);
+
+  vector<long int> resultVector(l_databaseRowSize_ui * l_databaseColumnSize_ui);
 
   copyDataToDevice(f_dataBase_r, l_databaseRowSize_ui, l_databaseColumnSize_ui,
                    l_DeviceDatabase);
@@ -154,12 +182,16 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
 
   l_foundedResult = l_AND_collectDataVector;
 
-  for (int x = 0; x < 3; x++) {
-    for (int y = 0; y < 4; y++) {
-      printf("cuda %lu ", l_foundedResult[(x * 4) + y]);
-    }
-    printf("\n");
-  }
+  /*
+   for (int x = 0; x < l_databaseRowSize_ui; x++) {
+     for (int y = 0; y < l_databaseColumnSize_ui; y++) {
+       printf("cuda %lu ", l_foundedResult[(x * l_databaseColumnSize_ui) + y]);
+     }
+     printf("\n");
+   }*/
+
+  copyDataFromDevice(l_databaseRowSize_ui, l_databaseColumnSize_ui,
+                     l_foundedResult);
 }
 
 void CudaSelect::and_method(
@@ -219,6 +251,7 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
         thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
         f_columnNumber_ui, row, l_targetColumnNumber_ui);
 
+    // Debug point
     /*thrust::host_vector<long int> l_foundedResult(3 * 4);
     l_foundedResult= *f_collectDataVector_p;
 
@@ -244,4 +277,9 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
 
     cudaDeviceSynchronize();
   }
+}
+
+vector<vector<long int>> CudaSelect::getQueryResult() const {
+
+  return m_resultDatabase_v;
 }

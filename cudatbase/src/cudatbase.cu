@@ -14,7 +14,7 @@
 #include <stdlib.h>
 
 int main(void) {
-  SELECT testSelect;
+  // SELECT testSelect; //For debug
   // testSelect.run();
   // testSelect.showDatabase();
 }
