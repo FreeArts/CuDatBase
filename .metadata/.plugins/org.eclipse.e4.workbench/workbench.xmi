@@ -70,12 +70,13 @@
           <children xsi:type="basic:PartSashContainer" xmi:id="_NEaytfu9EemqCpFw-Z-e-A" selectedElement="_NEayu_u9EemqCpFw-Z-e-A" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_NEaytvu9EemqCpFw-Z-e-A" elementId="topLeft" containerData="1494" selectedElement="_NEayt_u9EemqCpFw-Z-e-A">
               <tags>newtablook</tags>
+              <tags>noFocus</tags>
               <children xsi:type="advanced:Placeholder" xmi:id="_NEayt_u9EemqCpFw-Z-e-A" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_NEaz5_u9EemqCpFw-Z-e-A"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_NEayuPu9EemqCpFw-Z-e-A" elementId="org.eclipse.cdt.ui.CView" toBeRendered="false" ref="_NEaz_fu9EemqCpFw-Z-e-A"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_NEayufu9EemqCpFw-Z-e-A" elementId="org.eclipse.ui.views.ResourceNavigator" toBeRendered="false" ref="_NEaz_vu9EemqCpFw-Z-e-A"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_NEayuvu9EemqCpFw-Z-e-A" elementId="org.eclipse.ui.views.BookmarkView" toBeRendered="false" ref="_NEaz__u9EemqCpFw-Z-e-A"/>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_NEayu_u9EemqCpFw-Z-e-A" containerData="8506" selectedElement="_NEayvPu9EemqCpFw-Z-e-A">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_NEayu_u9EemqCpFw-Z-e-A" containerData="8506" selectedElement="_NEaywfu9EemqCpFw-Z-e-A">
               <children xsi:type="basic:PartSashContainer" xmi:id="_NEayvPu9EemqCpFw-Z-e-A" containerData="7558" selectedElement="_NEayvfu9EemqCpFw-Z-e-A" horizontal="true">
                 <children xsi:type="advanced:Placeholder" xmi:id="_NEayvfu9EemqCpFw-Z-e-A" elementId="org.eclipse.ui.editorss" containerData="8276" ref="_NEaz1vu9EemqCpFw-Z-e-A"/>
                 <children xsi:type="basic:PartStack" xmi:id="_NEayvvu9EemqCpFw-Z-e-A" elementId="topRight" containerData="1724" selectedElement="_NEayv_u9EemqCpFw-Z-e-A">
@@ -215,13 +216,13 @@
         <tags>noFocus</tags>
         <children xsi:type="advanced:Placeholder" xmi:id="_NEaz2Pu9EemqCpFw-Z-e-A" elementId="Drag Placerholder" toBeRendered="false"/>
         <children xsi:type="basic:Part" xmi:id="_NEaz5vu9EemqCpFw-Z-e-A" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="select.h" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;select.h&quot; partName=&quot;select.h&quot; title=&quot;select.h&quot; tooltip=&quot;cudatbase/src/select.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/select.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;590&quot; selectionTopPixel=&quot;445&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;select.h&quot; partName=&quot;select.h&quot; title=&quot;select.h&quot; tooltip=&quot;cudatbase/src/select.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/select.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;19&quot; selectionOffset=&quot;668&quot; selectionTopPixel=&quot;180&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_NEaz2vu9EemqCpFw-Z-e-A" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="select.cpp" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;select.cpp&quot; partName=&quot;select.cpp&quot; title=&quot;select.cpp&quot; tooltip=&quot;cudatbase/src/select.cpp&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/select.cpp&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;3519&quot; selectionTopPixel=&quot;2412&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;select.cpp&quot; partName=&quot;select.cpp&quot; title=&quot;select.cpp&quot; tooltip=&quot;cudatbase/src/select.cpp&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/select.cpp&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;723&quot; selectionTopPixel=&quot;293&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
@@ -245,7 +246,7 @@
           </menus>
         </children>
         <children xsi:type="basic:Part" xmi:id="_NEaz3vu9EemqCpFw-Z-e-A" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cuda_select.cu" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;cuda_select.cu&quot; partName=&quot;cuda_select.cu&quot; title=&quot;cuda_select.cu&quot; tooltip=&quot;cudatbase/src/cuda_select.cu&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/cuda_select.cu&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1099&quot; selectionTopPixel=&quot;414&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;cuda_select.cu&quot; partName=&quot;cuda_select.cu&quot; title=&quot;cuda_select.cu&quot; tooltip=&quot;cudatbase/src/cuda_select.cu&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/cuda_select.cu&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;10964&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
@@ -283,7 +284,7 @@
           </menus>
         </children>
         <children xsi:type="basic:Part" xmi:id="_NEaz2fu9EemqCpFw-Z-e-A" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cuda_select.cuh" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;cuda_select.cuh&quot; partName=&quot;cuda_select.cuh&quot; title=&quot;cuda_select.cuh&quot; tooltip=&quot;cudatbase/src/cuda_select.cuh&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/cuda_select.cuh&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;20&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;cuda_select.cuh&quot; partName=&quot;cuda_select.cuh&quot; title=&quot;cuda_select.cuh&quot; tooltip=&quot;cudatbase/src/cuda_select.cuh&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/cudatbase/src/cuda_select.cuh&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2023&quot; selectionTopPixel=&quot;540&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
@@ -631,7 +632,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_NEbaRvu9EemqCpFw-Z-e-A" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_70EhwAS7EeqfJJfeHFOZvA" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_NEcDhfu9EemqCpFw-Z-e-A"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_TOp8oAo9EeqdmeW0czeYng" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_NEcDhfu9EemqCpFw-Z-e-A"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_NEbaW_u9EemqCpFw-Z-e-A" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -655,7 +656,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_NEbalfu9EemqCpFw-Z-e-A" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_70JaQAS7EeqfJJfeHFOZvA" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_NEcDFfu9EemqCpFw-Z-e-A"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_TOtnAwo9EeqdmeW0czeYng" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_NEcDFfu9EemqCpFw-Z-e-A"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_NEbaoPu9EemqCpFw-Z-e-A" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

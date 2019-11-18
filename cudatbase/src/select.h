@@ -36,6 +36,8 @@ public:
 
   vector<vector<long int>> getQueryResult() const;
 
+  string m_versionNumber_str;
+
 private:
   string m_dataBasePath_str;
   string m_delimeter_str;

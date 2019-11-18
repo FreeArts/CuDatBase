@@ -13,24 +13,29 @@ CudaSelect::CudaSelect() {
 CudaSelect::~CudaSelect() {}
 
 __global__ void searcData(long int *f_dataBase_p, long int *f_resultLines_p,
-                          const unsigned int f_databaseRowSize_ui,
-                          const unsigned int f_databaseColumnSize_ui,
-                          const unsigned int f_targetWord_ui) {
+                          const unsigned long int f_databaseRowSize_ui,
+                          const unsigned long int f_databaseColumnSize_ui,
+                          const unsigned long int f_targetWord_ui) {
 
-  int rowThread = blockIdx.x * blockDim.x + threadIdx.x;
-  int columnThread = blockIdx.y * blockDim.y + threadIdx.y;
+  unsigned long int rowThread = blockIdx.x * blockDim.x + threadIdx.x;
+  unsigned long int columnThread = blockIdx.y * blockDim.y + threadIdx.y;
 
-  long int l_tmpWordContainer_li =
-      f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + columnThread];
+  if ((rowThread <= f_databaseRowSize_ui) &&
+      (columnThread <= f_databaseColumnSize_ui)) {
 
-  if (l_tmpWordContainer_li == f_targetWord_ui) {
+    long int l_tmpWordContainer_li =
+        f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + columnThread];
 
-    for (int l_it_x = 0; l_it_x < f_databaseColumnSize_ui; l_it_x++) {
+    if (l_tmpWordContainer_li == f_targetWord_ui) {
 
-      long int l_dataBaseFoundedLineContent_li =
-          f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
-      f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
-          l_dataBaseFoundedLineContent_li;
+      for (int l_it_x = 0; l_it_x < f_databaseColumnSize_ui; l_it_x++) {
+
+        long int l_dataBaseFoundedLineContent_li =
+            f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
+
+        f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
+            l_dataBaseFoundedLineContent_li;
+      }
     }
   }
   // auto syncOnlyThreads= cooperative_groups::this_thread();
@@ -45,22 +50,23 @@ __global__ void searcDataInColumn(long int *f_dataBase_p,
                                   const unsigned int f_databaseRowSize_ui,
                                   const unsigned int f_databaseColumnSize_ui,
                                   const long int f_targetWord_ui,
-                                  const unsigned int f_targetColumn) {
+                                  const unsigned long int f_targetColumn) {
 
   int rowThread = blockIdx.x * blockDim.x + threadIdx.x;
 
-  // printf("%i \n",rowThread);
-  long int l_tmpWordContainer_li =
-      f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + f_targetColumn];
+  if (rowThread <= f_databaseRowSize_ui) {
+    long int l_tmpWordContainer_li =
+        f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + f_targetColumn];
 
-  if (l_tmpWordContainer_li == f_targetWord_ui) {
+    if (l_tmpWordContainer_li == f_targetWord_ui) {
 
-    for (int l_it_x = 0; l_it_x < f_databaseColumnSize_ui; l_it_x++) {
+      for (int l_it_x = 0; l_it_x < f_databaseColumnSize_ui; l_it_x++) {
 
-      long int l_dataBaseFoundedLineContent_li =
-          f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
-      f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
-          l_dataBaseFoundedLineContent_li;
+        long int l_dataBaseFoundedLineContent_li =
+            f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
+        f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
+            l_dataBaseFoundedLineContent_li;
+      }
     }
   }
   // auto syncOnlyThreads= cooperative_groups::this_thread();
@@ -72,8 +78,8 @@ __global__ void searcDataInColumn(long int *f_dataBase_p,
 
 void CudaSelect::copyDataToDevice(
     const vector<vector<long int>> &f_dataBase_r,
-    const unsigned int f_databaseRowSize_ui,
-    unsigned int f_databaseColumnSize_ui,
+    const unsigned long int f_databaseRowSize_ui,
+    unsigned long int f_databaseColumnSize_ui,
     thrust::device_vector<long int> &f_DeviceDataBase_r) {
 
   int l_tmpDatabaseContainer_i[f_databaseRowSize_ui][f_databaseColumnSize_ui];
@@ -98,8 +104,8 @@ void CudaSelect::copyDataToDevice(
 }
 
 void CudaSelect::copyDataFromDevice(
-    const unsigned int f_databaseRowSize_ui,
-    const unsigned int f_databaseColumnSize_ui,
+    const unsigned long int f_databaseRowSize_ui,
+    const unsigned long int f_databaseColumnSize_ui,
     const thrust::host_vector<long int> &f_resultVector) {
 
   vector<long int> l_tmpDatabaseContainer_v;
@@ -107,10 +113,10 @@ void CudaSelect::copyDataFromDevice(
 
     l_tmpDatabaseContainer_v.clear();
     for (int y = 0; y < f_databaseColumnSize_ui; y++) {
-      long int l_tmpVectorValu =
+      long int l_tmpVectorValue =
           f_resultVector[(x * f_databaseColumnSize_ui) + y];
 
-      l_tmpDatabaseContainer_v.push_back(l_tmpVectorValu);
+      l_tmpDatabaseContainer_v.push_back(l_tmpVectorValue);
     }
     m_resultDatabase_v.push_back(l_tmpDatabaseContainer_v);
   }
@@ -120,8 +126,8 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
                          const vector<vector<long int>> &f_dataBase_r,
                          const vector<string> &f_dataBaseHeader_v) {
 
-  unsigned int l_databaseRowSize_ui = f_dataBase_r.size();
-  unsigned int l_databaseColumnSize_ui = f_dataBaseHeader_v.size();
+  unsigned long int l_databaseRowSize_ui = f_dataBase_r.size();
+  unsigned long int l_databaseColumnSize_ui = f_dataBaseHeader_v.size();
 
   thrust::device_vector<long int> *l_collectDataVector_p(NULL);
   thrust::device_vector<long int> l_workDataVector(l_databaseRowSize_ui *
@@ -198,7 +204,7 @@ void CudaSelect::and_method(
     thrust::device_vector<long int> *f_collectDataVector_p,
     thrust::device_vector<long int> &f_AND_collectDataVector_r,
     thrust::device_vector<long int> &f_workDataVector,
-    unsigned int f_rowNumber_ui, unsigned int f_columnNumber_ui) {
+    unsigned long int f_rowNumber_ui, unsigned long int f_columnNumber_ui) {
 
   thrust::host_vector<long int> nullInitVector(
       f_rowNumber_ui * f_columnNumber_ui); // by default Null vector
@@ -220,8 +226,11 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
                        const vector<string> &f_dataBaseHeader_v,
                        thrust::device_vector<long int> *f_collectDataVector_p,
                        thrust::device_vector<long int> &f_workDataVector,
-                       unsigned int f_rowNumber_ui,
-                       unsigned int f_columnNumber_ui) {
+                       unsigned long int f_rowNumber_ui,
+                       unsigned long int f_columnNumber_ui) {
+
+  unsigned long int l_necessaryBlockNumber_ui = 0;
+  unsigned long int l_necessaryThreadNumber_ui = 0;
 
   /// date="2010"
   unsigned int l_targetColumnNumber_ui = 0;
@@ -245,8 +254,9 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
   if ((m_firstRun_b == true) || (m_firstMethodWasOr_b == true)) {
     /// if first time run the query, search the lines from original database
     /// else we search from workDataVector
-    dim3 necessaryGridSize(f_rowNumber_ui);
-    searcDataInColumn<<<1, necessaryGridSize>>>(
+
+    dim3 necessaryThreadSize(f_rowNumber_ui);
+    searcDataInColumn<<<1, necessaryThreadSize>>>(
         thrust::raw_pointer_cast(dataBase_r.data()),
         thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
         f_columnNumber_ui, row, l_targetColumnNumber_ui);
@@ -269,13 +279,61 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
 
   else {
 
-    dim3 necessaryGridSize(f_rowNumber_ui);
-    searcDataInColumn<<<1, necessaryGridSize>>>(
+    dim3 necessaryThreadSize(f_rowNumber_ui);
+    searcDataInColumn<<<1, necessaryThreadSize>>>(
         thrust::raw_pointer_cast(f_workDataVector.data()),
         thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
         f_columnNumber_ui, row, l_targetColumnNumber_ui);
 
     cudaDeviceSynchronize();
+  }
+}
+
+void CudaSelect::calculateGridFillMethod(
+    unsigned long int &f_necessaryBlockNumber_r,
+    unsigned long int &f_necessaryThreadNumber_r,
+    const unsigned long int f_rowNumber_ui) {
+
+  f_necessaryBlockNumber_r = f_rowNumber_ui / 500;
+
+  if (f_necessaryBlockNumber_r <= 0) {
+    f_necessaryBlockNumber_r = 1;
+    f_necessaryThreadNumber_r = f_rowNumber_ui;
+  }
+
+  else {
+    unsigned long int l_remainder_ui =
+        f_rowNumber_ui % f_necessaryBlockNumber_r;
+    if (l_remainder_ui == 0) {
+      f_necessaryThreadNumber_r = f_rowNumber_ui / f_necessaryBlockNumber_r;
+    } else {
+      f_necessaryThreadNumber_r =
+          (f_rowNumber_ui / f_necessaryBlockNumber_r) + 1;
+    }
+  }
+}
+
+void CudaSelect::calculateGridBalanceMethod(
+    unsigned long int &f_necessaryBlockNumber_r,
+    unsigned long int &f_necessaryThreadNumber_r,
+    const unsigned long int f_rowNumber_ui) {
+
+  f_necessaryBlockNumber_r = f_rowNumber_ui / 500;
+
+  if (f_necessaryBlockNumber_r <= 0) {
+    f_necessaryBlockNumber_r = 1;
+    f_necessaryThreadNumber_r = f_rowNumber_ui;
+  }
+
+  else {
+    unsigned long int l_remainder_ui =
+        f_rowNumber_ui % f_necessaryBlockNumber_r;
+    if (l_remainder_ui == 0) {
+      f_necessaryThreadNumber_r = f_rowNumber_ui / f_necessaryBlockNumber_r;
+    } else {
+      f_necessaryThreadNumber_r =
+          (f_rowNumber_ui / f_necessaryBlockNumber_r) + 1;
+    }
   }
 }
 
