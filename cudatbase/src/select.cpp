@@ -59,7 +59,7 @@ SELECT::SELECT() {
   m_firstRun_b = true;
   m_firstMethodWasOr_b = true;
   m_AND_collectDataVector.clear();
-  m_versionNumber_str = "v1.0 alpha";
+  m_versionNumber_str = "v2.0 alpha";
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   // testRun();

@@ -1,0 +1,17 @@
+date;sex;brand;name
+2010;women;suzuki;Nati
+2009;men;honda;Peti
+2010;men;kawasaki;Aron
+
+men ->1
+women ->2
+
+suzuki ->1
+honda -> 2
+kawa ->3
+
+Nati -> 11
+Peti -> 12
+Aron -> 13
+
+SELECT name,brand where date="2010" & sex="1" | brand="3"

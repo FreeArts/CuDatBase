@@ -1,0 +1,14 @@
+ If needed:
+ 
+1,remove space (blank)
+2,change , to ;
+3,change ;; to ;-1;
+4,change ;; to ;
+5,convert for unix type
+ 
+cat jaac0_1_12_2017.csv | tr -d "[:blank:]" >> /home/freeart/MscThesis/CuDatBase/cudatbase/src/hope.csv
+cat hope.csv | sed 's/,/;/g'  >> /home/freeart/MscThesis/CuDatBase/cudatbase/src/hope2.csv
+cat hope2.csv | sed 's/;;/;-1;/g'  >> /home/freeart/MscThesis/CuDatBase/cudatbase/src/hope3.csv
+cat hope3.csv | sed 's/;;/;/g'  >> /home/freeart/MscThesis/CuDatBase/cudatbase/src/hope4.csv
+dos2unix -n hope4.csv hope5.csv
+

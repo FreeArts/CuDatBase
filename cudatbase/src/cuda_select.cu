@@ -255,8 +255,13 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
     /// if first time run the query, search the lines from original database
     /// else we search from workDataVector
 
-    dim3 necessaryThreadSize(f_rowNumber_ui);
-    searcDataInColumn<<<1, necessaryThreadSize>>>(
+    calculateGridBalanceMethod(l_necessaryBlockNumber_ui,
+                               l_necessaryThreadNumber_ui, f_rowNumber_ui);
+
+    dim3 necessaryBlockSize(l_necessaryBlockNumber_ui);
+    dim3 necessaryThreadSize(l_necessaryThreadNumber_ui);
+
+    searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
         thrust::raw_pointer_cast(dataBase_r.data()),
         thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
         f_columnNumber_ui, row, l_targetColumnNumber_ui);
@@ -279,8 +284,13 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
 
   else {
 
-    dim3 necessaryThreadSize(f_rowNumber_ui);
-    searcDataInColumn<<<1, necessaryThreadSize>>>(
+    calculateGridBalanceMethod(l_necessaryBlockNumber_ui,
+                               l_necessaryThreadNumber_ui, f_rowNumber_ui);
+
+    dim3 necessaryBlockSize(l_necessaryBlockNumber_ui);
+    dim3 necessaryThreadSize(l_necessaryThreadNumber_ui);
+
+    searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
         thrust::raw_pointer_cast(f_workDataVector.data()),
         thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
         f_columnNumber_ui, row, l_targetColumnNumber_ui);
@@ -302,14 +312,8 @@ void CudaSelect::calculateGridFillMethod(
   }
 
   else {
-    unsigned long int l_remainder_ui =
-        f_rowNumber_ui % f_necessaryBlockNumber_r;
-    if (l_remainder_ui == 0) {
-      f_necessaryThreadNumber_r = f_rowNumber_ui / f_necessaryBlockNumber_r;
-    } else {
-      f_necessaryThreadNumber_r =
-          (f_rowNumber_ui / f_necessaryBlockNumber_r) + 1;
-    }
+    // maximum Thread/block
+    f_necessaryThreadNumber_r = 500;
   }
 }
 
@@ -318,6 +322,7 @@ void CudaSelect::calculateGridBalanceMethod(
     unsigned long int &f_necessaryThreadNumber_r,
     const unsigned long int f_rowNumber_ui) {
 
+  // maximum 500 thread/block
   f_necessaryBlockNumber_r = f_rowNumber_ui / 500;
 
   if (f_necessaryBlockNumber_r <= 0) {
