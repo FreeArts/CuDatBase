@@ -59,7 +59,7 @@ SELECT::SELECT() {
   m_firstRun_b = true;
   m_firstMethodWasOr_b = true;
   m_AND_collectDataVector.clear();
-  m_versionNumber_str = "v2.0 alpha";
+  m_versionNumber_str = "v0.3 alpha";
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   // testRun();
@@ -143,6 +143,22 @@ void SELECT::run() {
             m_workDataVector);
       continue;
     }
+
+    input = l_rule_str.find("<");
+    if (input != (-1)) {
+
+      less(input, l_rule_str, l_dataBase_r, collectDataVector_p,
+           m_workDataVector);
+      continue;
+    }
+
+    input = l_rule_str.find(">");
+    if (input != (-1)) {
+
+      greater(input, l_rule_str, l_dataBase_r, collectDataVector_p,
+              m_workDataVector);
+      continue;
+    }
   }
 }
 
@@ -174,18 +190,19 @@ void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
   /// date="2010"
   unsigned int l_columnNumber_ui = 0;
   /// cut "=2010" part
-  string column = f_SelectRule_str.substr(0, whereIsTheTargetCharacter);
+  string l_columnName_str =
+      f_SelectRule_str.substr(0, whereIsTheTargetCharacter);
   /// cut "date=" part
-  string tmp_row = f_SelectRule_str.substr(whereIsTheTargetCharacter + 1,
-                                           f_SelectRule_str.size());
-  long int row = std::stol(tmp_row);
+  string l_condition_str = f_SelectRule_str.substr(
+      whereIsTheTargetCharacter + 1, f_SelectRule_str.size());
+  long int l_condition_li = std::stol(l_condition_str);
 
   /// find "date" number of column //PC side
   for (unsigned int l_it_y = 0; l_it_y < m_databaseHeader.size();
        l_it_y++) // Todo optimalize!!
   {
     string l_column = m_databaseHeader.at(l_it_y);
-    if (l_column == column) {
+    if (l_column == l_columnName_str) {
       l_columnNumber_ui = l_it_y;
     }
   }
@@ -195,7 +212,7 @@ void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
     /// else we search from workDataVector
     for (unsigned int l_it_x = 0; l_it_x < dataBase_r.size(); l_it_x++) {
       long int word = dataBase_r.at(l_it_x).at(l_columnNumber_ui);
-      if (word == row) {
+      if (word == l_condition_li) {
         // if find the line which include "2010" value put to
         // collectDataVector_p
         f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
@@ -207,13 +224,112 @@ void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
   else {
     for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
       long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
-      if (word == row) {
+      if (word == l_condition_li) {
         f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
       }
     }
   }
 }
 
+//---------------L-E-S-S------------------------------
+void SELECT::less(int whereIsTheTargetCharacter, string f_SelectRule_str,
+                  const vector<vector<long int>> &dataBase_r,
+                  vector<vector<long int>> *f_collectDataVector_p,
+                  vector<vector<long int>> &f_workDataVector) {
+  /// date="2010"
+  unsigned int l_columnNumber_ui = 0;
+  /// cut "=2010" part
+  string l_columnName_str =
+      f_SelectRule_str.substr(0, whereIsTheTargetCharacter);
+  /// cut "date=" part
+  string l_condition_str = f_SelectRule_str.substr(
+      whereIsTheTargetCharacter + 1, f_SelectRule_str.size());
+  long int l_condition_li = std::stol(l_condition_str);
+
+  /// find "date" number of column //PC side
+  for (unsigned int l_it_y = 0; l_it_y < m_databaseHeader.size();
+       l_it_y++) // Todo optimalize!!
+  {
+    string l_column = m_databaseHeader.at(l_it_y);
+    if (l_column == l_columnName_str) {
+      l_columnNumber_ui = l_it_y;
+    }
+  }
+
+  if ((m_firstRun_b == true) || (m_firstMethodWasOr_b == true)) {
+    /// if first time run the query, search the lines from original database
+    /// else we search from workDataVector
+    for (unsigned int l_it_x = 0; l_it_x < dataBase_r.size(); l_it_x++) {
+      long int word = dataBase_r.at(l_it_x).at(l_columnNumber_ui);
+      if (word < l_condition_li) {
+        // if find the line which include "2010" value put to
+        // collectDataVector_p
+        f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
+      }
+    }
+    m_firstRun_b = false;
+  }
+
+  else {
+    for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
+      long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
+      if (word < l_condition_li) {
+        f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
+      }
+    }
+  }
+}
+//----------------G-R-E-A-T-E-R------------
+void SELECT::greater(int whereIsTheTargetCharacter, string f_SelectRule_str,
+                     const vector<vector<long int>> &dataBase_r,
+                     vector<vector<long int>> *f_collectDataVector_p,
+                     vector<vector<long int>> &f_workDataVector) {
+  /// date="2010"
+  unsigned int l_columnNumber_ui = 0;
+  /// cut "=2010" part
+  string l_columnName_str =
+      f_SelectRule_str.substr(0, whereIsTheTargetCharacter);
+  /// cut "date=" part
+  string l_condition_str = f_SelectRule_str.substr(
+      whereIsTheTargetCharacter + 1, f_SelectRule_str.size());
+  long int l_condition_li = std::stol(l_condition_str);
+
+  /// find "date" number of column //PC side
+  for (unsigned int l_it_y = 0; l_it_y < m_databaseHeader.size();
+       l_it_y++) // Todo optimalize!!
+  {
+    string l_column = m_databaseHeader.at(l_it_y);
+    if (l_column == l_columnName_str) {
+      l_columnNumber_ui = l_it_y;
+    }
+  }
+
+  if ((m_firstRun_b == true) || (m_firstMethodWasOr_b == true)) {
+    /// if first time run the query, search the lines from original database
+    /// else we search from workDataVector
+    for (unsigned int l_it_x = 0; l_it_x < dataBase_r.size(); l_it_x++) {
+      long int word = dataBase_r.at(l_it_x).at(l_columnNumber_ui);
+      if (word > l_condition_li) {
+        // if find the line which include "2010" value put to
+        // collectDataVector_p
+        f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
+      }
+    }
+    m_firstRun_b = false;
+  }
+
+  else {
+    for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
+      long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
+      if (word > l_condition_li) {
+        f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
+      }
+    }
+  }
+}
+//-----------------------------------------
 vector<vector<long int>> SELECT::getQueryResult() const {
   return m_AND_collectDataVector;
 }
+
+string SELECT::getSWversion() { return m_versionNumber_str; }

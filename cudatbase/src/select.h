@@ -36,7 +36,7 @@ public:
 
   vector<vector<long int>> getQueryResult() const;
 
-  string m_versionNumber_str;
+  string getSWversion();
 
 private:
   string m_dataBasePath_str;
@@ -64,6 +64,17 @@ private:
              vector<vector<long int>> *f_collectDataVector_p,
              vector<vector<long int>> &f_workDataVector);
 
+  void less(int whereIsTheTargetCharacter, string f_SelectRule_str,
+            const vector<vector<long int>> &dataBase_r,
+            vector<vector<long int>> *f_collectDataVector_p,
+            vector<vector<long int>> &f_workDataVector);
+
+  void greater(int whereIsTheTargetCharacter, string f_SelectRule_str,
+               const vector<vector<long int>> &dataBase_r,
+               vector<vector<long int>> *f_collectDataVector_p,
+               vector<vector<long int>> &f_workDataVector);
+
+  string m_versionNumber_str;
   //-------------------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   // void loadCSV();
   // void testRun();

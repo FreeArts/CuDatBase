@@ -76,6 +76,68 @@ __global__ void searcDataInColumn(long int *f_dataBase_p,
   __syncthreads();
 }
 
+__global__ void
+searcDataLessInColumn(long int *f_dataBase_p, long int *f_resultLines_p,
+                      const unsigned int f_databaseRowSize_ui,
+                      const unsigned int f_databaseColumnSize_ui,
+                      const long int f_targetWord_ui,
+                      const unsigned long int f_targetColumn) {
+
+  int rowThread = blockIdx.x * blockDim.x + threadIdx.x;
+
+  if (rowThread <= f_databaseRowSize_ui) {
+    long int l_tmpWordContainer_li =
+        f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + f_targetColumn];
+
+    if (l_tmpWordContainer_li < f_targetWord_ui) {
+
+      for (int l_it_x = 0; l_it_x < f_databaseColumnSize_ui; l_it_x++) {
+
+        long int l_dataBaseFoundedLineContent_li =
+            f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
+        f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
+            l_dataBaseFoundedLineContent_li;
+      }
+    }
+  }
+  // auto syncOnlyThreads= cooperative_groups::this_thread();
+  // auto syncGroup = cooperative_groups::this_thread_block();
+  // syncGroup.sync();
+  // syncOnlyThreads.sync();
+  __syncthreads();
+}
+
+__global__ void
+searcDataGreaterInColumn(long int *f_dataBase_p, long int *f_resultLines_p,
+                         const unsigned int f_databaseRowSize_ui,
+                         const unsigned int f_databaseColumnSize_ui,
+                         const long int f_targetWord_ui,
+                         const unsigned long int f_targetColumn) {
+
+  int rowThread = blockIdx.x * blockDim.x + threadIdx.x;
+
+  if (rowThread <= f_databaseRowSize_ui) {
+    long int l_tmpWordContainer_li =
+        f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + f_targetColumn];
+
+    if (l_tmpWordContainer_li > f_targetWord_ui) {
+
+      for (int l_it_x = 0; l_it_x < f_databaseColumnSize_ui; l_it_x++) {
+
+        long int l_dataBaseFoundedLineContent_li =
+            f_dataBase_p[(rowThread * f_databaseColumnSize_ui) + l_it_x];
+        f_resultLines_p[l_it_x + (rowThread * f_databaseColumnSize_ui)] =
+            l_dataBaseFoundedLineContent_li;
+      }
+    }
+  }
+  // auto syncOnlyThreads= cooperative_groups::this_thread();
+  // auto syncGroup = cooperative_groups::this_thread_block();
+  // syncGroup.sync();
+  // syncOnlyThreads.sync();
+  __syncthreads();
+}
+
 void CudaSelect::copyDataToDevice(
     const vector<vector<long int>> &f_dataBase_r,
     const unsigned long int f_databaseRowSize_ui,
@@ -178,9 +240,27 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
     /// first will be find date="2010"
     whereIsTheTargetCharacter = l_rule_str.find("=");
     if (whereIsTheTargetCharacter != (-1)) {
-      equal(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
-            f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
-            l_databaseRowSize_ui, l_databaseColumnSize_ui);
+      find(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
+           f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
+           l_databaseRowSize_ui, l_databaseColumnSize_ui, "=");
+
+      continue;
+    }
+
+    whereIsTheTargetCharacter = l_rule_str.find("<");
+    if (whereIsTheTargetCharacter != (-1)) {
+      find(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
+           f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
+           l_databaseRowSize_ui, l_databaseColumnSize_ui, "<");
+
+      continue;
+    }
+
+    whereIsTheTargetCharacter = l_rule_str.find(">");
+    if (whereIsTheTargetCharacter != (-1)) {
+      find(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
+           f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
+           l_databaseRowSize_ui, l_databaseColumnSize_ui, ">");
 
       continue;
     }
@@ -221,13 +301,14 @@ void CudaSelect::and_method(
   f_AND_collectDataVector_r = nullInitVector;
 }
 
-void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
-                       thrust::device_vector<long int> &dataBase_r,
-                       const vector<string> &f_dataBaseHeader_v,
-                       thrust::device_vector<long int> *f_collectDataVector_p,
-                       thrust::device_vector<long int> &f_workDataVector,
-                       unsigned long int f_rowNumber_ui,
-                       unsigned long int f_columnNumber_ui) {
+void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
+                      thrust::device_vector<long int> &dataBase_r,
+                      const vector<string> &f_dataBaseHeader_v,
+                      thrust::device_vector<long int> *f_collectDataVector_p,
+                      thrust::device_vector<long int> &f_workDataVector,
+                      unsigned long int f_rowNumber_ui,
+                      unsigned long int f_columnNumber_ui,
+                      string f_mathRule_str) {
 
   unsigned long int l_necessaryBlockNumber_ui = 0;
   unsigned long int l_necessaryThreadNumber_ui = 0;
@@ -261,11 +342,26 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
     dim3 necessaryBlockSize(l_necessaryBlockNumber_ui);
     dim3 necessaryThreadSize(l_necessaryThreadNumber_ui);
 
-    searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
-        thrust::raw_pointer_cast(dataBase_r.data()),
-        thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
-        f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    if (f_mathRule_str == "=") {
+      searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
+          thrust::raw_pointer_cast(dataBase_r.data()),
+          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    }
 
+    else if (f_mathRule_str == "<") {
+      searcDataLessInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
+          thrust::raw_pointer_cast(dataBase_r.data()),
+          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    }
+
+    else if (f_mathRule_str == ">") {
+      searcDataGreaterInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
+          thrust::raw_pointer_cast(dataBase_r.data()),
+          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    }
     // Debug point
     /*thrust::host_vector<long int> l_foundedResult(3 * 4);
     l_foundedResult= *f_collectDataVector_p;
@@ -290,10 +386,26 @@ void CudaSelect::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
     dim3 necessaryBlockSize(l_necessaryBlockNumber_ui);
     dim3 necessaryThreadSize(l_necessaryThreadNumber_ui);
 
-    searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
-        thrust::raw_pointer_cast(f_workDataVector.data()),
-        thrust::raw_pointer_cast(f_collectDataVector_p->data()), f_rowNumber_ui,
-        f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    if (f_mathRule_str == "=") {
+      searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
+          thrust::raw_pointer_cast(f_workDataVector.data()),
+          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    }
+
+    else if (f_mathRule_str == "<") {
+      searcDataLessInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
+          thrust::raw_pointer_cast(f_workDataVector.data()),
+          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    }
+
+    else if (f_mathRule_str == ">") {
+      searcDataGreaterInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
+          thrust::raw_pointer_cast(f_workDataVector.data()),
+          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+    }
 
     cudaDeviceSynchronize();
   }
