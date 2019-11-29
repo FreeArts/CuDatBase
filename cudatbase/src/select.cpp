@@ -59,7 +59,7 @@ SELECT::SELECT() {
   m_firstRun_b = true;
   m_firstMethodWasOr_b = true;
   m_AND_collectDataVector.clear();
-  m_versionNumber_str = "v0.3 alpha";
+  m_versionNumber_str = "v0.1 beta";
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   // testRun();
@@ -104,7 +104,6 @@ void SELECT::run() {
 
   // init:
   m_AND_collectDataVector.clear();
-  m_OR_collectDataVector.clear();
   m_workDataVector.clear();
 
   // date="2010" & sex="men" | brand="ktm"
@@ -112,7 +111,6 @@ void SELECT::run() {
   m_firstMethodWasOr_b = true;
 
   int input; // Todo destroy it...
-  collectDataVector_p = &m_AND_collectDataVector;
 
   const vector<vector<long int>> &l_dataBase_r = m_dataList_v;
 
@@ -120,8 +118,7 @@ void SELECT::run() {
     input = l_rule_str.find("&");
     if (input != (-1)) {
 
-      and_method(collectDataVector_p, m_OR_collectDataVector,
-                 m_AND_collectDataVector, m_workDataVector);
+      and_method(m_AND_collectDataVector, m_workDataVector);
 
       if (m_firstMethodWasOr_b)
         m_firstMethodWasOr_b = false;
@@ -139,7 +136,7 @@ void SELECT::run() {
     input = l_rule_str.find("=");
     if (input != (-1)) {
 
-      equal(input, l_rule_str, l_dataBase_r, collectDataVector_p,
+      equal(input, l_rule_str, l_dataBase_r, m_AND_collectDataVector,
             m_workDataVector);
       continue;
     }
@@ -147,7 +144,7 @@ void SELECT::run() {
     input = l_rule_str.find("<");
     if (input != (-1)) {
 
-      less(input, l_rule_str, l_dataBase_r, collectDataVector_p,
+      less(input, l_rule_str, l_dataBase_r, m_AND_collectDataVector,
            m_workDataVector);
       continue;
     }
@@ -155,37 +152,30 @@ void SELECT::run() {
     input = l_rule_str.find(">");
     if (input != (-1)) {
 
-      greater(input, l_rule_str, l_dataBase_r, collectDataVector_p,
+      greater(input, l_rule_str, l_dataBase_r, m_AND_collectDataVector,
               m_workDataVector);
       continue;
     }
   }
 }
 
-void SELECT::and_method(
-    vector<vector<long int>> *f_collectDataVector_p,
-    const vector<vector<long int>> &f_OR_collectDataVector_r,
-    vector<vector<long int>> &f_AND_collectDataVector_r,
-    vector<vector<long int>> &f_workDataVector) {
+void SELECT::and_method(vector<vector<long int>> &f_AND_collectDataVector_r,
+                        vector<vector<long int>> &f_workDataVector) {
 
   // or_and_merge(f_collectDataVector_p, f_OR_collectDataVector_r,
   // f_AND_collectDataVector_r);
 
   f_workDataVector.clear();
 
-  /// put collectDataVector_p contain to AND_collectDataVector_r by indirect
-  /// (Redundant step!)
-  f_collectDataVector_p = &f_AND_collectDataVector_r;
-
   /// put the AND_collectDataVector_r contains to l_workDataVector by directly
   f_workDataVector = f_AND_collectDataVector_r;
 
-  f_collectDataVector_p->clear();
+  f_AND_collectDataVector_r.clear();
 }
 
 void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
                    const vector<vector<long int>> &dataBase_r,
-                   vector<vector<long int>> *f_collectDataVector_p,
+                   vector<vector<long int>> &f_AND_collectDataVector_r,
                    vector<vector<long int>> &f_workDataVector) {
   /// date="2010"
   unsigned int l_columnNumber_ui = 0;
@@ -215,7 +205,7 @@ void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
       if (word == l_condition_li) {
         // if find the line which include "2010" value put to
         // collectDataVector_p
-        f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
+        f_AND_collectDataVector_r.push_back(dataBase_r.at(l_it_x));
       }
     }
     m_firstRun_b = false;
@@ -225,7 +215,7 @@ void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
     for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
       long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
       if (word == l_condition_li) {
-        f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
+        f_AND_collectDataVector_r.push_back(f_workDataVector.at(l_it_x));
       }
     }
   }
@@ -234,7 +224,7 @@ void SELECT::equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
 //---------------L-E-S-S------------------------------
 void SELECT::less(int whereIsTheTargetCharacter, string f_SelectRule_str,
                   const vector<vector<long int>> &dataBase_r,
-                  vector<vector<long int>> *f_collectDataVector_p,
+                  vector<vector<long int>> &f_AND_collectDataVector_r,
                   vector<vector<long int>> &f_workDataVector) {
   /// date="2010"
   unsigned int l_columnNumber_ui = 0;
@@ -264,7 +254,7 @@ void SELECT::less(int whereIsTheTargetCharacter, string f_SelectRule_str,
       if (word < l_condition_li) {
         // if find the line which include "2010" value put to
         // collectDataVector_p
-        f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
+        f_AND_collectDataVector_r.push_back(dataBase_r.at(l_it_x));
       }
     }
     m_firstRun_b = false;
@@ -274,7 +264,7 @@ void SELECT::less(int whereIsTheTargetCharacter, string f_SelectRule_str,
     for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
       long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
       if (word < l_condition_li) {
-        f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
+        f_AND_collectDataVector_r.push_back(f_workDataVector.at(l_it_x));
       }
     }
   }
@@ -282,7 +272,7 @@ void SELECT::less(int whereIsTheTargetCharacter, string f_SelectRule_str,
 //----------------G-R-E-A-T-E-R------------
 void SELECT::greater(int whereIsTheTargetCharacter, string f_SelectRule_str,
                      const vector<vector<long int>> &dataBase_r,
-                     vector<vector<long int>> *f_collectDataVector_p,
+                     vector<vector<long int>> &f_AND_collectDataVector_r,
                      vector<vector<long int>> &f_workDataVector) {
   /// date="2010"
   unsigned int l_columnNumber_ui = 0;
@@ -312,7 +302,7 @@ void SELECT::greater(int whereIsTheTargetCharacter, string f_SelectRule_str,
       if (word > l_condition_li) {
         // if find the line which include "2010" value put to
         // collectDataVector_p
-        f_collectDataVector_p->push_back(dataBase_r.at(l_it_x));
+        f_AND_collectDataVector_r.push_back(dataBase_r.at(l_it_x));
       }
     }
     m_firstRun_b = false;
@@ -322,7 +312,7 @@ void SELECT::greater(int whereIsTheTargetCharacter, string f_SelectRule_str,
     for (unsigned int l_it_x = 0; l_it_x < f_workDataVector.size(); l_it_x++) {
       long int word = f_workDataVector.at(l_it_x).at(l_columnNumber_ui);
       if (word > l_condition_li) {
-        f_collectDataVector_p->push_back(f_workDataVector.at(l_it_x));
+        f_AND_collectDataVector_r.push_back(f_workDataVector.at(l_it_x));
       }
     }
   }

@@ -1,10 +1,28 @@
-21:54:55 **** Incremental Build of configuration Debug for project cudatbase ****
+22:29:36 **** Build of configuration Debug for project cudatbase ****
 make all 
+Building file: ../src/CSVReader.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/CSVReader.d" "../src/CSVReader.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/CSVReader.o" "../src/CSVReader.cpp"
+Finished building: ../src/CSVReader.cpp
+ 
 Building file: ../src/cuda_select.cu
 Invoking: NVCC Compiler
 /usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cuda_select.d" "../src/cuda_select.cu"
 /usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cuda_select.o" "../src/cuda_select.cu"
 Finished building: ../src/cuda_select.cu
+ 
+Building file: ../src/cudatbase.cu
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/cudatbase.d" "../src/cudatbase.cu"
+/usr/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "src/cudatbase.o" "../src/cudatbase.cu"
+Finished building: ../src/cudatbase.cu
+ 
+Building file: ../src/select.cpp
+Invoking: NVCC Compiler
+/usr/bin/nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30  -odir "src" -M -o "src/select.d" "../src/select.cpp"
+/usr/bin/nvcc -G -g -O0 --compile  -x c++ -o  "src/select.o" "../src/select.cpp"
+Finished building: ../src/select.cpp
  
 Building target: cudatbase
 Invoking: NVCC Linker

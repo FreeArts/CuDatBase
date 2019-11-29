@@ -45,33 +45,29 @@ private:
   vector<string> m_databaseHeader;
   vector<string> m_selectRule_v;
 
-  vector<vector<long int>> *collectDataVector_p = NULL;
   vector<vector<long int>> m_workDataVector;
 
   vector<vector<long int>> m_AND_collectDataVector;
-  vector<vector<long int>> m_OR_collectDataVector;
 
   bool m_firstRun_b;
   bool m_firstMethodWasOr_b;
 
-  void and_method(vector<vector<long int>> *f_collectDataVector_p,
-                  const vector<vector<long int>> &f_OR_collectDataVector_r,
-                  vector<vector<long int>> &f_AND_collectDataVector_r,
+  void and_method(vector<vector<long int>> &f_AND_collectDataVector_r,
                   vector<vector<long int>> &f_workDataVector);
 
   void equal(int whereIsTheTargetCharacter, string f_SelectRule_str,
              const vector<vector<long int>> &dataBase_r,
-             vector<vector<long int>> *f_collectDataVector_p,
+             vector<vector<long int>> &f_AND_collectDataVector_r,
              vector<vector<long int>> &f_workDataVector);
 
   void less(int whereIsTheTargetCharacter, string f_SelectRule_str,
             const vector<vector<long int>> &dataBase_r,
-            vector<vector<long int>> *f_collectDataVector_p,
+            vector<vector<long int>> &f_AND_collectDataVector_r,
             vector<vector<long int>> &f_workDataVector);
 
   void greater(int whereIsTheTargetCharacter, string f_SelectRule_str,
                const vector<vector<long int>> &dataBase_r,
-               vector<vector<long int>> *f_collectDataVector_p,
+               vector<vector<long int>> &f_AND_collectDataVector_r,
                vector<vector<long int>> &f_workDataVector);
 
   string m_versionNumber_str;
