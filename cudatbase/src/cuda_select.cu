@@ -191,11 +191,10 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
   unsigned long int l_databaseRowSize_ui = f_dataBase_r.size();
   unsigned long int l_databaseColumnSize_ui = f_dataBaseHeader_v.size();
 
-  thrust::device_vector<long int> *l_collectDataVector_p(NULL);
   thrust::device_vector<long int> l_workDataVector(l_databaseRowSize_ui *
                                                    l_databaseColumnSize_ui);
 
-  thrust::device_vector<long int> l_AND_collectDataVector(
+  thrust::device_vector<long int> l_collectDataVector_v(
       l_databaseRowSize_ui * l_databaseColumnSize_ui);
 
   thrust::device_vector<long int> l_DeviceDatabase(l_databaseRowSize_ui *
@@ -205,8 +204,6 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
   thrust::host_vector<long int> l_foundedResult(l_databaseRowSize_ui *
                                                 l_databaseColumnSize_ui);
 
-  vector<long int> resultVector(l_databaseRowSize_ui * l_databaseColumnSize_ui);
-
   copyDataToDevice(f_dataBase_r, l_databaseRowSize_ui, l_databaseColumnSize_ui,
                    l_DeviceDatabase);
 
@@ -215,14 +212,12 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
   m_firstMethodWasOr_b = true;
 
   int whereIsTheTargetCharacter;
-  l_collectDataVector_p = &l_AND_collectDataVector;
 
   for (string l_rule_str : f_selectRule) {
     whereIsTheTargetCharacter = l_rule_str.find("&");
     if (whereIsTheTargetCharacter != (-1)) {
 
-      and_method(l_collectDataVector_p, l_AND_collectDataVector,
-                 l_workDataVector, l_databaseRowSize_ui,
+      and_method(l_collectDataVector_v, l_workDataVector, l_databaseRowSize_ui,
                  l_databaseColumnSize_ui);
 
       if (m_firstMethodWasOr_b)
@@ -241,7 +236,7 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
     whereIsTheTargetCharacter = l_rule_str.find("=");
     if (whereIsTheTargetCharacter != (-1)) {
       find(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
-           f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
+           f_dataBaseHeader_v, l_collectDataVector_v, l_workDataVector,
            l_databaseRowSize_ui, l_databaseColumnSize_ui, "=");
 
       continue;
@@ -250,7 +245,7 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
     whereIsTheTargetCharacter = l_rule_str.find("<");
     if (whereIsTheTargetCharacter != (-1)) {
       find(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
-           f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
+           f_dataBaseHeader_v, l_collectDataVector_v, l_workDataVector,
            l_databaseRowSize_ui, l_databaseColumnSize_ui, "<");
 
       continue;
@@ -259,14 +254,14 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
     whereIsTheTargetCharacter = l_rule_str.find(">");
     if (whereIsTheTargetCharacter != (-1)) {
       find(whereIsTheTargetCharacter, l_rule_str, l_DeviceDatabase,
-           f_dataBaseHeader_v, l_collectDataVector_p, l_workDataVector,
+           f_dataBaseHeader_v, l_collectDataVector_v, l_workDataVector,
            l_databaseRowSize_ui, l_databaseColumnSize_ui, ">");
 
       continue;
     }
   }
 
-  l_foundedResult = l_AND_collectDataVector;
+  l_foundedResult = l_collectDataVector_v;
 
   /*
    for (int x = 0; x < l_databaseRowSize_ui; x++) {
@@ -281,8 +276,7 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
 }
 
 void CudaSelect::and_method(
-    thrust::device_vector<long int> *f_collectDataVector_p,
-    thrust::device_vector<long int> &f_AND_collectDataVector_r,
+    thrust::device_vector<long int> &f_collectDataVector_r,
     thrust::device_vector<long int> &f_workDataVector,
     unsigned long int f_rowNumber_ui, unsigned long int f_columnNumber_ui) {
 
@@ -290,21 +284,18 @@ void CudaSelect::and_method(
       f_rowNumber_ui * f_columnNumber_ui); // by default Null vector
   f_workDataVector = nullInitVector;
 
-  /// put collectDataVector_p contain to AND_collectDataVector_r by indirect
-  // f_collectDataVector_p = &f_AND_collectDataVector_r;
-
-  /// f_collectDataVector_p point to f_AND_collectDataVector_r !!!!!!!!!!!
+  /// f_collectDataVector_p point to f_collectDataVector_r !!!!!!!!!!!
   /// put the AND_collectDataVector_r contains to l_workDataVector by directly
-  f_workDataVector = f_AND_collectDataVector_r;
+  f_workDataVector = f_collectDataVector_r;
 
   // similar to f_collectDataVector_p->clear();
-  f_AND_collectDataVector_r = nullInitVector;
+  f_collectDataVector_r = nullInitVector;
 }
 
 void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
                       thrust::device_vector<long int> &dataBase_r,
                       const vector<string> &f_dataBaseHeader_v,
-                      thrust::device_vector<long int> *f_collectDataVector_p,
+                      thrust::device_vector<long int> &f_collectDataVector_r,
                       thrust::device_vector<long int> &f_workDataVector,
                       unsigned long int f_rowNumber_ui,
                       unsigned long int f_columnNumber_ui,
@@ -345,21 +336,21 @@ void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
     if (f_mathRule_str == "=") {
       searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(dataBase_r.data()),
-          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
     }
 
     else if (f_mathRule_str == "<") {
       searcDataLessInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(dataBase_r.data()),
-          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
     }
 
     else if (f_mathRule_str == ">") {
       searcDataGreaterInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(dataBase_r.data()),
-          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
     }
     // Debug point
@@ -389,21 +380,21 @@ void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
     if (f_mathRule_str == "=") {
       searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(f_workDataVector.data()),
-          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
     }
 
     else if (f_mathRule_str == "<") {
       searcDataLessInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(f_workDataVector.data()),
-          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
     }
 
     else if (f_mathRule_str == ">") {
       searcDataGreaterInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(f_workDataVector.data()),
-          thrust::raw_pointer_cast(f_collectDataVector_p->data()),
+          thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
     }
 
