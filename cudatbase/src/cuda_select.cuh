@@ -34,6 +34,8 @@ public:
                           const thrust::host_vector<long int> &f_resultVector);
 
   vector<vector<long int>> getQueryResult() const;
+  float getRuntimeValue() const;
+  float getSearchtimeValue() const;
 
 private:
   void and_method(thrust::device_vector<long int> &f_collectDataVector_r,
@@ -49,10 +51,6 @@ private:
             unsigned long int f_rowNumber_ui,
             unsigned long int f_columnNumber_ui, string f_mathRule_str);
 
-  bool m_firstRun_b;
-  bool m_firstMethodWasOr_b;
-  vector<vector<long int>> m_resultDatabase_v;
-
   void calculateGridFillMethod(unsigned long int &f_necessaryBlockNumber_r,
                                unsigned long int &f_necessaryThreadNumber_r,
                                const unsigned long int f_rowNumber_ui);
@@ -60,4 +58,13 @@ private:
   void calculateGridBalanceMethod(unsigned long int &f_necessaryBlockNumber_r,
                                   unsigned long int &f_necessaryThreadNumber_r,
                                   const unsigned long int f_rowNumber_ui);
+
+  bool m_firstRun_b;
+  bool m_firstMethodWasOr_b;
+  vector<vector<long int>> m_resultDatabase_v;
+  float m_RunTimeMilliseconds_f;
+  float m_searchRunTime_f;
+
+  unsigned long int m_necessaryBlockNumber_ui;
+  unsigned long int m_necessaryThreadNumber_ui;
 };

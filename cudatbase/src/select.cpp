@@ -60,6 +60,7 @@ SELECT::SELECT() {
   m_firstMethodWasOr_b = true;
   m_AND_collectDataVector.clear();
   m_versionNumber_str = "v0.1 beta";
+  m_parallelRuntimeResult_f = 0.0;
 
   //--------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   // testRun();
@@ -96,6 +97,8 @@ vector<vector<long int>> SELECT::parallelRun() {
   cudaSelect.CudaRun(m_selectRule_v, m_dataList_v, m_databaseHeader);
 
   vector<vector<long int>> l_cudaResult_v = cudaSelect.getQueryResult();
+  m_parallelRuntimeResult_f = cudaSelect.getRuntimeValue();
+  m_parallelSearchtimeResult_f = cudaSelect.getSearchtimeValue();
   return l_cudaResult_v;
 }
 
@@ -323,3 +326,11 @@ vector<vector<long int>> SELECT::getQueryResult() const {
 }
 
 string SELECT::getSWversion() { return m_versionNumber_str; }
+
+float SELECT::getParallelRuntimeValue() const {
+  return m_parallelRuntimeResult_f;
+}
+
+float SELECT::getParallelSearchtimeValue() const {
+  return m_parallelSearchtimeResult_f;
+}

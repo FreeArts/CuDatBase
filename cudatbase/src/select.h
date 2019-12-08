@@ -37,6 +37,8 @@ public:
   vector<vector<long int>> getQueryResult() const;
 
   string getSWversion();
+  float getParallelRuntimeValue() const;
+  float getParallelSearchtimeValue() const;
 
 private:
   string m_dataBasePath_str;
@@ -71,6 +73,9 @@ private:
                vector<vector<long int>> &f_workDataVector);
 
   string m_versionNumber_str;
+  float m_parallelRuntimeResult_f;
+  float m_parallelSearchtimeResult_f;
+
   //-------------------------------------O-N-L-Y-F-O-R-D-E-B-U-G-!!!!--------------
   // void loadCSV();
   // void testRun();

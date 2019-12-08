@@ -6,6 +6,11 @@ CudaSelect::CudaSelect() {
 
   m_firstMethodWasOr_b = true;
   m_firstRun_b = true;
+  m_RunTimeMilliseconds_f = 0.0;
+  m_searchRunTime_f = 0.0;
+
+  m_necessaryBlockNumber_ui = 0;
+  m_necessaryThreadNumber_ui = 0;
 
   m_resultDatabase_v.clear();
 }
@@ -191,6 +196,9 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
   unsigned long int l_databaseRowSize_ui = f_dataBase_r.size();
   unsigned long int l_databaseColumnSize_ui = f_dataBaseHeader_v.size();
 
+  calculateGridBalanceMethod(m_necessaryBlockNumber_ui,
+                             m_necessaryThreadNumber_ui, l_databaseRowSize_ui);
+
   thrust::device_vector<long int> l_workDataVector(l_databaseRowSize_ui *
                                                    l_databaseColumnSize_ui);
 
@@ -208,6 +216,12 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
                    l_DeviceDatabase);
 
   //---------------------R-U-N----------------------
+  cudaEvent_t start, stop;
+  cudaEventCreate(&start);
+  cudaEventCreate(&stop);
+
+  cudaEventRecord(start);
+
   m_firstRun_b = true;
   m_firstMethodWasOr_b = true;
 
@@ -263,7 +277,11 @@ void CudaSelect::CudaRun(const vector<string> &f_selectRule,
 
   l_foundedResult = l_collectDataVector_v;
 
-  /*
+  cudaEventRecord(stop);
+  cudaEventSynchronize(stop);
+  cudaEventElapsedTime(&m_RunTimeMilliseconds_f, start, stop);
+
+  /*//Only l_foundedResult value Debug:
    for (int x = 0; x < l_databaseRowSize_ui; x++) {
      for (int y = 0; y < l_databaseColumnSize_ui; y++) {
        printf("cuda %lu ", l_foundedResult[(x * l_databaseColumnSize_ui) + y]);
@@ -301,9 +319,6 @@ void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
                       unsigned long int f_columnNumber_ui,
                       string f_mathRule_str) {
 
-  unsigned long int l_necessaryBlockNumber_ui = 0;
-  unsigned long int l_necessaryThreadNumber_ui = 0;
-
   /// date="2010"
   unsigned int l_targetColumnNumber_ui = 0;
   /// cut "=2010" part
@@ -327,17 +342,29 @@ void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
     /// if first time run the query, search the lines from original database
     /// else we search from workDataVector
 
-    calculateGridBalanceMethod(l_necessaryBlockNumber_ui,
-                               l_necessaryThreadNumber_ui, f_rowNumber_ui);
-
-    dim3 necessaryBlockSize(l_necessaryBlockNumber_ui);
-    dim3 necessaryThreadSize(l_necessaryThreadNumber_ui);
+    dim3 necessaryBlockSize(m_necessaryBlockNumber_ui);
+    dim3 necessaryThreadSize(m_necessaryThreadNumber_ui);
 
     if (f_mathRule_str == "=") {
+
+      cudaEvent_t start, stop;
+      cudaEventCreate(&start);
+      cudaEventCreate(&stop);
+
+      cudaEventRecord(start);
+
       searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(dataBase_r.data()),
           thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+
+      cudaEventRecord(stop);
+      cudaEventSynchronize(stop);
+      float l_searchTime;
+      cudaEventElapsedTime(&l_searchTime, start, stop);
+
+      m_searchRunTime_f += l_searchTime;
+
     }
 
     else if (f_mathRule_str == "<") {
@@ -353,6 +380,7 @@ void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
           thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
     }
+
     // Debug point
     /*thrust::host_vector<long int> l_foundedResult(3 * 4);
     l_foundedResult= *f_collectDataVector_p;
@@ -371,17 +399,29 @@ void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
 
   else {
 
-    calculateGridBalanceMethod(l_necessaryBlockNumber_ui,
-                               l_necessaryThreadNumber_ui, f_rowNumber_ui);
-
-    dim3 necessaryBlockSize(l_necessaryBlockNumber_ui);
-    dim3 necessaryThreadSize(l_necessaryThreadNumber_ui);
+    dim3 necessaryBlockSize(m_necessaryBlockNumber_ui);
+    dim3 necessaryThreadSize(m_necessaryThreadNumber_ui);
 
     if (f_mathRule_str == "=") {
+
+      cudaEvent_t start, stop;
+      cudaEventCreate(&start);
+      cudaEventCreate(&stop);
+
+      cudaEventRecord(start);
+
       searcDataInColumn<<<necessaryBlockSize, necessaryThreadSize>>>(
           thrust::raw_pointer_cast(f_workDataVector.data()),
           thrust::raw_pointer_cast(f_collectDataVector_r.data()),
           f_rowNumber_ui, f_columnNumber_ui, row, l_targetColumnNumber_ui);
+
+      cudaEventRecord(stop);
+      cudaEventSynchronize(stop);
+      float l_searchTime;
+      cudaEventElapsedTime(&l_searchTime, start, stop);
+
+      m_searchRunTime_f += l_searchTime;
+
     }
 
     else if (f_mathRule_str == "<") {
@@ -449,3 +489,7 @@ vector<vector<long int>> CudaSelect::getQueryResult() const {
 
   return m_resultDatabase_v;
 }
+
+float CudaSelect::getRuntimeValue() const { return m_RunTimeMilliseconds_f; }
+
+float CudaSelect::getSearchtimeValue() const { return m_searchRunTime_f; }
