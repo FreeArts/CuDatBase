@@ -154,6 +154,7 @@ void CudaSelect::copyDataToDevice(
   unsigned int l_it_x = 0;
   unsigned int l_it_y = 0;
 
+  //ToDO: OpenMP
   for (vector<long int> vec : f_dataBase_r) {
     for (long int vector_member : vec) {
       l_tmpDatabaseContainer_i[l_it_x][l_it_y] = vector_member;
@@ -163,7 +164,6 @@ void CudaSelect::copyDataToDevice(
     l_it_x++;
   }
 
-  // ToDo! What??
   thrust::copy(&(l_tmpDatabaseContainer_i[0][0]),
                &(l_tmpDatabaseContainer_i[f_databaseRowSize_ui]
                                          [f_databaseColumnSize_ui]),
@@ -328,7 +328,7 @@ void CudaSelect::find(int whereIsTheTargetCharacter, string f_SelectRule_str,
                                            f_SelectRule_str.size());
   long int row = std::stol(tmp_row);
 
-  /// find "date" number of column //PC side
+  /// find "date" number of column //PC side OpenMP!!! ToDO!!
   for (unsigned int l_it_y = 0; l_it_y < f_dataBaseHeader_v.size();
        l_it_y++) // Todo optimalize to parallel search!!
   {
@@ -466,6 +466,8 @@ void CudaSelect::calculateGridBalanceMethod(
     const unsigned long int f_rowNumber_ui) {
 
   // maximum 500 thread/block
+
+  //How Many Blocks need?
   f_necessaryBlockNumber_r = f_rowNumber_ui / 500;
 
   if (f_necessaryBlockNumber_r <= 0) {
@@ -474,6 +476,7 @@ void CudaSelect::calculateGridBalanceMethod(
   }
 
   else {
+	 // 2000/4 = 500; 1600/3=(533,3)
     unsigned long int l_remainder_ui =
         f_rowNumber_ui % f_necessaryBlockNumber_r;
     if (l_remainder_ui == 0) {
